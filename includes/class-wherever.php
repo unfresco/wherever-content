@@ -71,7 +71,7 @@ class Wherever {
 	public function __construct() {
 		
 		$this->plugin_name = 'wherever';
-		$this->version = '1.0.1';
+		$this->version = '1.0.2';
 
 		$this->load_dependencies();
 		$this->set_locale();
@@ -121,10 +121,6 @@ class Wherever {
 		 */
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'public/class-wherever-public.php';
 	
-		/*
-			Load Carbon fields
-		*/
-		require_once plugin_dir_path( dirname( __FILE__ ) ) . '/vendor/carbon-fields/carbon-fields-plugin.php' ;
 
 		$this->loader = new Wherever_Loader();
 		
@@ -170,9 +166,16 @@ class Wherever {
 		$this->loader->add_filter( 'post_updated', $plugin_admin, 'post_updated' ,10, 3 );
 		
 		// Carbon Fields
-		$this->loader->add_action( 'carbon_register_fields', $plugin_admin, 'carbon_fields' );
-		$this->loader->add_action( 'carbon_after_save_post_meta', $plugin_admin, 'carbon_fields_save' );
-		
+		if ( class_exists( 'Carbon_Fields\\Container' ) ) {
+			
+			$this->loader->add_action( 'carbon_register_fields', $plugin_admin, 'carbon_fields' );
+			$this->loader->add_action( 'carbon_after_save_post_meta', $plugin_admin, 'carbon_fields_save' );
+			
+		} else {
+			
+			$this->loader->add_action( 'admin_notices', $plugin_admin, 'carbon_fields_missing_notice' );
+			
+		}
 	}
 
 	/**

@@ -545,6 +545,23 @@ class Wherever_Admin {
 			));
 	}
 	
+	/**
+	 * Display admin notice if Carbon Field Plugin not installed/activated
+	 *
+	 * @since    1.0.2
+	 */
+	public function carbon_fields_missing_notice() {
+		
+		$network = ( is_multisite() ? '/network' : '' );
+		
+		$install_url = network_site_url( '/wp-admin' . $network . '/plugin-install.php?tab=search&s=Carbon+Fields' );
+
+		?>
+	    <div class="notice notice-error is-dismissible">
+	        <p><?php printf( __( 'The <strong>Wherever Content</strong> plugin is not ready yet to work. You still need to install and/or activate the <a href="https://wordpress.org/plugins/carbon-fields/" target="_blank">Carbon Fields</a> plugin. <a href="%s">Do it now!</a>', 'wherever' ), $install_url ); ?></p>
+	    </div>
+	    <?php
+	}
 	
 	/**
 	 * Set wherever_place taxonomy on saving wherever through ajax editing
