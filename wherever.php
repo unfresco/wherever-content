@@ -10,7 +10,7 @@
  * Plugin Name:       Wherever Content
  * Plugin URI:        http://wherever.grell.es
  * Description:       Put reusable content wherever you want.
- * Version:           1.0.1
+ * Version:           1.0.2
  * Author:            Adrián Ortiz Arandes
  * Author URI:        http://grell.es
  * License:           GPL-2.0+
