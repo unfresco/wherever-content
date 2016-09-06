@@ -9,6 +9,7 @@
  * @wordpress-plugin
  * Plugin Name:       Wherever Content
  * Plugin URI:        http://wherever.grell.es
+ * GitHub Plugin URI: boquiabierto/wherever-content
  * Description:       Put reusable content wherever you want.
  * Version:           1.0.2
  * Author:            Adrián Ortiz Arandes
