@@ -347,7 +347,7 @@ class Wherever_Public {
 	
 	// Build html output of wherevers for a place
 	private function build_wherevers( $content, $wherevers_by_placement ) {
-		
+
 		// ToDo: apply_filters for wrapper classes and attributes
 		$wherever_content_classes = array();		
 		
@@ -386,7 +386,7 @@ class Wherever_Public {
 	// Filter for the_content place
 	public static function the_content( $content ) {
 		global $post;
-		
+
 		if ( 'wherever' != get_post_type($post) ) {		
 			
 			$wherevers = self::get_wherevers( 'content' );
@@ -401,9 +401,9 @@ class Wherever_Public {
 	// Filter for the_title place
 	public static function the_title( $title ) {
 		global $post;
-		
+
 		if ( 'wherever' != get_post_type($post) ) {
-			
+
 			$wherevers = self::get_wherevers( 'title' );
 			$title = self::build_wherevers( $title, $wherevers );
 			
@@ -415,10 +415,10 @@ class Wherever_Public {
 	
 	// Action/Filter for get_sidebar place
 	public static function get_sidebar( $place ) {
-		
+
 		$wherevers = self::get_wherevers( 'sidebar' );
 		
-		if ( empty( $wherevers ) )
+		if ( empty( $wherevers['before'] ) && empty( $wherevers['instead'] ) && empty( $wherevers['after'] ) )
 			return;
 		
 		$wherevers_content = self::build_wherevers( 'sidebar', $wherevers );
@@ -429,14 +429,14 @@ class Wherever_Public {
 	
 	// Action/Filter for get_footer place
 	public static function get_footer( $place ) {
-		
+
 		$wherevers = self::get_wherevers( 'footer' );
-		
-		if ( empty( $wherevers ) )
+
+		if ( empty( $wherevers['before'] ) && empty( $wherevers['instead'] ) && empty( $wherevers['after'] ) )
 			return;
 		
 		$wherevers_content = self::build_wherevers( 'footer', $wherevers );
-		
+				
 		echo $wherevers_content;
 		
 	}
@@ -446,7 +446,7 @@ class Wherever_Public {
 		
 		$wherevers = self::get_wherevers( $place );
 		
-		if( empty( $wherevers ) )
+		if( empty( $wherevers['before'] ) && empty( $wherevers['instead'] ) && empty( $wherevers['after'] ) )
 			return;
 			
 		$wherevers_content = self::build_wherevers( $place, $wherevers );
