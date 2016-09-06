@@ -162,7 +162,6 @@ class Wherever {
 		$this->loader->add_action( 'init', $plugin_admin, 'place_taxonomy' );
 		$this->loader->add_action( 'init', $plugin_admin, 'custom_post_types' );
 		$this->loader->add_action( 'init', $plugin_admin, 'setup_default_places' );
-		$this->loader->add_action( 'admin_head', $plugin_admin, 'hide_default_place_controls' );
 		$this->loader->add_filter( 'post_updated', $plugin_admin, 'post_updated' ,10, 3 );
 		
 		// Carbon Fields

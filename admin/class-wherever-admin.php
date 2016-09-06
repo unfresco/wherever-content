@@ -311,37 +311,6 @@ class Wherever_Admin {
 			Handle unused, once registered places when there is no UI for deleting places 		
 		*/
 	}
-
-	
-	/**
-	 * Hides GUI access for editing/deleting default places terms.
-	 * 
-	 * @since    1.0.0
-	 * Todo: block editing/deleting https://gist.github.com/hakre/711874
-	*/
-	public function hide_default_place_controls() {
-		
-		$options = get_option( 'wherever' );
-		
-		$row_action_styles = array();
-		$row_check_styles = array();
-		$row_slug_styles = array();
-		
-		foreach( $options['default_places'] as $id ){
-			$row_action_styles[] = '.edit-tags-php.taxonomy-wherever_place #tag-' . $id . ' .row-actions';
-			$row_check_styles[] = '.edit-tags-php.taxonomy-wherever_place #tag-' . $id . ' .check-column';
-			$row_slug_styles[] = '.edit-tags-php.taxonomy-wherever_place #tag-' . $id . ' .column-slug';
-		}		
-		
-		?>
-		<style type="text/css">
-			<?php echo implode(', ', $row_action_styles ); ?> { display: none; }
-			<?php echo implode(', ', $row_check_styles ); ?> { visibility: hidden; }
-			<?php echo implode(', ', $row_slug_styles ); ?> { visibility: hidden; }
-		</style>
-		<?php
-		
-	}
 	
 	
 	/*
