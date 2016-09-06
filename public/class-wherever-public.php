@@ -400,11 +400,13 @@ class Wherever_Public {
 	
 	// Filter for the_title place
 	public static function the_title( $title ) {
+		global $post;
 		
 		if ( 'wherever' != get_post_type($post) ) {
 			
 			$wherevers = self::get_wherevers( 'title' );
 			$title = self::build_wherevers( $title, $wherevers );
+			
 		}
 		
 		return $title;
