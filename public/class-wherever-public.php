@@ -346,7 +346,7 @@ class Wherever_Public {
 	}
 	
 	// Build html output of wherevers for a place
-	private function build_wherevers( $content, $wherevers_by_placement ) {
+	private function build_wherevers( $content, $wherevers_by_placement, $no_content = false ) {
 
 		// ToDo: apply_filters for wrapper classes and attributes
 		$wherever_content_classes = array();		
@@ -368,7 +368,7 @@ class Wherever_Public {
 	
 			} else {
 				
-				if ( 'instead' == $placement_key ) {
+				if ( 'instead' == $placement_key && !$no_content ) {
 				
 					$wherever_contents['instead'][] = $content;
 				
@@ -376,7 +376,7 @@ class Wherever_Public {
 				
 			}
 		}
-		
+				
 		$content = implode(' ', $wherever_contents['before'] ) . implode(' ', $wherever_contents['instead'] ) . implode(' ', $wherever_contents['after'] );
 		
 		return $content;
@@ -390,7 +390,13 @@ class Wherever_Public {
 		if ( 'wherever' != get_post_type($post) ) {		
 			
 			$wherevers = self::get_wherevers( 'content' );
-			$content = self::build_wherevers( $content, $wherevers );
+			
+			if ( !( empty( $wherevers['before'] ) && empty( $wherevers['instead'] ) && empty( $wherevers['after'] ) ) ) {
+				
+				$content = self::build_wherevers( $content, $wherevers );
+				
+			}
+			
 			
 		}
 		
@@ -421,7 +427,7 @@ class Wherever_Public {
 		if ( empty( $wherevers['before'] ) && empty( $wherevers['instead'] ) && empty( $wherevers['after'] ) )
 			return;
 		
-		$wherevers_content = self::build_wherevers( 'sidebar', $wherevers );
+		$wherevers_content = self::build_wherevers( 'sidebar', $wherevers, true );
 		
 		echo $wherevers_content;
 		
@@ -435,7 +441,7 @@ class Wherever_Public {
 		if ( empty( $wherevers['before'] ) && empty( $wherevers['instead'] ) && empty( $wherevers['after'] ) )
 			return;
 		
-		$wherevers_content = self::build_wherevers( 'footer', $wherevers );
+		$wherevers_content = self::build_wherevers( 'footer', $wherevers, true );
 				
 		echo $wherevers_content;
 		
@@ -449,7 +455,7 @@ class Wherever_Public {
 		if( empty( $wherevers['before'] ) && empty( $wherevers['instead'] ) && empty( $wherevers['after'] ) )
 			return;
 			
-		$wherevers_content = self::build_wherevers( $place, $wherevers );
+		$wherevers_content = self::build_wherevers( $place, $wherevers, true );
 		
 		echo $wherevers_content;
 		
