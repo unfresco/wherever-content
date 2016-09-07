@@ -504,7 +504,14 @@ class Wherever_Admin {
 					    		'before' => __( 'Before', 'wherever' ),
 					    		'instead' => __( 'Instead', 'wherever' ),
 					    		'after' => __( 'After', 'wherever' )
-				    		)),
+				    		))
+				    		->set_conditional_logic(array(
+								array(
+								'field' => 'place',
+								'value' => array('content', 'title'),
+								'compare' => 'IN'
+								)
+							)),
 				    	Field::make('text', 'order', __( 'Order', 'wherever' ) )
 				    		->set_default_value(5)
 				    		->add_class('number')

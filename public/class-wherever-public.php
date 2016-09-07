@@ -175,7 +175,7 @@ class Wherever_Public {
 			
 			// Setup places
 			if( !empty( $wherever['wherever_places'] ) ){
-				
+
 				foreach ( $wherever['wherever_places'] as $place_key => $place ) {
 
 					if ( !array_key_exists( $place['place'], self::$places ) ) {
@@ -316,6 +316,12 @@ class Wherever_Public {
 					// Add to corresponding placement array in $return_wherevers
 					foreach( $wherever['wherever_places'] as $place ) {
 						
+						if ( empty( $place['placement'] )) {
+							// No placement declared (footer, sidebars and custom places)
+							$place['placement'] = 'instead';
+						
+						}
+						
 						$return_wherevers[ $place['placement'] ][] = array(
 							'post' => $wherever['post'],
 							'the_content' => $wherever['the_content'],
@@ -346,10 +352,13 @@ class Wherever_Public {
 	}
 	
 	// Build html output of wherevers for a place
-	private function build_wherevers( $content, $wherevers_by_placement, $no_content = false ) {
+	private function build_wherevers( $place, $content, $wherevers_by_placement ) {
 
 		// ToDo: apply_filters for wrapper classes and attributes
-		$wherever_content_classes = array();		
+		$wherever_content_classes = array( 
+			'wherever',
+			'wherever-' . $place
+		);		
 		
 		$wherever_contents = array(
 			'before' => array(),
@@ -361,14 +370,17 @@ class Wherever_Public {
 			if ( !empty( $wherevers_by_placement[ $placement_key ] ) ) {
 							
 				foreach ( $wherevers_by_placement[ $placement_key ] as $wherever ) {
-	
-					$wherever_contents[ $placement_key ][] = '<div class="whatever whatever-' . $placement_key . ' ' . implode( ' ', $wherever_content_classes ) . '" data-wherever-id="' . $wherever['post']->ID . '" >' . $wherever['the_content'] . '</div>';
+					
+					$wherever_content_classes[] = 'wherever-' . $placement_key;
+					$wherever_content_classes[] = 'wherever-id-' . $wherever['post']->ID;
+					
+					$wherever_contents[ $placement_key ][] = '<div class="'. implode( ' ', $wherever_content_classes ) . '" data-wherever-id="' . $wherever['post']->ID . '" >' . $wherever['the_content'] . '</div>';
 					
 				}
 	
 			} else {
 				
-				if ( 'instead' == $placement_key && !$no_content ) {
+				if ( 'instead' == $placement_key && !empty( $content ) ) {
 				
 					$wherever_contents['instead'][] = $content;
 				
@@ -393,7 +405,7 @@ class Wherever_Public {
 			
 			if ( !( empty( $wherevers['before'] ) && empty( $wherevers['instead'] ) && empty( $wherevers['after'] ) ) ) {
 				
-				$content = self::build_wherevers( $content, $wherevers );
+				$content = self::build_wherevers( 'content', $content, $wherevers );
 				
 			}
 			
@@ -411,7 +423,7 @@ class Wherever_Public {
 		if ( 'wherever' != get_post_type($post) ) {
 
 			$wherevers = self::get_wherevers( 'title' );
-			$title = self::build_wherevers( $title, $wherevers );
+			$title = self::build_wherevers( 'title', $title, $wherevers );
 			
 		}
 		
@@ -427,7 +439,7 @@ class Wherever_Public {
 		if ( empty( $wherevers['before'] ) && empty( $wherevers['instead'] ) && empty( $wherevers['after'] ) )
 			return;
 		
-		$wherevers_content = self::build_wherevers( 'sidebar', $wherevers, true );
+		$wherevers_content = self::build_wherevers( 'sidebar', '', $wherevers );
 		
 		echo $wherevers_content;
 		
@@ -441,7 +453,7 @@ class Wherever_Public {
 		if ( empty( $wherevers['before'] ) && empty( $wherevers['instead'] ) && empty( $wherevers['after'] ) )
 			return;
 		
-		$wherevers_content = self::build_wherevers( 'footer', $wherevers, true );
+		$wherevers_content = self::build_wherevers( 'footer', '', $wherevers );
 				
 		echo $wherevers_content;
 		
@@ -455,7 +467,7 @@ class Wherever_Public {
 		if( empty( $wherevers['before'] ) && empty( $wherevers['instead'] ) && empty( $wherevers['after'] ) )
 			return;
 			
-		$wherevers_content = self::build_wherevers( $place, $wherevers, true );
+		$wherevers_content = self::build_wherevers( $place, '', $wherevers );
 		
 		echo $wherevers_content;
 		
