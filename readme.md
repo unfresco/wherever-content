@@ -87,6 +87,13 @@ Further on we recommend to install siteorigin’s [page builder](https://wordpre
 
 ##  Changelog
 
+**1.0.3**
+- Fixes for contents injected into footer, sidebar and custom places
+- Conditional logic for places showing placements only for Content
+- Drop support for Title as default place. Too many calls (in meta-tags, `wp_nav_menu()` and `the_title()`).
+- Code cleanup
+- Added Github Updater plugin compatibility 
+
 **1.0.2**
 Does not include Carbon Fields plugin. Admin notice for the user to install and activate.
 
