@@ -162,7 +162,7 @@ class Wherever {
 		$this->loader->add_action( 'init', $plugin_admin, 'place_taxonomy' );
 		$this->loader->add_action( 'init', $plugin_admin, 'custom_post_types' );
 		$this->loader->add_action( 'init', $plugin_admin, 'setup_default_places' );
-		$this->loader->add_filter( 'post_updated', $plugin_admin, 'post_updated' ,10, 3 );
+		$this->loader->add_filter( 'save_post', $plugin_admin, 'save_post' );
 		
 		// Carbon Fields
 		if ( class_exists( 'Carbon_Fields\\Container' ) ) {

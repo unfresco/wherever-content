@@ -544,26 +544,22 @@ class Wherever_Admin {
 	 *
 	 * @since    1.0.0
 	 */
-	public function post_updated( $post_ID, $post_after, $post_before ) {		
+	public function save_post( $post_ID ) {		
 
-		if ( 'wherever' == get_post_type( $post_ID ) ) {
-			
-			$current_screen = get_current_screen();
-			
+		if ( 'wherever' == get_post_type( $post_ID ) && empty( get_current_screen() ) && !DOING_AUTOSAVE) {
+			// Saving though edit.php?post_type=wherever by ajax
 			// get_current_screen() is empty in edit.php?post_type=wherever / ajax place editing
-			if ( empty( $current_screen ) ) {
-				// Saving though edit.php?post_type=wherever / ajax
-				$terms = get_the_terms( $post_ID, 'wherever_place' );
-				
-				$meta_terms = array();
-				
-				foreach ( $terms as $term ) {
-					$meta_terms[] = $term->slug;
-				}
-				
-				update_post_meta( $post_ID, '_wherever_place', $meta_terms );			
-				
+			
+			$terms = get_the_terms( $post_ID, 'wherever_place' );
+			
+			$meta_terms = array();
+			
+			foreach ( $terms as $term ) {
+				$meta_terms[] = $term->slug;
 			}
+			
+			update_post_meta( $post_ID, '_wherever_place', $meta_terms );			
+				
 		}
 		
 	}
