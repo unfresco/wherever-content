@@ -199,11 +199,6 @@ class Wherever_Admin {
 				
 		$default_places = array(
 			array(
-				'name'			=> __( 'Title', 'wherever' ),
-				'slug'			=> 'title',
-				#'description'	=> __( 'Puts content before the title. Default place.', 'wherever' )
-			),
-			array(
 				'name'			=> __( 'Content', 'wherever' ),
 				'slug'			=> 'content',
 				#'description'	=> __( 'Puts content before the content. Default place.', 'wherever' )
@@ -508,7 +503,7 @@ class Wherever_Admin {
 				    		->set_conditional_logic(array(
 								array(
 								'field' => 'place',
-								'value' => array('content', 'title'),
+								'value' => array('content'),
 								'compare' => 'IN'
 								)
 							)),

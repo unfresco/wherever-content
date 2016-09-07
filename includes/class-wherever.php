@@ -201,7 +201,6 @@ class Wherever {
 		
 		// Filters
 		$this->loader->add_filter( 'the_content', $plugin_public, 'the_content' );
-		#$this->loader->add_filter( 'the_title', $plugin_public, 'the_title' );
 		$this->loader->add_action( 'get_sidebar', $plugin_public, 'get_sidebar', 10, 1 );
 		$this->loader->add_action( 'get_footer', $plugin_public, 'get_footer', 10, 1 );
 		
