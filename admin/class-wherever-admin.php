@@ -311,25 +311,63 @@ class Wherever_Admin {
 	/*
 		Setup custom fields
 		
-	*/
-	
+	*/	
 	private function get_posts_for_select( $post_type ){
 		global $post, $wp;
 				
-		$args = array(
-			'post_type' => $post_type,
-			'post_status' => 'publish'
-		);
-		
+		$post_type_object = get_post_type_object( $post_type );
 		$post_type_posts = array();
 		
-		$query = new WP_Query($args);
+		if ( $post_type_object->hierarchical ) {
+			
+			$dropdown_args = array(
+				'post_type'		=> $post_type,
+				'hierarchical'	=> 1,
+				'post_status'	=> 'publish'
+			);
+			
+			$pages = get_pages( $dropdown_args );
+			$depths = array();
+			
+			if ( !empty( $pages ) ) {
+				
+				foreach( $pages as $page ){
+
+					if ( array_key_exists( $page->post_parent, $depths ) ) {
+
+						$depths[ $page->ID ] = $depths[$page->post_parent] + 1;
+						
+					} else {
+						
+						$depths[ $page->ID ] = 0;
+						
+					}
+					
+					$post_type_posts[$page->ID] = '&nbsp;' . str_repeat( '&nbsp;&nbsp;', $depths[ $page->ID ] ) . $page->post_title;
+				}
+				
+			}
+			
+		} else {
+			
+			$args = array(
+				'post_type' => $post_type,
+				'post_status' => 'publish',
+				'posts_per_page' => -1
+			);
+			
+			$query = new WP_Query( $args );
+	
+			if ( $query->have_posts() ):
+				while ( $query->have_posts() ): $query->the_post();
+					$post_type_posts[$post->ID] = $post->post_title;
+				endwhile;		
+			endif;
+			
+		}
 		
-		if ( $query->have_posts() ):
-			while ( $query->have_posts() ): $query->the_post();
-				$post_type_posts[$post->ID] = $post->post_title;
-			endwhile;		
-		endif;
+		
+		
 		
 		wp_reset_postdata();
 
