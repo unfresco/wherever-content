@@ -1,14 +1,14 @@
 #Wherever Content
 ### About
-A WordPress plugin that allows you to **put reusable content wherever you want**. 
-#### But we already have widgets for this! 
-Yes, widgets are very nice indeed but a Wherever Content enables you a different and more powerful way to do more tapping into WP’s native post & page distribution manners and content creation capabilities.
+WordPress’s native solution for static and/or reusable contents are – beside the specific theme-options – sidebars and widgets. Managing them is very different to post and pages. Not only the interface is completely different, the users actually need to know and understand the current theme stucture: when and where it uses it’s sidebars. Changing a theme means mostly to learn and rebuild it’s sidebars and widgets. Not to mention repeating same widgets accross different sidebars. 
 
-Conceptually, it’s an easy to understand **post-like & content-first** distribution approach whereas WP’s widgets-in-sidebars requires you to think in a **post-unlike & content-last** distribution manner. 
+Wherever Content on the other hand is simple to understand: manage content in a post-like way with an extra info that relates each of them to other site contents and places.
 
-Make it a thing of the past where you (or your clients) didn’t knew where and how to change that banner spread across the blog, header image a category archive page, footer logos, etc. One, content searchable Wherever Content post list. 
+Think of it as a **post-like & content-first** distribution approach whereas WordPress’s widgets-in-sidebars requires to think in a **post-unlike & content-last** distribution manner. 
 
-More specifically and useful (and the why everything started) it enables the use of siteorigin’s [page builder](https://wordpress.org/plugins/siteorigin-panels/) inside a Wherever Content post and to display it wherever you want. No more duplicated layouts! Site-wide page-builder built footers!
+Changing a banner spread across the blog, header images on a category archive page, footer logos, etc. is much easier in a searchable Wherever Content post-list than in a multiple sidebar widget-hell. 
+
+More specifically and useful – and the why everything started – it enables the use of siteorigin’s [page builder](https://wordpress.org/plugins/siteorigin-panels/) inside a Wherever Content post and to display it wherever you want. This means f.e. no more duplicated layouts and site-wide page-builder built footers.
 
 Please check it out and give your feedback. We use it for our clients and will publish it to the WP plugin directory if you like it. 
 
@@ -20,14 +20,13 @@ Please check it out and give your feedback. We use it for our clients and will p
 
 ### Custom Wherever Places
 
-By default you can put Wherever Contents in 4 places:
+By default you can put Wherever Contents in 3 places:
 
 - before, instead and after **the content** of other post and pages.
-- before, instead and after **the title** of other post and pages.
-- before the **footer** (see get_footer() function in your theme) 
-- before the **sidebar** (see get_sidebar() function in your theme)
+- before the **footer** (see the `get_footer()` function in your theme) 
+- before the **sidebar** (see the `get_sidebar()` function in your theme)
 
-But you are invited to add **custom places** to your theme wherever you want by registering new places in your theme (like registering menus or sidebars) and declaring where the custom places should display Wherever Contents for that specific place.
+But you can add **custom places** to your theme wherever you want by registering new places in your theme (like registering menus or sidebars) and declaring where the custom places should display Wherever Contents for that specific place.
 
 #### Registering Custom Places for your theme
 
@@ -86,6 +85,10 @@ Further on we recommend to install siteorigin’s [page builder](https://wordpre
 
 
 ##  Changelog
+
+**1.0.4**
+- New page parent rule
+- Hierachical indeted page selectors
 
 **1.0.3**
 - Fixes for contents injected into footer, sidebar and custom places
