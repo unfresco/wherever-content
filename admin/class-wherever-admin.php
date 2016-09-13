@@ -419,7 +419,7 @@ class Wherever_Admin {
 								'post_cat' => 'Post Category',
 								'page' => 'Page',
 								'page_type' => 'Page Type',
-								#'page_parent' => 'Page Parent',
+								'page_parent' => 'Page Parent',
 								#'page_template' => 'Page Template'
 							)),
 				    	Field::make('select', 'location_condition', __( 'Condition', 'wherever' ) )
@@ -466,8 +466,8 @@ class Wherever_Admin {
 				    		->set_conditional_logic(array(
 								array(
 								'field' => 'location_type',
-								'value' => 'page',
-								'compare' => '='
+								'value' => array('page', 'page_parent'),
+								'compare' => 'IN'
 								)
 							)),
 						Field::make('select', 'page_type', __( 'Page Type', 'wherever' ) )

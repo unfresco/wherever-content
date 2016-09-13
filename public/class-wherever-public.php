@@ -253,6 +253,17 @@ class Wherever_Public {
 					
 					break;
 				
+				case 'page_parent' : // Has a rule on the page parent
+					
+					// Has a rule on this post parent
+					if ( $location['page'] == wp_get_post_parent_id( $post->ID ) ) {
+
+						$is_in[] = $condition;
+						
+					}
+					
+					break;
+				
 				case 'page_type' : // Has a rule on the page type
 					
 					if ( 'archive' == $location['page_type'] && is_archive() ) {
