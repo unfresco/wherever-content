@@ -220,7 +220,7 @@ class Wherever_Admin {
 			self::setup_wherever_place( $place, true );
 			
 		}
-				
+		
 	}
 	
 	/**
@@ -248,7 +248,9 @@ class Wherever_Admin {
 			);
 			
 			if ( !empty( $place['description'] )) {
+				
 				$args['description'] = $place['description'];
+				
 			}
 			
 			$term = wp_insert_term( $place['name'], 'wherever_place', $args );
@@ -298,7 +300,9 @@ class Wherever_Admin {
 		
 		
 		if ( $update_options ) {
+			
 			update_option( 'wherever', $options );
+			
 		}
 		
 		/* 
@@ -316,22 +320,24 @@ class Wherever_Admin {
 		global $post, $wp;
 				
 		$post_type_object = get_post_type_object( $post_type );
+		
 		$post_type_posts = array();
 		
 		if ( $post_type_object->hierarchical ) {
 			
-			$dropdown_args = array(
+			$args = array(
 				'post_type'		=> $post_type,
 				'hierarchical'	=> 1,
 				'post_status'	=> 'publish'
 			);
 			
-			$pages = get_pages( $dropdown_args );
-			$depths = array();
+			$pages = get_pages( $args );
 			
 			if ( !empty( $pages ) ) {
 				
-				foreach( $pages as $page ){
+				$depths = array();
+				
+				foreach ( $pages as $page ) {
 
 					if ( array_key_exists( $page->post_parent, $depths ) ) {
 
@@ -344,6 +350,7 @@ class Wherever_Admin {
 					}
 					
 					$post_type_posts[$page->ID] = '&nbsp;' . str_repeat( '&nbsp;&nbsp;', $depths[ $page->ID ] ) . $page->post_title;
+					
 				}
 				
 			}
@@ -358,18 +365,19 @@ class Wherever_Admin {
 			
 			$query = new WP_Query( $args );
 	
-			if ( $query->have_posts() ):
+			if ( $query->have_posts() ){
+				
 				while ( $query->have_posts() ): $query->the_post();
+				
 					$post_type_posts[$post->ID] = $post->post_title;
-				endwhile;		
-			endif;
+				
+				endwhile;
+				
+			}
 			
+			wp_reset_postdata();
+						
 		}
-		
-		
-		
-		
-		wp_reset_postdata();
 
 		return $post_type_posts;
 		
@@ -390,7 +398,7 @@ class Wherever_Admin {
 		
 		
 		if ( version_compare( $wp_version, '4.5'  ) >= 0 ) {
-						
+			
 			$post_terms = get_terms(array(
 				'taxonomy' => $taxonomy,
 				'hide_empty' => false
@@ -402,9 +410,11 @@ class Wherever_Admin {
 		
 		}
 		
-		foreach( $post_terms as $term ){
+		foreach ( $post_terms as $term ) {
+			
 			$select_terms[$term->term_id] = $term->name  . ' (' . $term->count . ')';
-		}		
+			
+		}
 		
 		return $select_terms;
 		
@@ -414,20 +424,23 @@ class Wherever_Admin {
 				
 	private function get_places_for_options() {
 		
-		$terms = get_terms( array(
+		$args = array(
 		    'taxonomy' => 'wherever_place',
-		    'hide_empty' => false,
-		) );
+		    'hide_empty' => false
+		);
+		
+		$terms = get_terms( $args );
 		
 		$options_terms = array();
 		
-		foreach( $terms as $term ){
+		foreach ( $terms as $term ) {
 			
 			$options_terms[ $term->slug ] = $term->name;
 			
 		};
 
 		return $options_terms;
+		
 	}
 	
 	/**
@@ -564,12 +577,12 @@ class Wherever_Admin {
 		$network = ( is_multisite() ? '/network' : '' );
 		
 		$install_url = network_site_url( '/wp-admin' . $network . '/plugin-install.php?tab=search&s=Carbon+Fields' );
-
+		
 		?>
-	    <div class="notice notice-error is-dismissible">
-	        <p><?php printf( __( 'The <strong>Wherever Content</strong> plugin is not ready yet to work. You still need to install and/or activate the <a href="https://wordpress.org/plugins/carbon-fields/" target="_blank">Carbon Fields</a> plugin. <a href="%s">Do it now!</a>', 'wherever' ), $install_url ); ?></p>
-	    </div>
-	    <?php
+		<div class="notice notice-error is-dismissible">
+			<p><?php printf( __( 'The <strong>Wherever Content</strong> plugin is not ready yet to work. You still need to install and/or activate the <a href="https://wordpress.org/plugins/carbon-fields/" target="_blank">Carbon Fields</a> plugin. <a href="%s">Do it now!</a>', 'wherever' ), $install_url ); ?></p>
+		</div>
+		<?php
 	}
 	
 	/**
@@ -592,7 +605,7 @@ class Wherever_Admin {
 			}
 			
 			update_post_meta( $post_ID, '_wherever_place', $meta_terms );			
-				
+			
 		}
 		
 	}
@@ -612,7 +625,7 @@ class Wherever_Admin {
 		$wherever_places = carbon_get_post_meta( $post_ID, 'wherever_places', 'complex' );
 		$wherever_places_terms = array();
 				
-		foreach( $wherever_places as $place ){
+		foreach ( $wherever_places as $place ) {
 			
 			$wherever_places_terms[] = $place['place'];
 			
