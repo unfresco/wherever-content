@@ -102,6 +102,12 @@ class Wherever_Public {
 		wp_register_script( 'siteorigin-parallax', plugin_dir_url( __FILE__ ) . 'js/siteorigin-panels/siteorigin-parallax' . SITEORIGIN_PANELS_JS_SUFFIX . '.js', array('jquery'), SITEORIGIN_PANELS_VERSION );
 	
 	}
+
+	public function enqueue_page_builder_styles() {
+
+		wp_enqueue_style( 'siteorigin-panels-front', plugin_dir_url( __FILE__ ) . 'css/siteorigin-panels/front.css', array(), $this->version, 'all' );
+	
+	}
 	
 	/**
 	 * Setup static vars $wherever and $places.

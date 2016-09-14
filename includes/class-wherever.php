@@ -191,8 +191,13 @@ class Wherever {
 		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_styles' );
 		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_scripts' );
 		
-		// Earlier enqueue some page-builder scripts for beeing available 
-		$this->loader->add_action( 'wp', $plugin_public, 'enqueue_page_builder_scripts' );
+		// Earlier enqueue some page-builder scripts & styles for beeing available
+		if ( function_exists('siteorigin_panels_render') ) {
+			
+			$this->loader->add_action( 'wp', $plugin_public, 'enqueue_page_builder_styles' );
+			$this->loader->add_action( 'wp', $plugin_public, 'enqueue_page_builder_scripts' );
+			
+		}
 		
 		$this->loader->add_action( 'wp', $plugin_public, 'setup_wherevers' );
 		
