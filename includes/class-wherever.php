@@ -71,7 +71,7 @@ class Wherever {
 	public function __construct() {
 		
 		$this->plugin_name = 'wherever';
-		$this->version = '1.0.4';
+		$this->version = '1.0.5';
 
 		$this->load_dependencies();
 		$this->set_locale();
