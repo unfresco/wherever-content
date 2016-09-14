@@ -321,7 +321,7 @@ class Wherever_Public {
 			'instead' => array(),
 			'after' => array()
 		);
-
+		
 		if ( !empty( self::$places ) && array_key_exists( $place_name, self::$places ) ) {
 			
 			// Get wherevers by place from self::$places
@@ -339,11 +339,15 @@ class Wherever_Public {
 						
 						}
 						
-						$return_wherevers[ $place['placement'] ][] = array(
-							'post' => $wherever['post'],
-							'the_content' => $wherever['the_content'],
-							'order' => $place['order']
-						);
+						if ( $place['place'] ==  $place_name ) {
+							// Make sure we get only the place specified in $place_name as we travel through all allowed places 
+							$return_wherevers[ $place['placement'] ][] = array(
+								'post' => $wherever['post'],
+								'the_content' => $wherever['the_content'],
+								'order' => $place['order']
+							);
+							
+						}
 					
 					}
 
