@@ -23,6 +23,10 @@ More on the (github repository)[https://github.com/boquiabierto/wherever-content
 
 === Changelog ===
 
+**1.0.5**
+- fixes cases where same content in different places is injected multiple times
+- fixes loading of siteorigin styles and scripts in admin and frontend
+
 **1.0.4**
 - New page parent rule
 - Hierachical indeted page selectors
