@@ -534,6 +534,15 @@ class Wherever_Admin {
 								'compare' => '='
 								)
 							)),
+						Field::make('select', 'archive_post_type', __( 'Archive Post Type', 'wherever' ) )
+				    		->add_options( $this->get_post_types_for_select() )
+				    		->set_conditional_logic(array(
+								array(
+								'field' => 'page_type',
+								'value' => 'archive',
+								'compare' => '='
+								)
+							)),
 			    	))
 					->set_min(1)
 					->set_width(50),
