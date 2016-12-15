@@ -159,14 +159,14 @@ class Wherever {
 		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_scripts' );
 		
 		// WP
-		$this->loader->add_action( 'init', $plugin_admin, 'place_taxonomy' );
-		$this->loader->add_action( 'init', $plugin_admin, 'custom_post_types' );
-		$this->loader->add_action( 'init', $plugin_admin, 'setup_default_places' );
 		$this->loader->add_filter( 'save_post', $plugin_admin, 'save_post' );
 		
 		// Carbon Fields
 		if ( class_exists( 'Carbon_Fields\\Container' ) ) {
 			
+			$this->loader->add_action( 'carbon_register_fields', $plugin_admin, 'place_taxonomy' );
+			$this->loader->add_action( 'carbon_register_fields', $plugin_admin, 'setup_default_places' );
+			$this->loader->add_action( 'carbon_register_fields', $plugin_admin, 'custom_post_types' );
 			$this->loader->add_action( 'carbon_register_fields', $plugin_admin, 'carbon_fields' );
 			$this->loader->add_action( 'carbon_after_save_post_meta', $plugin_admin, 'carbon_fields_save' );
 			
