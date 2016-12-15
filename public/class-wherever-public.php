@@ -314,7 +314,7 @@ class Wherever_Public {
 		
 	}
 	
-	private function get_wherevers( $place_name ) {
+	private static function get_wherevers( $place_name ) {
 		
 		$return_wherevers = array(
 			'before' => array(),
@@ -373,7 +373,7 @@ class Wherever_Public {
 	}
 	
 	// Build html output of wherevers for a place
-	private function build_wherevers( $place, $content, $wherevers_by_placement ) {
+	private static function build_wherevers( $place, $content, $wherevers_by_placement ) {
 
 		// ToDo: apply_filters for wrapper classes and attributes
 		$wherever_content_classes = array( 
