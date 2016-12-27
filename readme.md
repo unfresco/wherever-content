@@ -86,6 +86,13 @@ Further on we recommend to install siteorigin’s [page builder](https://wordpre
 
 ##  Changelog
 
+**1.0.7**
+- Fix hooks
+- [Polylang](https://wordpress.org/plugins/polylang/) compatibility
+
+**1.0.6**
+- New archive page_type rule
+
 **1.0.5**
 - fixes cases where same content in different places is injected multiple times
 - fixes loading of siteorigin styles and scripts in admin and frontend
