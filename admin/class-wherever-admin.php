@@ -68,7 +68,7 @@ class Wherever_Admin {
 		self::$theme = wp_get_theme();
 		
 	}
-
+	
 	/**
 	 * Register the stylesheets for the admin area.
 	 *
@@ -97,7 +97,8 @@ class Wherever_Admin {
 	 * @since    1.0.0
 	 */
 	public function custom_post_types() {
-			$labels = array(
+				
+		$labels = array(
 			'name'                  => _x( 'Wherever Contents', 'Post Type General Name', 'wherever' ),
 			'singular_name'         => _x( 'Wherever Content', 'Post Type Singular Name', 'wherever' ),
 			'menu_name'             => __( 'Wherever', 'wherever' ),
@@ -144,6 +145,30 @@ class Wherever_Admin {
 			'capability_type'       => 'page',
 		);
 		register_post_type( 'wherever', $args );
+	}
+	
+	public function polylang_compat( $post_types, $is_settings ) {
+		
+		$polylang_options = get_option( 'polylang' );
+
+		if ( ! in_array( 'wherever', $polylang_options['post_types'] ) ) {
+			// Auto-include wherever post_type into Polylang options
+			$polylang_options['post_types'][] = 'wherever';
+			update_option( 'polylang', $polylang_options );
+		} 
+		
+		if ( $is_settings ) {
+			// hides 'wherever' from the list of custom post types in Polylang settings
+			unset( $post_types['wherever'] );
+		
+		} else {
+			// enables language and translation management for 'wherever'
+			$post_types['wherever'] = 'wherever';
+		
+		}
+		
+		return $post_types;
+	
 	}
 	
 	/**

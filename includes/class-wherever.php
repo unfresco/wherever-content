@@ -168,6 +168,7 @@ class Wherever {
 			$this->loader->add_action( 'init', $plugin_admin, 'setup_default_places' );
 			$this->loader->add_action( 'init', $plugin_admin, 'custom_post_types' );
 			$this->loader->add_action( 'init', $plugin_admin, 'carbon_fields' );
+			$this->loader->add_action( 'pll_get_post_types', $plugin_admin, 'polylang_compat', 10, 2 );
 			$this->loader->add_action( 'carbon_after_save_post_meta', $plugin_admin, 'carbon_fields_save' );
 			
 		} else {
