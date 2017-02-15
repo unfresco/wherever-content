@@ -408,7 +408,7 @@ class Wherever_Admin {
 		
 	}
 	
-	private function get_post_types_for_select() {
+	public function get_post_types_for_select() {
 		
 		$post_types = get_post_types( array( 'public' => true ) );
 		
@@ -447,7 +447,7 @@ class Wherever_Admin {
 
 	// Todo private function get_page_type_for_select() {}
 				
-	private function get_places_for_options() {
+	public function get_places_for_options() {
 		
 		$args = array(
 		    'taxonomy' => 'wherever_place',
@@ -455,7 +455,7 @@ class Wherever_Admin {
 		);
 		
 		$terms = get_terms( $args );
-		
+				
 		$options_terms = array();
 		
 		foreach ( $terms as $term ) {
@@ -520,7 +520,7 @@ class Wherever_Admin {
 								)
 							)),
 						Field::make('select', 'post_type', __( 'Post Type', 'wherever' ) )
-				    		->add_options( $this->get_post_types_for_select() )
+				    		->add_options( array( $this, 'get_post_types_for_select' ) )
 				    		->set_conditional_logic(array(
 								array(
 								'field' => 'location_type',
@@ -560,7 +560,7 @@ class Wherever_Admin {
 								)
 							)),
 						Field::make('select', 'archive_post_type', __( 'Archive Post Type', 'wherever' ) )
-				    		->add_options( $this->get_post_types_for_select() )
+				    		->add_options( array( $this, 'get_post_types_for_select' ) )
 				    		->set_conditional_logic(array(
 								array(
 								'field' => 'page_type',
@@ -578,7 +578,7 @@ class Wherever_Admin {
 		    		))
 					->add_fields(array(
 						Field::make('select', 'place', __( 'Place', 'wherever' ) )
-				    		->add_options( $this->get_places_for_options() ),
+				    		->add_options( array( $this,  'get_places_for_options' ) ),
 				    	Field::make('radio', 'placement', __( 'Placement', 'wherever' ) )
 				    		->add_options(array(
 					    		'before' => __( 'Before', 'wherever' ),
