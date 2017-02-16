@@ -3,7 +3,7 @@ Contributors: boquiabierto
 Donate link: http://wherever.grell.es
 Tags: custom content, page builder
 Requires at least: 4.3
-Tested up to: 4.5.3
+Tested up to: 4.7.2
 Stable tag: trunk
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -22,6 +22,17 @@ More on the (github repository)[https://github.com/boquiabierto/wherever-content
 
 
 === Changelog ===
+
+**1.0.8**
+- Fix carbon field hooks (carbon fields 1.5 won’t initiate on init any more)
+- Add spanish translation
+
+**1.0.7**
+- Fix hooks
+- [Polylang](https://wordpress.org/plugins/polylang/) compatibility
+
+**1.0.6**
+- New archive page_type rule
 
 **1.0.5**
 - fixes cases where same content in different places is injected multiple times

@@ -75,6 +75,7 @@ A common and useful example would be to build a multi-column footer section as a
 Wherever Content depends on the [Carbon Fields](https://wordpress.org/plugins/carbon-fields/) plugin. Install and activate, if not, the plugin will advice you with a notice to do so.
 
 ## Recommendation
+
 Further on we recommend to install siteorigin’s [page builder](https://wordpress.org/plugins/siteorigin-panels/). The Wherever Content plugin has no direct relation nor affiliation to that plugin but we use it a lot and are committed to maintain compatibility.
 
 
@@ -85,6 +86,10 @@ Further on we recommend to install siteorigin’s [page builder](https://wordpre
 
 
 ##  Changelog
+
+**1.0.8**
+- Fix carbon field hooks (carbon fields 1.5 won’t initiate on init any more)
+- Add spanish translation
 
 **1.0.7**
 - Fix hooks
