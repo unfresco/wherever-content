@@ -1,113 +1,113 @@
-#, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: Wherever Content\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-02-16 10:59+0100\n"
-"PO-Revision-Date: 2017-02-15 23:14+0100\n"
-"Last-Translator: Adrián Ortiz Arandes – GRELL <adrian@grell.es>\n"
+"POT-Creation-Date: 2017-02-16 11:00+0100\n"
+"PO-Revision-Date: 2017-02-16 11:13+0100\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Language: en\n"
 "X-Generator: Poedit 1.8.11\n"
 "X-Poedit-KeywordsList: __;_e\n"
 "X-Poedit-Basepath: .\n"
 "X-Poedit-SourceCharset: UTF-8\n"
+"Last-Translator: Adrián Ortiz Arandes – GRELL <adrian@grell.es>\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Language: es\n"
 "X-Poedit-SearchPath-0: ..\n"
 
 #: ../admin/class-wherever-admin.php:104
 msgid "Wherever"
-msgstr ""
+msgstr "Dondequiera"
 
 #: ../admin/class-wherever-admin.php:106
 msgid "Item Archives"
-msgstr ""
+msgstr "Archivo de ítemes"
 
 #: ../admin/class-wherever-admin.php:107 ../admin/class-wherever-admin.php:187
 msgid "Parent Item:"
-msgstr ""
+msgstr "Elemento padre:"
 
 #: ../admin/class-wherever-admin.php:108
 msgid "All contents"
-msgstr ""
+msgstr "todos los contenidos"
 
 #: ../admin/class-wherever-admin.php:109
 msgid "Add New Content"
-msgstr ""
+msgstr "Añadir nuevo contenido"
 
 #: ../admin/class-wherever-admin.php:110
 msgid "Add New"
-msgstr ""
+msgstr "Añadir nuevo"
 
 #: ../admin/class-wherever-admin.php:111
 msgid "New Content"
-msgstr ""
+msgstr "Nuevo contenido"
 
 #: ../admin/class-wherever-admin.php:112
 msgid "Edit Content"
-msgstr ""
+msgstr "Editar contenido"
 
 #: ../admin/class-wherever-admin.php:113
 msgid "Update Content"
-msgstr ""
+msgstr "Actualizar contenido"
 
 #: ../admin/class-wherever-admin.php:114
 msgid "View Content"
-msgstr ""
+msgstr "Ver contenido"
 
 #: ../admin/class-wherever-admin.php:115
 msgid "Search Content"
-msgstr ""
+msgstr "Buscar contenido"
 
 #: ../admin/class-wherever-admin.php:116
 msgid "Not found"
-msgstr ""
+msgstr "No encontrado"
 
 #: ../admin/class-wherever-admin.php:117
 msgid "Not found in Trash"
-msgstr ""
+msgstr "No encontrado en papelera"
 
 #: ../admin/class-wherever-admin.php:118
 msgid "Featured Image"
-msgstr ""
+msgstr "Imagen destacada"
 
 #: ../admin/class-wherever-admin.php:119
 msgid "Set featured image"
-msgstr ""
+msgstr "Establecer imagen destacada"
 
 #: ../admin/class-wherever-admin.php:120
 msgid "Remove featured image"
-msgstr ""
+msgstr "Eliminar imagen destacada"
 
 #: ../admin/class-wherever-admin.php:121
 msgid "Use as featured image"
-msgstr ""
+msgstr "Usar como imagen destacada"
 
 #: ../admin/class-wherever-admin.php:122
 msgid "Insert into item"
-msgstr ""
+msgstr "Insertar en el ítem"
 
 #: ../admin/class-wherever-admin.php:123
 msgid "Uploaded to this Wherever"
-msgstr ""
+msgstr "Subido a éste Dondequiera"
 
 #: ../admin/class-wherever-admin.php:124
 msgid "Items list"
-msgstr ""
+msgstr "Listado de ítemes"
 
 #: ../admin/class-wherever-admin.php:125
 msgid "Items list navigation"
-msgstr ""
+msgstr "Navegación de listado de ítemes"
 
 #: ../admin/class-wherever-admin.php:126
 msgid "Filter items list"
-msgstr ""
+msgstr "Filtrar listado de ítemes"
 
 #: ../admin/class-wherever-admin.php:129 ../admin/class-wherever-admin.php:227
 msgid "Content"
-msgstr ""
+msgstr "Contenido"
 
 #: ../admin/class-wherever-admin.php:130
 msgid "Post Type Description"
@@ -115,169 +115,177 @@ msgstr ""
 
 #: ../admin/class-wherever-admin.php:184
 msgid "Places"
-msgstr ""
+msgstr "Lugar"
 
 #: ../admin/class-wherever-admin.php:185
 msgid "All Places"
-msgstr ""
+msgstr "Todos los lugares"
 
 #: ../admin/class-wherever-admin.php:186
 msgid "Parent Place"
-msgstr ""
+msgstr "Lugar padre"
 
 #: ../admin/class-wherever-admin.php:188
 msgid "New Place Name"
-msgstr ""
+msgstr "Nuevo nombre del lugar "
 
 #: ../admin/class-wherever-admin.php:189
 msgid "Add New Place"
-msgstr ""
+msgstr "Añadir nuevo lugar"
 
 #: ../admin/class-wherever-admin.php:190
 msgid "Edit Place"
-msgstr ""
+msgstr "Editar lugar"
 
 #: ../admin/class-wherever-admin.php:191
 msgid "Update Place"
-msgstr ""
+msgstr "Actualizar lugar"
 
 #: ../admin/class-wherever-admin.php:192
 msgid "View Place"
-msgstr ""
+msgstr "Ver lugar"
 
 #: ../admin/class-wherever-admin.php:193
 msgid "Separate places with commas"
-msgstr ""
+msgstr "Separar lugares con comas"
 
 #: ../admin/class-wherever-admin.php:194
 msgid "Add or remove Places"
-msgstr ""
+msgstr "Añadir o eliminar lugares"
 
 #: ../admin/class-wherever-admin.php:195
 msgid "Choose from the most used"
-msgstr ""
+msgstr "Elige entre los más utilizados"
 
 #: ../admin/class-wherever-admin.php:196
 msgid "Popular Places"
-msgstr ""
+msgstr "Lugares populares"
 
 #: ../admin/class-wherever-admin.php:197
 msgid "Search Places"
-msgstr ""
+msgstr "Buscar lugares"
 
 #: ../admin/class-wherever-admin.php:198
 msgid "Not Found"
-msgstr ""
+msgstr "No encontrado"
 
 #: ../admin/class-wherever-admin.php:199
 msgid "No Places"
-msgstr ""
+msgstr "Ningún lugar"
 
 #: ../admin/class-wherever-admin.php:200
 msgid "Places list"
-msgstr ""
+msgstr "Listados de lugares"
 
 #: ../admin/class-wherever-admin.php:201
 msgid "Places list navigation"
-msgstr ""
+msgstr "Navegación de listado de lugares"
 
 #: ../admin/class-wherever-admin.php:232
 msgid "Sidebar"
-msgstr ""
+msgstr "Barra lateral"
 
 #: ../admin/class-wherever-admin.php:237
 msgid "Footer"
-msgstr ""
+msgstr "Pié"
 
 #: ../admin/class-wherever-admin.php:479
 msgid "Configuration"
-msgstr ""
+msgstr "Configuración"
 
 #: ../admin/class-wherever-admin.php:483
 msgid "Show this content if:"
-msgstr ""
+msgstr "Mostrar éste contenido si:"
 
 #: ../admin/class-wherever-admin.php:490
 msgid "Location"
-msgstr ""
+msgstr "Ubicación"
 
 #: ../admin/class-wherever-admin.php:501
 msgid "Condition"
-msgstr ""
+msgstr "Condición"
 
 #: ../admin/class-wherever-admin.php:513
 msgid "Post"
-msgstr ""
+msgstr "Entrada"
 
 #: ../admin/class-wherever-admin.php:522
 msgid "Post Type"
-msgstr ""
+msgstr "Tipo de entrada"
 
 #: ../admin/class-wherever-admin.php:531
 msgid "Post Category"
-msgstr ""
+msgstr "Categoría de entrada"
 
 #: ../admin/class-wherever-admin.php:540
 msgid "Page"
-msgstr ""
+msgstr "Página"
 
 #: ../admin/class-wherever-admin.php:549
 msgid "Page Type"
-msgstr ""
+msgstr "Tipo de página"
 
 #: ../admin/class-wherever-admin.php:551
 msgid "Home (Blog & Front Page )"
-msgstr ""
+msgstr "Inicio (Blog & página de inicio)"
 
 #: ../admin/class-wherever-admin.php:552
 msgid "Front Page"
-msgstr ""
+msgstr "Página de inicio"
 
 #: ../admin/class-wherever-admin.php:553
 msgid "Archive"
-msgstr ""
+msgstr "Archivo"
 
 #: ../admin/class-wherever-admin.php:562
 msgid "Archive Post Type"
-msgstr ""
+msgstr "Tipo de entrada archivo"
 
 #: ../admin/class-wherever-admin.php:574
 msgid "Place(s) to show this content:"
-msgstr ""
+msgstr "Lugar(es) donde mostrar éste contenido:"
 
 #: ../admin/class-wherever-admin.php:576
 msgid "place"
-msgstr ""
+msgstr "lugar"
 
 #: ../admin/class-wherever-admin.php:577
 msgid "places"
-msgstr ""
+msgstr "lugares"
 
 #: ../admin/class-wherever-admin.php:580
 msgid "Place"
-msgstr ""
+msgstr "Lugar"
 
 #: ../admin/class-wherever-admin.php:582
 msgid "Placement"
-msgstr ""
+msgstr "Ubicación"
 
 #: ../admin/class-wherever-admin.php:584
 msgid "Before"
-msgstr ""
+msgstr "Antes"
 
 #: ../admin/class-wherever-admin.php:585
 msgid "Instead"
-msgstr ""
+msgstr "En vez de"
 
 #: ../admin/class-wherever-admin.php:586
 msgid "After"
-msgstr ""
+msgstr "Después"
 
 #: ../admin/class-wherever-admin.php:595
 msgid "Order"
-msgstr ""
+msgstr "Orden"
 
 #: ../admin/class-wherever-admin.php:617
 #, php-format
-msgid "The <strong>Wherever Content</strong> plugin is not ready yet to work. You still need to install and/or activate the <a href=\"https://wordpress.org/plugins/carbon-fields/\" target=\"_blank\">Carbon Fields</a> plugin. <a href=\"%s\">Do it now!</a>"
+msgid ""
+"The <strong>Wherever Content</strong> plugin is not ready yet to work. You "
+"still need to install and/or activate the <a href=\"https://wordpress.org/"
+"plugins/carbon-fields/\" target=\"_blank\">Carbon Fields</a> plugin. <a href="
+"\"%s\">Do it now!</a>"
 msgstr ""
+"El plugin <strong>Contenidos Dondequiera</strong> aún no esta listo para que "
+"funcione. Necesitas aún instalar y/o activar el plugin <a href=\"https://"
+"wordpress.org/plugins/carbon-fields/\" target=\"_blank\">Carbon Fields</a>. "
+"<a href=\"%s\">¡Hazlo ahora!</a>"
