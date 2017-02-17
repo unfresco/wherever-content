@@ -482,26 +482,26 @@ class Wherever_Admin {
 				
 		    	Field::make('complex', 'wherever_rules', __( 'Show this content if:', 'wherever' ) )
 		    		->setup_labels(array(
-						'singular_name' => 'rule',
-						'plural_name' => 'rules'
+						'singular_name' => __( 'rule', 'wherever' ),
+						'plural_name' => __( 'rules', 'wherever' )
 		    		))
 		    		#->set_required(true)
 			    	->add_fields(array(
 				    	Field::make('select', 'location_type', __( 'Location', 'wherever' ) )
 				    		->add_options(array(
-					    		'all' => 'Everywhere',
-								'post' => 'Post',
-								'post_type' => 'Post Type',
-								'post_cat' => 'Post Category',
-								'page' => 'Page',
-								'page_type' => 'Page Type',
-								'page_parent' => 'Page Parent',
+					    		'all' => __( 'Everywhere', 'wherever' ),
+								'post' => __( 'Post', 'wherever' ),
+								'post_type' => __( 'Post Type', 'wherever' ),
+								'post_cat' => __( 'Post Category', 'wherever' ),
+								'page' => __( 'Page', 'wherever' ),
+								'page_type' => __( 'Page Type', 'wherever'),
+								'page_parent' => __( 'Page Parent', 'wherever' )
 								#'page_template' => 'Page Template'
 							)),
 				    	Field::make('select', 'location_condition', __( 'Condition', 'wherever' ) )
 				    		->add_options(array(
-					    		'==' => 'is',
-								'!=' => 'is not'
+					    		'==' => __( 'is', 'wherever' ),
+								'!=' => __( 'is not', 'wherever' )
 							))
 							->set_conditional_logic(array(
 								array(
