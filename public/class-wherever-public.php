@@ -373,13 +373,7 @@ class Wherever_Public {
 	}
 	
 	// Build html output of wherevers for a place
-	private static function build_wherevers( $place, $content, $wherevers_by_placement ) {
-
-		// ToDo: apply_filters for wrapper classes and attributes
-		$wherever_content_classes = array( 
-			'wherever',
-			'wherever-' . $place
-		);		
+	private static function build_wherevers( $place, $content, $wherevers_by_placement ) {	
 		
 		$wherever_contents = array(
 			'before' => array(),
@@ -388,14 +382,32 @@ class Wherever_Public {
 		);
 		
 		foreach ( $wherevers_by_placement as $placement_key => $placement_wherevers ) {
+			
 			if ( !empty( $wherevers_by_placement[ $placement_key ] ) ) {
-							
+						
 				foreach ( $wherevers_by_placement[ $placement_key ] as $wherever ) {
 					
-					$wherever_content_classes[] = 'wherever-' . $placement_key;
-					$wherever_content_classes[] = 'wherever-id-' . $wherever['post']->ID;
+					// Default contant wrapper classes
+					$wherever_content_wrapper_classes = array( 
+						'wherever',
+						'wherever-' . $place,
+						'wherever-' . $placement_key,
+						'wherever-id-' . $wherever['post']->ID
+					);
 					
-					$wherever_contents[ $placement_key ][] = '<div class="'. implode( ' ', $wherever_content_classes ) . '" data-wherever-id="' . $wherever['post']->ID . '" >' . $wherever['the_content'] . '</div>';
+					// Filter default classes
+					$wherever_content_wrapper_classes = apply_filters( 'wherever_content_wrapper_classes', $wherever_content_wrapper_classes );
+					
+					// Filter classes dependending on place
+					$wherever_content_wrapper_classes = apply_filters( 'wherever_content_wrapper_classes_place_' . $place, $wherever_content_wrapper_classes );
+					
+					// Filter classes depending on placement_key
+					$wherever_content_wrapper_classes = apply_filters( 'wherever_content_wrapper_classes_placement_' . $placement_key, $wherever_content_wrapper_classes );					
+					
+					// Filter classes depending on post id
+					$wherever_content_wrapper_classes = apply_filters( 'wherever_content_wrapper_classes_id_' . $wherever['post']->ID, $wherever_content_wrapper_classes );
+					
+					$wherever_contents[ $placement_key ][] = '<div class="'. implode( ' ', $wherever_content_wrapper_classes ) . '" data-wherever-id="' . $wherever['post']->ID . '" >' . $wherever['the_content'] . '</div>';
 					
 				}
 	
