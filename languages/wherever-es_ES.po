@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Wherever Content\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-02-17 14:25+0100\n"
-"PO-Revision-Date: 2017-02-17 14:25+0100\n"
+"POT-Creation-Date: 2017-02-18 15:37+0100\n"
+"PO-Revision-Date: 2017-02-19 18:15+0100\n"
 "Last-Translator: Adrián Ortiz Arandes – GRELL <adrian@grell.es>\n"
 "Language-Team: \n"
 "Language: es\n"
@@ -11,11 +11,21 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Poedit 1.8.11\n"
-"X-Poedit-KeywordsList: __;_e\n"
+"X-Poedit-KeywordsList: __;_e;_x:1,2c\n"
 "X-Poedit-Basepath: .\n"
 "X-Poedit-SourceCharset: UTF-8\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Poedit-SearchPath-0: ..\n"
+
+#: ../admin/class-wherever-admin.php:102
+msgctxt "Post Type General Name"
+msgid "Wherever Contents"
+msgstr "Contenidos Dondequiera"
+
+#: ../admin/class-wherever-admin.php:103
+msgctxt "Post Type Singular Name"
+msgid "Wherever Content"
+msgstr "Contenido Dondequiera"
 
 #: ../admin/class-wherever-admin.php:104
 msgid "Wherever"
@@ -31,7 +41,7 @@ msgstr "Elemento padre:"
 
 #: ../admin/class-wherever-admin.php:108
 msgid "All contents"
-msgstr "todos los contenidos"
+msgstr "Todos los contenidos"
 
 #: ../admin/class-wherever-admin.php:109
 msgid "Add New Content"
@@ -112,6 +122,16 @@ msgstr "Contenido"
 #: ../admin/class-wherever-admin.php:130
 msgid "Post Type Description"
 msgstr "Descripción tipo de entrada"
+
+#: ../admin/class-wherever-admin.php:182
+msgctxt "Taxonomy General Name"
+msgid "Places"
+msgstr "Lugares"
+
+#: ../admin/class-wherever-admin.php:183
+msgctxt "Taxonomy Singular Name"
+msgid "Place"
+msgstr "Lugar"
 
 #: ../admin/class-wherever-admin.php:184
 msgid "Places"
