@@ -72,7 +72,8 @@ A common and useful example would be to build a multi-column footer section as a
 
 ## Requirements
 
-Wherever Content depends on the [Carbon Fields](https://wordpress.org/plugins/carbon-fields/) plugin. Install and activate, if not, the plugin will advice you with a notice to do so.
+- Wherever Content depends on the [Carbon Fields](https://wordpress.org/plugins/carbon-fields/) plugin. Install and activate, if not, the plugin will advice you with a notice to do so.
+- The theme must contain the wp_head() function.
 
 ## Recommendation
 
@@ -86,6 +87,16 @@ Further on we recommend to install siteorigin’s [page builder](https://wordpre
 
 
 ##  Changelog
+
+**1.0.9**
+- Fix Wherever Content CSS classes on wrapper tags
+- Added filter hooks for CSS classes on the wrapper tag:
+    - 'wherever_content_wrapper_classes' applies to all wrapper tags,
+    - 'wherever_content_wrapper_classes_place_[place]' applies only to containers of specified place (f.e. content)
+    - 'wherever_content_wrapper_classes_placement_[placement]' applies only to containers of specified placement (before, instead or after)
+    - 'wherever_content_wrapper_classes_id_' applies only to containers of specified Wherever post id
+- Contents are now processed on the wp_head hook which trades dependency on site-origin pane’s script and styles for the theme-dependent but usually available wp_head() theme function.
+- Update spanish translation
 
 **1.0.8**
 - Fix carbon field hooks (carbon fields 1.5 won’t initiate on init any more)
