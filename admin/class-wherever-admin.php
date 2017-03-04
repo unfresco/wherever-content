@@ -461,7 +461,7 @@ class Wherever_Admin {
 		
 		foreach ( $terms as $term ) {
 			
-			$options_terms[ $term->slug ] = $term->name;
+			$options_terms[ $term->slug ] = __( $term->name, 'wherever' );
 			
 		};
 
