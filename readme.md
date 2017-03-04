@@ -88,6 +88,10 @@ Further on we recommend to install siteorigin’s [page builder](https://wordpre
 
 ##  Changelog
 
+**1.0.10**
+- localisation of default place terms
+- new menu icon
+
 **1.0.9**
 - Fix Wherever Content CSS classes on wrapper tags
 - Added filter hooks for CSS classes on the wrapper tag:

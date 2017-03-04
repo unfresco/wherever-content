@@ -11,7 +11,7 @@
  * Plugin URI:        http://wherever.grell.es
  * GitHub Plugin URI: boquiabierto/wherever-content
  * Description:       Put reusable content wherever you want.
- * Version:           1.0.9
+ * Version:           1.0.10
  * Author:            Adrián Ortiz Arandes
  * Author URI:        http://grell.es
  * License:           GPL-2.0+

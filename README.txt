@@ -23,6 +23,21 @@ More on the (github repository)[https://github.com/boquiabierto/wherever-content
 
 === Changelog ===
 
+**1.0.10**
+- localisation of default place terms
+- new menu icon
+
+**1.0.9**
+- Fix Wherever Content CSS classes on wrapper tags
+- Added filter hooks for CSS classes on the wrapper tag:
+    - 'wherever_content_wrapper_classes' applies to all wrapper tags,
+    - 'wherever_content_wrapper_classes_place_[place]' applies only to containers of specified place (f.e. content)
+    - 'wherever_content_wrapper_classes_placement_[placement]' applies only to containers of specified placement (before, instead or after)
+    - 'wherever_content_wrapper_classes_id_' applies only to containers of specified Wherever post id
+- Contents are now processed on the wp_head hook which trades dependency on site-origin pane’s script and styles for the theme-dependent but usually available wp_head() theme function.
+- Update spanish translation
+
+
 **1.0.8**
 - Fix carbon field hooks (carbon fields 1.5 won’t initiate on init any more)
 - Add spanish translation
