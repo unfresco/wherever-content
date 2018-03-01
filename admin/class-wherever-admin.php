@@ -53,6 +53,8 @@ class Wherever_Admin {
 	 */	
 	private static $theme;
 	
+	private static $wherever_places_terms;
+	
 	/**
 	 * Initialize the class and set its properties.
 	 *
@@ -66,6 +68,7 @@ class Wherever_Admin {
 		$this->version = $version;
 		
 		self::$theme = wp_get_theme();
+		self::$wherever_places_terms = array();
 		
 	}
 	
@@ -216,6 +219,45 @@ class Wherever_Admin {
 	
 	}
 	
+	public function get_wherever_place_terms() {
+		$terms = self::$wherever_places_terms;
+		
+		if ( empty( $terms ) ){
+			$terms = get_terms(array(
+				'taxonomy' => 'wherever_place',
+				'hide_empty' => false
+			));
+			self::$wherever_places_terms = $terms;
+		}
+		
+		return $terms;
+	}
+	
+	public function wherever_place_term_exist( $term_check ){
+		$exist = false;
+
+		foreach( self::get_wherever_place_terms() as $term ){
+			if ( $term_check == $term->slug ) {
+				$exist = true;
+				break;
+			}
+		}
+		
+		return $exist;
+	}
+	
+	public function wherever_place_get_term_by( $by, $term_check ){
+		foreach( self::get_wherever_place_terms() as $term ){
+			if ( 'slug' == $by && $term_check == $term->slug ) {
+				return $term;
+				break;
+			} else if ( 'id' == $by && $term_check == $term->term_id ) {
+				return $term;
+				break;
+			}
+		}
+	}
+	
 	/**
 	 * Setup default places for the wherever_place custom taxonomy
 	 *
@@ -257,16 +299,16 @@ class Wherever_Admin {
 	 */
 	public static function setup_wherever_place( $place, $is_default = false ) {
 		
-		if( !current_user_can('edit_posts' ) ) 
+		if( !current_user_can('edit_posts' ) )
 			return;
 		
 		$options = get_option( 'wherever' );
-			
+
 		$save_options_places_to = ( $is_default ? 'default_places' : 'registered_places' );
-						
+		
 		$update_options = false;
-				
-		if ( !term_exists( $place['slug'], 'wherever_place' ) ) {
+		
+		if ( ! self::wherever_place_term_exist( $place['slug'] ) ) {
 			// Term doesn’t exist in DB -> insert
 			
 			$args = array(
@@ -278,9 +320,9 @@ class Wherever_Admin {
 				$args['description'] = $place['description'];
 				
 			}
-			
+
 			$term = wp_insert_term( $place['name'], 'wherever_place', $args );
-			
+
 			if ( $is_default ) {
 				// for default_places save right away
 				
@@ -305,19 +347,17 @@ class Wherever_Admin {
 		} else {
 			// Term already exists in DB. 
 			
-			$term = get_term_by( 'slug', $place['slug'], 'wherever_place' );			
+			$term = self::wherever_place_get_term_by( 'slug', $place['slug'] );
 			
-			if ( !in_array( $term->term_id, $options[ $save_options_places_to ] ) ) {
+			// Check if theme already exists
+			if ( !array_key_exists( self::$theme->stylesheet, $options[ $save_options_places_to ] ) ) {
+				$options[ $save_options_places_to ][ self::$theme->stylesheet ] = array();
+			
+			}
+			
+			if ( !in_array( $term->term_id, $options[ $save_options_places_to ][ self::$theme->stylesheet ] ) ) {
 				// Not present in wherever options -> recover theme dependent
-				
-				if ( !in_array( self::$theme->stylesheet, $options[ $save_options_places_to ] ) ) {
-					
-					$options[ $save_options_places_to ][ self::$theme->stylesheet ] = array();
-				
-				}
-				
 				$options[ $save_options_places_to ][ self::$theme->stylesheet ][] = $term->term_id;
-				
 				$update_options = true;
 				
 			}
@@ -476,6 +516,17 @@ class Wherever_Admin {
 	 * @see https://carbonfields.net/docs/
 	*/
 	public function carbon_fields() {
+		
+		global $pagenow;
+		
+		if ( $pagenow !== 'post.php' && $pagenow !== 'post-new.php' )
+			return;
+		
+		if ( !empty( $_GET ) && isset( $_GET['post_type']) && 'wherever' !== $_GET['post_type'] )
+			return;
+		
+		if ( !empty( $_GET ) && isset( $_GET['post'] ) && 'wherever' !== get_post_type($_GET['post']) )
+			return;
 		
 		Container::make('post_meta', __( 'Configuration', 'wherever' ))
 			->show_on_post_type('wherever')

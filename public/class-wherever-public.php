@@ -201,7 +201,7 @@ class Wherever_Public {
 	}
 	
 	public static function register_wherever_places( $places ){
-		
+
 		if ( !empty( $places ) ) {
 			
 			foreach( $places as $place ){
