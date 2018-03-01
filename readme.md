@@ -88,6 +88,12 @@ Further on we recommend to install siteorigin’s [page builder](https://wordpre
 
 ##  Changelog
 
+**1.0.12**
+- execution optimization
+
+**1.0.11**
+- various query optimizations
+
 **1.0.10**
 - localisation of default place terms
 - new menu icon
@@ -133,5 +139,3 @@ Does not include Carbon Fields plugin. Admin notice for the user to install and 
 
 **1.0.1**
 Initial published version
-
-

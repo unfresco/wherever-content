@@ -3,7 +3,7 @@ Contributors: boquiabierto
 Donate link: http://wherever.grell.es
 Tags: custom content, page builder
 Requires at least: 4.3
-Tested up to: 4.7.2
+Tested up to: 4.9.2
 Stable tag: trunk
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -22,6 +22,12 @@ More on the (github repository)[https://github.com/boquiabierto/wherever-content
 
 
 === Changelog ===
+
+**1.0.12**
+- execution optimization
+
+**1.0.11**
+- various query optimizations
 
 **1.0.10**
 - localisation of default place terms
@@ -69,4 +75,3 @@ Does not include Carbon Fields plugin. Admin notice for the user to install and 
 
 **1.0.1**
 Initial published version
-
