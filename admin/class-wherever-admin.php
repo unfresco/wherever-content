@@ -219,7 +219,7 @@ class Wherever_Admin {
 	
 	}
 	
-	public function get_wherever_place_terms() {
+	public static function get_wherever_place_terms() {
 		$terms = self::$wherever_places_terms;
 		
 		if ( empty( $terms ) ){
@@ -233,7 +233,7 @@ class Wherever_Admin {
 		return $terms;
 	}
 	
-	public function wherever_place_term_exist( $term_check ){
+	public static function wherever_place_term_exist( $term_check ){
 		$exist = false;
 
 		foreach( self::get_wherever_place_terms() as $term ){
@@ -246,7 +246,7 @@ class Wherever_Admin {
 		return $exist;
 	}
 	
-	public function wherever_place_get_term_by( $by, $term_check ){
+	public static function wherever_place_get_term_by( $by, $term_check ){
 		foreach( self::get_wherever_place_terms() as $term ){
 			if ( 'slug' == $by && $term_check == $term->slug ) {
 				return $term;
