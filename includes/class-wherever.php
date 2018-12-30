@@ -109,7 +109,13 @@ class Wherever {
 		 * of the plugin.
 		 */
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-wherever-i18n.php';
-
+		
+		/**
+		 * The class for general purpuse functions
+		 *
+		 */
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-wherever-helpers.php';
+		
 		/**
 		 * The class responsible for defining all actions that occur in the admin area.
 		 */
