@@ -422,7 +422,7 @@ class Wherever_Admin {
 						
 					}
 					
-					$post_type_posts[$page->ID] = '&nbsp;' . str_repeat( '&nbsp;&nbsp;', $depths[ $page->ID ] ) . $page->post_title;
+					$post_type_posts[$page->ID] = str_repeat( '– ', $depths[ $page->ID ] ) . $page->post_title;
 					
 				}
 				
@@ -504,7 +504,7 @@ class Wherever_Admin {
 			'location_type_post_cat' => sprintf( __('%s on the selected post category.', 'wherever'), $condition_string ),
 			'location_type_page' => sprintf( __('%s on the selected page.', 'wherever'), $condition_string ),
 			'location_type_page_type' => sprintf( __('%s on the selected page type.', 'wherever'), $condition_string ),
-			'location_type_page_parent' => sprintf( __('%s on the selected page parent.', 'wherever'), $condition_string )
+			'location_type_page_parent' => sprintf( __('%s on children of the selected page.', 'wherever'), $condition_string )
 		);
 		
 		if ( array_key_exists( $key, $info ) ) {
