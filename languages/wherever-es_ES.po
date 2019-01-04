@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Wherever Content\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-01-03 14:35+0100\n"
-"PO-Revision-Date: 2019-01-03 14:44+0100\n"
+"POT-Creation-Date: 2019-01-04 21:57+0100\n"
+"PO-Revision-Date: 2019-01-04 21:58+0100\n"
 "Last-Translator: Adrián Ortiz Arandes – GRELL <adrian@grell.es>\n"
 "Language-Team: \n"
 "Language: es\n"
@@ -261,8 +261,8 @@ msgstr "%s en el tipo de página seleccionada."
 
 #: admin/class-wherever-admin.php:507
 #, php-format
-msgid "%s on the selected page parent."
-msgstr "%s en el padre de página seleccionado."
+msgid "%s on children of the selected page."
+msgstr "%s en hijos de la página seleccionada."
 
 #: admin/class-wherever-admin.php:513
 msgid "No description yet for this rule"
@@ -391,6 +391,9 @@ msgstr ""
 "funcionar. Por favor desactiva el plugin Carbon fields o actualizalo a una "
 "versión superior a la 2.0. Si necesitas trabajar con carbon fields inferior "
 "a 2.0, instala una versión 1.x de Wherever Content."
+
+#~ msgid "%s on the selected page parent."
+#~ msgstr "%s en el padre de página seleccionado."
 
 #~ msgid ""
 #~ "The <strong>Wherever Content</strong> plugin is not ready yet to work. "
