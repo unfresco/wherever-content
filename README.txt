@@ -3,7 +3,7 @@ Contributors: boquiabierto
 Donate link: http://wherever.grell.es
 Tags: custom content, page builder
 Requires at least: 4.3
-Tested up to: 4.9.2
+Tested up to: 4.9.9
 Stable tag: trunk
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -12,16 +12,14 @@ Put reusable content wherever you want.
 
 === Description ===
 
-WordPress’s native solution for static and/or reusable contents are – beside the specific theme-options – sidebars and widgets. Managing them is very different to post and pages. Not only the interface is completely different, the users actually need to know and understand the current theme stucture: when and where it uses it’s sidebars. Changing a theme means mostly to learn and rebuild it’s sidebars and widgets. Not to mention repeating same widgets accross different sidebars. 
-
-Wherever Content on the other hand is simple to understand: manage content in a post-like way with an extra info that relates each of them to other site contents and places.
-
-Think of it as a **post-like & content-first** distribution approach whereas WordPress’s widgets-in-sidebars requires to think in a **post-unlike & content-last** distribution manner.
-
-More on the (github repository)[https://github.com/boquiabierto/wherever-content].
+This WordPress plugin will enable content distribution across your site in a post-like way with the power of a flexible set of rules and an expandable set of places which tell WordPress where to show the Wherever Content.
 
 
 === Changelog ===
+
+**2.0.0**
+- Distribution now includes Carbon fields framework (v2.2.0). If you depend on Carbon Fields 1.6 download the 1.0.12 version.
+- Improved default setup of rules and places with guidance
 
 **1.0.12**
 - execution optimization

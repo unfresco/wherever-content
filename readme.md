@@ -1,32 +1,30 @@
-#Wherever Content
+
 ### About
-WordPress’s native solution for static and/or reusable contents are – beside the specific theme-options – sidebars and widgets. Managing them is very different to post and pages. Not only the interface is completely different, the users actually need to know and understand the current theme stucture: when and where it uses it’s sidebars. Changing a theme means mostly to learn and rebuild it’s sidebars and widgets. Not to mention repeating same widgets accross different sidebars. 
+This WordPress plugin will enable content distribution across your site in a post-like way with the power of a flexible set of rules and an expandable set of places which tell WordPress where to show the Wherever Content.
 
-Wherever Content on the other hand is simple to understand: manage content in a post-like way with an extra info that relates each of them to other site contents and places.
+### Why
+WordPress’s native solution for static and/or reusable contents are – beside the specific theme-options – sidebars and widgets. Managing them is very different to post and pages. Not only the interface is completely different, the users actually need to know and understand the current theme’s internal structure: when and where it uses it’s sidebars, footers, navigations, etc. Changing a theme means mostly to learn and rebuild it’s widgets and widget areas. Not to mention repeating same widgets across different sidebars. 
 
-Think of it as a **post-like & content-first** distribution approach whereas WordPress’s widgets-in-sidebars requires to think in a **post-unlike & content-last** distribution manner. 
+Wherever Content on the other hand is simple to understand: manage content in a post-like way with a configuration that relates each of them to your site’s contents and places.
 
-Changing a banner spread across the blog, header images on a category archive page, footer logos, etc. is much easier in a searchable Wherever Content post-list than in a multiple sidebar widget-hell. 
+Changing a banner spread across the blog, header images on a category archive page, footer logos, etc. is much easier in a searchable Wherever Content post-list than in the usual multiple sidebar widget-hell. 
 
-More specifically and useful – and the why everything started – it enables the use of siteorigin’s [page builder](https://wordpress.org/plugins/siteorigin-panels/) inside a Wherever Content post and to display it wherever you want. This means f.e. no more duplicated layouts and site-wide page-builder built footers.
+More specifically, useful and tested – and the why everything started – it enables the use of siteorigin’s [page builder](https://wordpress.org/plugins/siteorigin-panels/) inside a Wherever Content post and to display it wherever you want. This means f.e. no more duplicated layouts and site-wide page-builder built footers.
 
-Please check it out and give your feedback. We use it for our clients and will publish it to the WP plugin directory if you like it. 
 
-### Using it
-
+### Quickstart
 1. Add a new Wherever Content from the left admin menu (under Posts). Edit it like a normal post.
-2. Edit it’s rules and places in the configuration panel below it’s richtext content editor. It’s easy but extensible and it specifies where (and where not) to show the content. 
+2. Edit it’s rules and places in the configuration panel below WP’s richtext/block editor. 
 3. Publish!
 
 ### Custom Wherever Places
-
 By default you can put Wherever Contents in 3 places:
 
 - before, instead and after **the content** of other post and pages.
 - before the **footer** (see the `get_footer()` function in your theme) 
 - before the **sidebar** (see the `get_sidebar()` function in your theme)
 
-But you can add **custom places** to your theme wherever you want by registering new places in your theme (like registering menus or sidebars) and declaring where the custom places should display Wherever Contents for that specific place.
+But you can add **custom places** to your theme wherever you want by registering new places in your themes function.php (like registering menus or sidebars) and declaring in your theme files where the custom places should display Wherever Content.
 
 #### Registering Custom Places for your theme
 
@@ -43,7 +41,7 @@ function my_custom_wherever_places() {
 	if ( !function_exists( 'register_wherever_places' ) )
 		return;
 	
-	// Register Custom Wherever Places for this theme			
+	// Register Custom Wherever Places for this theme
 	register_wherever_places( array(
 		array(
 			'name' => 'Your Place Name',
@@ -72,21 +70,24 @@ A common and useful example would be to build a multi-column footer section as a
 
 ## Requirements
 
-- Wherever Content depends on the [Carbon Fields](https://wordpress.org/plugins/carbon-fields/) plugin. Install and activate, if not, the plugin will advice you with a notice to do so.
-- The theme must contain the wp_head() function.
-
-## Recommendation
-
-Further on we recommend to install siteorigin’s [page builder](https://wordpress.org/plugins/siteorigin-panels/). The Wherever Content plugin has no direct relation nor affiliation to that plugin but we use it a lot and are committed to maintain compatibility.
+- The theme must contain the `wp_head()` function.
 
 
 ## Installation
 
-1. Upload the “wherever” folder to the `/wp-content/plugins/` directory
-2. Activate the plugin through the 'Plugins' menu in WordPress
+1. Download and unzip
+2. Upload the “wherever-content” folder to the `/wp-content/plugins/` directory
+3. Activate the plugin through the 'Plugins' menu in WordPress
 
+## Roadmap
+
+Gutenberg compatibility is next. We would like to call it the *Wherever Blocks* edition ;-).
 
 ##  Changelog
+
+**2.0.0**
+- Distribution now includes Carbon fields framework (v2.2.0). If you depend on Carbon Fields 1.6 download the 1.0.12 version.
+- Improved default setup of rules and places with guidance
 
 **1.0.12**
 - execution optimization
