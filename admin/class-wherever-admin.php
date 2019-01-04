@@ -94,6 +94,13 @@ class Wherever_Admin {
 
 	}
 	
+	public function localize_plugin_info( $plugins ) {
+		
+		$plugins['wherever-content/wherever.php']['Name'] = __('Wherever Content', 'wherever' );
+		$plugins['wherever-content/wherever.php']['Description'] = __('Put reusable content wherever you want.', 'wherever');
+		
+		return $plugins;
+	}
 	/**
 	 * Register wherever Custom Post Type 
 	 *
@@ -485,18 +492,41 @@ class Wherever_Admin {
 		return $select_terms;
 		
 	}
+	
+	private function get_rule_info( $key, $condition = '==' ) {
 
+		$condition_string = ( '==' == $condition ? __( 'Show', 'wherever') : __('Don’t show', 'wherever') );
+		
+		$info = array(
+			'location_type_all' => __('Show on all posts, pages and custom post types. Good for general purpose like site navigation and footers.', 'wherever'),
+			'location_type_post' => sprintf( __('%s on the selected post.', 'wherever'), $condition_string ),
+			'location_type_post_type' => sprintf( __('%s on the selected post type.', 'wherever'), $condition_string ),
+			'location_type_post_cat' => sprintf( __('%s on the selected post category.', 'wherever'), $condition_string ),
+			'location_type_page' => sprintf( __('%s on the selected page.', 'wherever'), $condition_string ),
+			'location_type_page_type' => sprintf( __('%s on the selected page type.', 'wherever'), $condition_string ),
+			'location_type_page_parent' => sprintf( __('%s on the selected page parent.', 'wherever'), $condition_string )
+		);
+		
+		if ( array_key_exists( $key, $info ) ) {
+			$string = '<p><span class="dashicons dashicons-move"></span> ' . $info[$key] . '</p>';
+		} else {
+			$string = __('No description yet for this rule', 'wherever' );
+		}
+		
+		return $string;
+	}
+	
 	// Todo private function get_page_type_for_select() {}
 				
 	public function get_places_for_options() {
 		
 		$args = array(
-		    'taxonomy' => 'wherever_place',
-		    'hide_empty' => false
+			'taxonomy' => 'wherever_place',
+			'hide_empty' => false
 		);
 		
 		$terms = get_terms( $args );
-				
+		
 		$options_terms = array();
 		
 		foreach ( $terms as $term ) {
@@ -504,7 +534,7 @@ class Wherever_Admin {
 			$options_terms[ $term->slug ] = __( $term->name, 'wherever' );
 			
 		};
-
+		
 		return $options_terms;
 		
 	}
@@ -616,6 +646,188 @@ class Wherever_Admin {
 								'compare' => '='
 								)
 							)),
+						// Rule descriptions
+						Field::make( 'html', 'location_type_all_info' )
+							->set_html( $this->get_rule_info('location_type_all') )
+							->set_conditional_logic(array(
+								array(
+								'field' => 'location_type',
+								'value' => array('all'),
+								'compare' => 'IN'
+								)
+							)),
+						Field::make( 'html', 'location_type_post_info' )
+							->set_html( $this->get_rule_info('location_type_post') )
+							->set_conditional_logic(array(
+								array(
+								'field' => 'location_type',
+								'value' => array('post'),
+								'compare' => '='
+								),
+								array(
+								'field' => 'location_condition',
+								'value' => array('=='),
+								'compare' => '='
+								)
+							)),
+						Field::make( 'html', 'location_type_post_info_not_in' )
+							->set_html( $this->get_rule_info('location_type_post', '!=' ) )
+							->set_conditional_logic(array(
+								array(
+								'field' => 'location_type',
+								'value' => array('post'),
+								'compare' => '='
+								),
+								array(
+								'field' => 'location_condition',
+								'value' => array('!='),
+								'compare' => '='
+								)
+							)),
+						Field::make( 'html', 'location_type_post_type_info' )
+							->set_html( $this->get_rule_info('location_type_post_type') )
+							->set_conditional_logic(array(
+								array(
+								'field' => 'location_type',
+								'value' => array('post_type'),
+								'compare' => '='
+								),
+								array(
+								'field' => 'location_condition',
+								'value' => array('=='),
+								'compare' => '='
+								)
+							)),
+						Field::make( 'html', 'location_type_post_type_info_not_in' )
+							->set_html( $this->get_rule_info('location_type_post_type', '!=' ) )
+							->set_conditional_logic(array(
+								array(
+								'field' => 'location_type',
+								'value' => array('post_type'),
+								'compare' => '='
+								),
+								array(
+								'field' => 'location_condition',
+								'value' => array('!='),
+								'compare' => '='
+								)
+							)),
+						Field::make( 'html', 'location_type_post_cat_info' )
+							->set_html( $this->get_rule_info('location_type_post_cat') )
+							->set_conditional_logic(array(
+								array(
+								'field' => 'location_type',
+								'value' => array('post_cat'),
+								'compare' => '='
+								),
+								array(
+								'field' => 'location_condition',
+								'value' => array('=='),
+								'compare' => '='
+								)
+							)),
+						Field::make( 'html', 'location_type_post_cat_info_not_in' )
+							->set_html( $this->get_rule_info('location_type_post_cat', '!=' ) )
+							->set_conditional_logic(array(
+								array(
+								'field' => 'location_type',
+								'value' => array('post_cat'),
+								'compare' => '='
+								),
+								array(
+								'field' => 'location_condition',
+								'value' => array('!='),
+								'compare' => '='
+								)
+							)),
+						Field::make( 'html', 'location_type_page_info' )
+							->set_html( $this->get_rule_info('location_type_page') )
+							->set_conditional_logic(array(
+								array(
+								'field' => 'location_type',
+								'value' => array('page'),
+								'compare' => '='
+								),
+								array(
+								'field' => 'location_condition',
+								'value' => array('=='),
+								'compare' => '='
+								)
+							)),
+						Field::make( 'html', 'location_type_page_info_not_in' )
+							->set_html( $this->get_rule_info('location_type_page', '!=' ) )
+							->set_conditional_logic(array(
+								array(
+								'field' => 'location_type',
+								'value' => array('page'),
+								'compare' => '='
+								),
+								array(
+								'field' => 'location_condition',
+								'value' => array('!='),
+								'compare' => '='
+								)
+							)),
+						Field::make( 'html', 'location_type_page_type_info' )
+							->set_html( $this->get_rule_info('location_type_page_type') )
+							->set_conditional_logic(array(
+								array(
+								'field' => 'location_type',
+								'value' => array('page_type'),
+								'compare' => '='
+								),
+								array(
+								'field' => 'location_condition',
+								'value' => array('=='),
+								'compare' => '='
+								)
+							)),
+						Field::make( 'html', 'location_type_page_type_info_not_in' )
+							->set_html( $this->get_rule_info('location_type_page_type', '!=' ) )
+							->set_conditional_logic(array(
+								array(
+								'field' => 'location_type',
+								'value' => array('page_type'),
+								'compare' => '='
+								),
+								array(
+								'field' => 'location_condition',
+								'value' => array('!='),
+								'compare' => '='
+								)
+							)),
+						Field::make( 'html', 'location_type_page_parent_info' )
+							->set_html( $this->get_rule_info('location_type_page_parent') )
+							->set_conditional_logic(array(
+								array(
+								'field' => 'location_type',
+								'value' => array('page_parent'),
+								'compare' => '='
+								),
+								array(
+								'field' => 'location_condition',
+								'value' => array('=='),
+								'compare' => '='
+								)
+							)),
+						Field::make( 'html', 'location_type_page_parent_info_not_in' )
+							->set_html( $this->get_rule_info('location_type_page_parent', '!=' ) )
+							->set_conditional_logic(array(
+								array(
+								'field' => 'location_type',
+								'value' => array('page_parent'),
+								'compare' => '='
+								),
+								array(
+								'field' => 'location_condition',
+								'value' => array('!='),
+								'compare' => '='
+								)
+							)),
+					))
+					->set_default_value(array(
+						array( 'location_type' => 'all' )
+					))
 					->set_min(1)
 					->set_width(50),
 				Field::make('complex', 'wherever_places', __( 'Place(s) to show this content:', 'wherever' ) )
