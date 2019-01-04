@@ -233,7 +233,7 @@ class Wherever_Admin {
 		return $terms;
 	}
 	
-	public static function wherever_place_term_exist( $term_check ){
+	public static function wherever_place_term_exist( $term_check ) {
 		$exist = false;
 
 		foreach( self::get_wherever_place_terms() as $term ){
@@ -246,7 +246,7 @@ class Wherever_Admin {
 		return $exist;
 	}
 	
-	public static function wherever_place_get_term_by( $by, $term_check ){
+	public static function wherever_place_get_term_by( $by, $term_check ) {
 		foreach( self::get_wherever_place_terms() as $term ){
 			if ( 'slug' == $by && $term_check == $term->slug ) {
 				return $term;
@@ -382,9 +382,9 @@ class Wherever_Admin {
 		Setup custom fields
 		
 	*/	
-	private function get_posts_for_select( $post_type ){
+	private function get_posts_for_select( $post_type ) {
 		global $post, $wp;
-				
+		
 		$post_type_object = get_post_type_object( $post_type );
 		
 		$post_type_posts = array();
@@ -442,7 +442,7 @@ class Wherever_Admin {
 			}
 			
 			wp_reset_postdata();
-						
+			
 		}
 
 		return $post_type_posts;
@@ -516,32 +516,27 @@ class Wherever_Admin {
 	 * @see https://carbonfields.net/docs/
 	*/
 	public function carbon_fields() {
-		
-		global $pagenow;
-		
-		if ( $pagenow !== 'post.php' && $pagenow !== 'post-new.php' )
-			return;
-		
-		if ( !empty( $_GET ) && isset( $_GET['post_type']) && 'wherever' !== $_GET['post_type'] )
-			return;
-		
-		if ( !empty( $_GET ) && isset( $_GET['post'] ) && 'wherever' !== get_post_type($_GET['post']) )
-			return;
-		
+
 		Container::make('post_meta', __( 'Configuration', 'wherever' ))
-			->show_on_post_type('wherever')
+			->where( 'post_type', 'CUSTOM', function( $post_type ){
+				$get_post_type = ( isset( $_GET['post_type'] ) ? $_GET['post_type'] : '' );
+				if ( 'wherever' == $post_type || 'wherever' == $get_post_type ) {
+					return true;
+				} else {
+					return false;
+				}
+			})
 			->add_fields(array(
 				
-		    	Field::make('complex', 'wherever_rules', __( 'Show this content if:', 'wherever' ) )
-		    		->setup_labels(array(
+				Field::make('complex', 'wherever_rules', __( 'Show this content if:', 'wherever' ) )
+					->setup_labels(array(
 						'singular_name' => __( 'rule', 'wherever' ),
 						'plural_name' => __( 'rules', 'wherever' )
-		    		))
-		    		#->set_required(true)
-			    	->add_fields(array(
-				    	Field::make('select', 'location_type', __( 'Location', 'wherever' ) )
-				    		->add_options(array(
-					    		'all' => __( 'Everywhere', 'wherever' ),
+					))
+					->add_fields(array(
+						Field::make('select', 'location_type', __( 'Location', 'wherever' ) )
+							->add_options(array(
+								'all' => __( 'Everywhere', 'wherever' ),
 								'post' => __( 'Post', 'wherever' ),
 								'post_type' => __( 'Post Type', 'wherever' ),
 								'post_cat' => __( 'Post Category', 'wherever' ),
@@ -549,10 +544,11 @@ class Wherever_Admin {
 								'page_type' => __( 'Page Type', 'wherever'),
 								'page_parent' => __( 'Page Parent', 'wherever' )
 								#'page_template' => 'Page Template'
-							)),
-				    	Field::make('select', 'location_condition', __( 'Condition', 'wherever' ) )
-				    		->add_options(array(
-					    		'==' => __( 'is', 'wherever' ),
+							))
+							->set_default_value('all'),
+						Field::make('select', 'location_condition', __( 'Condition', 'wherever' ) )
+							->add_options(array(
+								'==' => __( 'is', 'wherever' ),
 								'!=' => __( 'is not', 'wherever' )
 							))
 							->set_conditional_logic(array(
@@ -562,8 +558,8 @@ class Wherever_Admin {
 								'compare' => 'NOT IN'
 								)
 							)),
-				    	Field::make('select', 'post', __( 'Post', 'wherever' ) )
-				    		->add_options( $this->get_posts_for_select('post') )
+						Field::make('select', 'post', __( 'Post', 'wherever' ) )
+							->add_options( $this->get_posts_for_select('post') )
 							->set_conditional_logic(array(
 								array(
 								'field' => 'location_type',
@@ -572,8 +568,8 @@ class Wherever_Admin {
 								)
 							)),
 						Field::make('select', 'post_type', __( 'Post Type', 'wherever' ) )
-				    		->add_options( array( $this, 'get_post_types_for_select' ) )
-				    		->set_conditional_logic(array(
+							->add_options( array( $this, 'get_post_types_for_select' ) )
+							->set_conditional_logic(array(
 								array(
 								'field' => 'location_type',
 								'value' => 'post_type',
@@ -581,8 +577,8 @@ class Wherever_Admin {
 								)
 							)),
 						Field::make('select', 'post_cat', __( 'Post Category', 'wherever' ) )
-				    		->add_options( $this->get_post_categories_for_select( 'category' ) )
-				    		->set_conditional_logic(array(
+							->add_options( $this->get_post_categories_for_select( 'category' ) )
+							->set_conditional_logic(array(
 								array(
 								'field' => 'location_type',
 								'value' => 'post_cat',
@@ -590,8 +586,8 @@ class Wherever_Admin {
 								)
 							)),
 						Field::make('select', 'page', __( 'Page', 'wherever' ) )
-				    		->add_options( $this->get_posts_for_select('page') )
-				    		->set_conditional_logic(array(
+							->add_options( $this->get_posts_for_select('page') )
+							->set_conditional_logic(array(
 								array(
 								'field' => 'location_type',
 								'value' => array('page', 'page_parent'),
@@ -599,12 +595,12 @@ class Wherever_Admin {
 								)
 							)),
 						Field::make('select', 'page_type', __( 'Page Type', 'wherever' ) )
-				    		->add_options(array(
-					    		'home' => __( 'Home (Blog & Front Page )', 'wherever' ),
-					    		'front_page' => __( 'Front Page', 'wherever' ),
-					    		'archive' => __( 'Archive', 'wherever' )
-				    		))
-				    		->set_conditional_logic(array(
+							->add_options(array(
+								'home' => __( 'Home (Blog & Front Page )', 'wherever' ),
+								'front_page' => __( 'Front Page', 'wherever' ),
+								'archive' => __( 'Archive', 'wherever' )
+							))
+							->set_conditional_logic(array(
 								array(
 								'field' => 'location_type',
 								'value' => 'page_type',
@@ -612,41 +608,49 @@ class Wherever_Admin {
 								)
 							)),
 						Field::make('select', 'archive_post_type', __( 'Archive Post Type', 'wherever' ) )
-				    		->add_options( array( $this, 'get_post_types_for_select' ) )
-				    		->set_conditional_logic(array(
+							->add_options( array( $this, 'get_post_types_for_select' ) )
+							->set_conditional_logic(array(
 								array(
 								'field' => 'page_type',
 								'value' => 'archive',
 								'compare' => '='
 								)
 							)),
-			    	))
 					->set_min(1)
 					->set_width(50),
 				Field::make('complex', 'wherever_places', __( 'Place(s) to show this content:', 'wherever' ) )
-		    		->setup_labels(array(
+					->setup_labels(array(
 						'singular_name' => __( 'place', 'wherever' ),
 						'plural_name' => __( 'places', 'wherever' )
-		    		))
+					))
 					->add_fields(array(
 						Field::make('select', 'place', __( 'Place', 'wherever' ) )
-				    		->add_options( array( $this,  'get_places_for_options' ) ),
-				    	Field::make('radio', 'placement', __( 'Placement', 'wherever' ) )
-				    		->add_options(array(
-					    		'before' => __( 'Before', 'wherever' ),
-					    		'instead' => __( 'Instead', 'wherever' ),
-					    		'after' => __( 'After', 'wherever' )
-				    		))
-				    		->set_conditional_logic(array(
+							->add_options( array( $this,  'get_places_for_options' ) )
+							->set_default_value('content'),
+						Field::make('radio', 'placement', __( 'Placement', 'wherever' ) )
+							->add_options(array(
+								'before' => __( 'Before', 'wherever' ),
+								'instead' => __( 'Instead', 'wherever' ),
+								'after' => __( 'After', 'wherever' )
+							))
+							->set_default_value('before')
+							->set_conditional_logic(array(
 								array(
 								'field' => 'place',
 								'value' => array('content'),
 								'compare' => 'IN'
 								)
 							)),
-				    	Field::make('text', 'order', __( 'Order', 'wherever' ) )
-				    		->set_default_value(5)
-				    		->add_class('number')
+						Field::make('text', 'order', __( 'Order', 'wherever' ) )
+							->set_default_value(5)
+							->set_classes('number')
+					))
+					->set_default_value(array(
+						array(
+							'place' => 'content',
+							'placement' => 'before',
+							'order' => 5
+						)
 					))
 					->set_min(1)
 					->set_width(50),
@@ -658,15 +662,10 @@ class Wherever_Admin {
 	 *
 	 * @since    1.0.2
 	 */
-	public function carbon_fields_missing_notice() {
-		
-		$network = ( is_multisite() ? '/network' : '' );
-		
-		$install_url = network_site_url( '/wp-admin' . $network . '/plugin-install.php?tab=search&s=Carbon+Fields' );
-		
+	public function framework_notice() {
 		?>
 		<div class="notice notice-error is-dismissible">
-			<p><?php printf( __( 'The <strong>Wherever Content</strong> plugin is not ready yet to work. You still need to install and/or activate the <a href="https://wordpress.org/plugins/carbon-fields/" target="_blank">Carbon Fields</a> plugin. <a href="%s">Do it now!</a>', 'wherever' ), $install_url ); ?></p>
+			<p><?php _e( 'The <strong>Wherever Content</strong> plugin is not ready yet to work. Please deactivate the Carbon fields plugin or update it to a version higher than 2.0. If you need to work with Carbon fields version lower than 2.0, please install a 1.x version of Wherever Content.', 'wherever' ); ?></p>
 		</div>
 		<?php
 	}
@@ -676,9 +675,9 @@ class Wherever_Admin {
 	 *
 	 * @since    1.0.0
 	 */
-	public function save_post( $post_ID ) {		
-
-		if ( 'wherever' == get_post_type( $post_ID ) && empty( get_current_screen() ) && !DOING_AUTOSAVE) {
+	public function save_post( $post_ID ) {
+		
+		if ( 'wherever' == get_post_type( $post_ID ) && empty( get_current_screen() ) && ! wp_is_post_autosave( $post_ID )) {
 			// Saving though edit.php?post_type=wherever by ajax
 			// get_current_screen() is empty in edit.php?post_type=wherever / ajax place editing
 			
@@ -703,12 +702,12 @@ class Wherever_Admin {
 	 * @since    1.0.0
 	 */
 	public function carbon_fields_save( $post_ID ) {
-		
+
 		if ( 'wherever' !== get_post_type( $post_ID )  )
 			return;
 			
 		// copy selection to post terms
-		$wherever_places = carbon_get_post_meta( $post_ID, 'wherever_places', 'complex' );
+		$wherever_places = carbon_get_post_meta( $post_ID, 'wherever_places' );
 		$wherever_places_terms = array();
 				
 		foreach ( $wherever_places as $place ) {

@@ -97,18 +97,33 @@ class Wherever {
 	 * @access   private
 	 */
 	private function load_dependencies() {
+		
 
+			
 		/**
 		 * The class responsible for orchestrating the actions and filters of the
 		 * core plugin.
 		 */
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-wherever-loader.php';
-
+		$this->loader = new Wherever_Loader();
 		/**
 		 * The class responsible for defining internationalization functionality
 		 * of the plugin.
 		 */
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-wherever-i18n.php';
+		
+		/**
+		 * Version control 
+		 */
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-wherever-version-control.php';
+		
+		/**
+		 * Composer autoload
+		 */
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-wherever-metafields.php';
+		$this->metafields = new Wherever_Metafields();
+		$this->metafields->boot();
+		
 		
 		/**
 		 * The class for general purpuse functions
@@ -126,9 +141,7 @@ class Wherever {
 		 * side of the site.
 		 */
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'public/class-wherever-public.php';
-	
-
-		$this->loader = new Wherever_Loader();
+		
 		
 
 	}
@@ -161,27 +174,29 @@ class Wherever {
 
 		$plugin_admin = new Wherever_Admin( $this->get_plugin_name(), $this->get_version() );
 
-		#$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_styles' );
+		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_styles' );
 		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_scripts' );
-		
+		$this->loader->add_action( 'all_plugins', $plugin_admin, 'localize_plugin_info' );
 		// WP
 		$this->loader->add_filter( 'save_post', $plugin_admin, 'save_post' );
 
 		// Carbon Fields
-		if ( class_exists( 'Carbon_Fields\\Container' ) ) {
+		
+		if ( $this->metafields->is_loaded() ) {
 			
 			$this->loader->add_action( 'init', $plugin_admin, 'place_taxonomy' );
 			$this->loader->add_action( 'init', $plugin_admin, 'setup_default_places' );
 			$this->loader->add_action( 'init', $plugin_admin, 'custom_post_types' );
-			$this->loader->add_action( 'carbon_register_fields', $plugin_admin, 'carbon_fields' );
+			$this->loader->add_action( 'carbon_fields_register_fields', $plugin_admin, 'carbon_fields' );
 			$this->loader->add_action( 'pll_get_post_types', $plugin_admin, 'polylang_compat', 10, 2 );
-			$this->loader->add_action( 'carbon_after_save_post_meta', $plugin_admin, 'carbon_fields_save' );
+			$this->loader->add_action( 'carbon_fields_post_meta_container_saved', $plugin_admin, 'carbon_fields_save' );
 			
 		} else {
 			
-			$this->loader->add_action( 'admin_notices', $plugin_admin, 'carbon_fields_missing_notice' );
+			$this->loader->add_action( 'admin_notices', $plugin_admin, 'framework_notice' );
 			
 		}
+		
 	}
 
 	/**

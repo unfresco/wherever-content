@@ -133,15 +133,15 @@ class Wherever_Public {
 			self::$wherevers[] = array(
 				'post'	=> $post,
 				'the_content' => apply_filters('the_content', $post->post_content ), // Todo: apply_filters only on wherevers to display in build_wherevers
-				'wherever_rules' => carbon_get_the_post_meta('wherever_rules', 'complex'),
-				'wherever_places' => carbon_get_the_post_meta('wherever_places', 'complex'),
+				'wherever_rules' => carbon_get_the_post_meta('wherever_rules'),
+				'wherever_places' => carbon_get_the_post_meta('wherever_places'),
 				'in_current_location' => false
 			);
 			
 		endwhile;
 		
 		wp_reset_postdata();
-				
+		
 		foreach( self::$wherevers as $key => $wherever ){
 		
 			// Set if in current location
