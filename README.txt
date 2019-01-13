@@ -17,6 +17,11 @@ This WordPress plugin will enable content distribution across your site in a pos
 
 === Changelog ===
 
+**2.1.0**
+- Gutenberg compatible
+- New settings page with options for disabling Gutenberg and SiteOrigin page builder optimization
+
+
 **2.0.0**
 - Distribution now includes Carbon fields framework (v2.2.0). If you depend on Carbon Fields 1.6 download the 1.0.12 version.
 - Improved default setup of rules and places with guidance

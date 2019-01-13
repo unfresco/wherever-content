@@ -53,6 +53,10 @@ class Wherever_Admin {
 	 */	
 	private static $theme;
 	
+	/**
+	 * The registered places terms
+	 * @var array
+	 */
 	private static $wherever_places_terms;
 	
 	/**
@@ -66,7 +70,8 @@ class Wherever_Admin {
 
 		$this->plugin_name = $plugin_name;
 		$this->version = $version;
-		
+		$this->display = new Wherever_Admin_Display();
+				
 		self::$theme = wp_get_theme();
 		self::$wherever_places_terms = array();
 		
@@ -94,6 +99,11 @@ class Wherever_Admin {
 
 	}
 	
+	/**
+	 * Filter for plugin localisation
+	 * @param  array $plugins list of active plugins
+	 * @return array          modified plugin info
+	 */
 	public function localize_plugin_info( $plugins ) {
 		
 		$plugins['wherever-content/wherever.php']['Name'] = __('Wherever Content', 'wherever' );
@@ -101,13 +111,105 @@ class Wherever_Admin {
 		
 		return $plugins;
 	}
+	
+	/**
+	 * Shortcut for the public functions of the Wherever_Admin_Display class
+	 * @return [type] [description]
+	 */
+	public function display() {
+		
+		return $this->display;
+	
+	}
+	
+	/**
+	 * Setup wherever_status options
+	 * @return void 
+	 */
+	public function options_status_init() {
+		
+		$options_old = get_option( 'wherever' ); // < v2.0		
+		$options = get_option( 'wherever_status' );
+		
+		if ( empty( $options ) ) {
+			// First time setup
+			update_option('wherever_status', array() ); // Filtered by filter_get_options_status
+			$options = get_option( 'wherever_status' );
+		}
+		
+		if ( !empty( $options_old ) ) {
+			$options = array_merge( $options, $options_old );
+			delete_option('wherever');
+			update_option('wherever_status', $options );
+		}
+		
+	}
+	
+	/**
+	 * Setup wherever_settings options
+	 * @return void 
+	 */
+	public function options_settings_init() {
+		
+		$options_settings = get_option( 'wherever_settings' );
+		
+		if ( empty( $options_settings ) ) {
+			// First time setup
+			update_option('wherever_settings', array() );
+			$options_settings = get_option( 'wherever_settings' );
+		}
+		
+	}
+	
+	/**
+	 * Setup version check/hooks
+	 * @return void 
+	 */
+	public function check_version() {
+		$options = get_option( 'wherever_status' );
+
+		$arg = array(
+			'old_version' => $options['plugin_version'],
+			'new_version' => $this->version
+		);
+		
+		if ( version_compare( $this->version, $options['plugin_version']  ) > 0 ) {
+
+			do_action( 'wherever_update_version', $arg );
+
+		}
+		
+		if ( version_compare( $this->version, $options['plugin_version']  ) < 0 ) {
+
+			do_action( 'wherever_downgrade_version', $arg );
+
+		}
+		
+	}
+	
+	/**
+	 * Executes on version update
+	 * @param  array $arg array( 'old_version' => {version}, 'new_version' => {version} )
+	 * @return [type]      [description]
+	 */
+	public function update_options_status_version( $arg ) {
+
+		$options = get_option( 'wherever_status' );
+		$options['plugin_version'] = $arg['new_version'];
+		
+		update_option('wherever_status', $options );
+	
+	}
+	
 	/**
 	 * Register wherever Custom Post Type 
 	 *
 	 * @since    1.0.0
 	 */
 	public function custom_post_types() {
-				
+		
+		$settings = get_option('wherever_settings');
+		
 		$labels = array(
 			'name'                  => _x( 'Wherever Contents', 'Post Type General Name', 'wherever' ),
 			'singular_name'         => _x( 'Wherever Content', 'Post Type Singular Name', 'wherever' ),
@@ -140,6 +242,7 @@ class Wherever_Admin {
 			'description'           => __( 'Post Type Description', 'wherever' ),
 			'labels'                => $labels,
 			'supports'              => array( 'title', 'editor', 'revisions', 'custom-fields', ),
+			'show_in_rest'          => $settings['show_in_rest'],
 			'taxonomies'            => array( 'place' ),
 			'hierarchical'          => false,
 			'public'                => false,
@@ -152,7 +255,6 @@ class Wherever_Admin {
 			'can_export'            => true,
 			'has_archive'           => false,		
 			'exclude_from_search'   => true,
-			'publicly_queryable'    => true,
 			'capability_type'       => 'page',
 		);
 		register_post_type( 'wherever', $args );
@@ -180,6 +282,33 @@ class Wherever_Admin {
 		
 		return $post_types;
 	
+	}
+	
+	public function siteorigin_optimize( $wherever_settings ) {
+		
+		$settings = get_option( 'siteorigin_panels_settings' );
+		
+		if ( empty( $settings ) ) {
+			return;
+		}
+		
+		if ( !empty( $wherever_settings['optimize_siteorigin'] ) ) {
+			if ( array_key_exists('post-types', $settings ) && !in_array( 'wherever', $settings ) ) {
+				// add to post-types
+				$settings['post-types'][] = 'wherever';
+			}
+			if ( array_key_exists('use-classic', $settings) ) {
+				// use-classic
+				$settings['use-classic'] = 1;
+			}
+			update_option( 'siteorigin_panels_settings', $settings );
+			
+			// disable Gutenberg
+			$wherever_settings['show_in_rest'] = 0;
+			update_option('wherever_settings', $wherever_settings );
+		
+		}
+		
 	}
 	
 	/**
@@ -276,7 +405,7 @@ class Wherever_Admin {
 			array(
 				'name'			=> __( 'Content', 'wherever' ),
 				'slug'			=> 'content',
-				#'description'	=> __( 'Puts content before the content. Default place.', 'wherever' )
+				#'description'	=> __( 'Puts content arround the content. Default place.', 'wherever' )
 			),
 			array(
 				'name'			=> __( 'Sidebar', 'wherever' ),
@@ -309,7 +438,7 @@ class Wherever_Admin {
 		if( !current_user_can('edit_posts' ) )
 			return;
 		
-		$options = get_option( 'wherever' );
+		$options = get_option( 'wherever_status' );
 
 		$save_options_places_to = ( $is_default ? 'default_places' : 'registered_places' );
 		
@@ -374,7 +503,7 @@ class Wherever_Admin {
 		
 		if ( $update_options ) {
 			
-			update_option( 'wherever', $options );
+			update_option( 'wherever_status', $options );
 			
 		}
 		
@@ -384,12 +513,12 @@ class Wherever_Admin {
 		*/
 	}
 	
-	
-	/*
-		Setup custom fields
-		
-	*/	
-	private function get_posts_for_select( $post_type ) {
+	/**
+	 * Helper function for populating carbon fields with post/pages/custom-post-types
+	 * @param  string $taxonomy the post_type slug 
+	 * @return array            a list of post/page/custom-post-types
+	 */	
+	public function get_posts_for_select( $post_type ) {
 		global $post, $wp;
 		
 		$post_type_object = get_post_type_object( $post_type );
@@ -456,6 +585,11 @@ class Wherever_Admin {
 		
 	}
 	
+	/**
+	 * Helper function for populating carbon fields with post-types
+	 * @param  string $taxonomy the taxonomy slug 
+	 * @return array            the public post-types
+	 */
 	public function get_post_types_for_select() {
 		
 		$post_types = get_post_types( array( 'public' => true ) );
@@ -464,7 +598,12 @@ class Wherever_Admin {
 		
 	}
 	
-	private function get_post_categories_for_select( $taxonomy ) {
+	/**
+	 * Helper function for populating carbon fields with terms of one taxonomy
+	 * @param  string $taxonomy the taxonomy slug 
+	 * @return array            the terms
+	 */
+	public function get_post_categories_for_select( $taxonomy ) {
 		global $wp_version;
 		
 		$select_terms = array();
@@ -493,7 +632,13 @@ class Wherever_Admin {
 		
 	}
 	
-	private function get_rule_info( $key, $condition = '==' ) {
+	/**
+	 * Helper function for populating the description of carbon fields
+	 * @param  string $key       slug for lating the description
+	 * @param  string $condition == or !=
+	 * @return string            resulting string
+	 */
+	public function get_rule_info( $key, $condition = '==' ) {
 
 		$condition_string = ( '==' == $condition ? __( 'Show', 'wherever') : __('Don’t show', 'wherever') );
 		
@@ -516,8 +661,10 @@ class Wherever_Admin {
 		return $string;
 	}
 	
-	// Todo private function get_page_type_for_select() {}
-				
+	/**
+	 * get terms for poplating places in carbon fields
+	 * @return array of terms
+	 */
 	public function get_places_for_options() {
 		
 		$args = array(
@@ -545,7 +692,7 @@ class Wherever_Admin {
 	 * @since    1.0.0
 	 * @see https://carbonfields.net/docs/
 	*/
-	public function carbon_fields() {
+	public function carbon_fields_post_meta() {
 
 		Container::make('post_meta', __( 'Configuration', 'wherever' ))
 			->where( 'post_type', 'CUSTOM', function( $post_type ){
@@ -598,7 +745,7 @@ class Wherever_Admin {
 								)
 							)),
 						Field::make('select', 'post_type', __( 'Post Type', 'wherever' ) )
-							->add_options( array( $this, 'get_post_types_for_select' ) )
+							->add_options( $this->get_post_types_for_select() )
 							->set_conditional_logic(array(
 								array(
 								'field' => 'location_type',
@@ -638,7 +785,7 @@ class Wherever_Admin {
 								)
 							)),
 						Field::make('select', 'archive_post_type', __( 'Archive Post Type', 'wherever' ) )
-							->add_options( array( $this, 'get_post_types_for_select' ) )
+							->add_options(   $this->get_post_types_for_select() )
 							->set_conditional_logic(array(
 								array(
 								'field' => 'page_type',
@@ -868,20 +1015,31 @@ class Wherever_Admin {
 					->set_width(50),
 			));
 	}
-	
+
 	/**
-	 * Display admin notice if Carbon Field Plugin not installed/activated
+	 * Set wherever_place taxonomy on saving wherever custom post type
 	 *
-	 * @since    1.0.2
+	 * @since    1.0.0
 	 */
-	public function framework_notice() {
-		?>
-		<div class="notice notice-error is-dismissible">
-			<p><?php _e( 'The <strong>Wherever Content</strong> plugin is not ready yet to work. Please deactivate the Carbon fields plugin or update it to a version higher than 2.0. If you need to work with Carbon fields version lower than 2.0, please install a 1.x version of Wherever Content.', 'wherever' ); ?></p>
-		</div>
-		<?php
+	public function carbon_fields_save( $post_ID ) {
+		
+		if ( 'wherever' !== get_post_type( $post_ID )  )
+			return;
+		
+		// copy selection to post terms
+		$wherever_places = carbon_get_post_meta( $post_ID, 'wherever_places' );
+		$wherever_places_terms = array();
+		
+		foreach ( $wherever_places as $place ) {
+			
+			$wherever_places_terms[] = $place['place'];
+			
+		}
+		
+		wp_set_object_terms( $post_ID, $wherever_places_terms, 'wherever_place' );
+		
 	}
-	
+
 	/**
 	 * Set wherever_place taxonomy on saving wherever through ajax editing
 	 *
@@ -889,10 +1047,12 @@ class Wherever_Admin {
 	 */
 	public function save_post( $post_ID ) {
 		
+		if ( ! function_exists( 'get_current_screen' ) )
+			return;
+		
 		if ( 'wherever' == get_post_type( $post_ID ) && empty( get_current_screen() ) && ! wp_is_post_autosave( $post_ID )) {
 			// Saving though edit.php?post_type=wherever by ajax
 			// get_current_screen() is empty in edit.php?post_type=wherever / ajax place editing
-			
 			$terms = get_the_terms( $post_ID, 'wherever_place' );
 			
 			$meta_terms = array();
@@ -906,30 +1066,154 @@ class Wherever_Admin {
 		}
 		
 	}
-
-
+	
 	/**
-	 * Set wherever_place taxonomy on saving wherever custom post type
-	 *
-	 * @since    1.0.0
+	 * Get default value for wherever_status option
+	 * @return array default value
 	 */
-	public function carbon_fields_save( $post_ID ) {
-
-		if ( 'wherever' !== get_post_type( $post_ID )  )
-			return;
-			
-		// copy selection to post terms
-		$wherever_places = carbon_get_post_meta( $post_ID, 'wherever_places' );
-		$wherever_places_terms = array();
-				
-		foreach ( $wherever_places as $place ) {
-			
-			$wherever_places_terms[] = $place['place'];
-			
-		}
+	public function get_options_status_defaults() {
 		
-		wp_set_object_terms( $post_ID, $wherever_places_terms, 'wherever_place' );
+		$defaults = array(
+			'plugin_version' => '0.0.0',
+			'default_places' => array(),
+			'registered_places' => array()
+		);
+		
+		return $defaults;
+	}
+	
+	/**
+	 * get default value for wherever_settings option
+	 * @return array default value
+	 */
+	public function get_options_settings_defaults() {
+		
+		$defaults = array(
+			'show_in_rest' => 1,
+			'optimize_siteorigin' => 0
+		);
+		
+		return $defaults;
+	}
+	
+	/**
+	 * Register settings page
+	 * @return void
+	 */
+	public function settings_page() {
+		
+		add_options_page(
+			__('Wherever Settings', 'wherever' ),
+			__('Wherever', 'wherever' ),
+			'manage_options',
+			'wherever_content',
+			array( $this->display(), 'settings')
+		);
 		
 	}
+	
+	/**
+	 * Register settings page content
+	 * @return void
+	 */
+	public function settings() {
+
+		register_setting( 'wherever_content', 'wherever_settings'  ) ;
+		
+		add_settings_section(
+			'wherever_editing_section',
+			__( 'Wherever Settings', 'wherever' ),
+			array( $this->display(), 'setting_editing_section' ),
+			'wherever_content'
+		);
+		
+		add_settings_field(
+			'show_in_rest',
+			__( 'Gutenberg editor', 'wherever' ),
+			array( $this->display(), 'setting_checkbox' ),
+			'wherever_content',
+			'wherever_editing_section',
+			array(
+				'class' => 'checkbox-field',
+				'label_for' => 'show_in_rest',
+				'option_key' => 'show_in_rest'
+			)
+		);
+		
+		add_settings_field(
+			'optimize_siteorigin',
+			__( 'SiteOrigin optimisation', 'wherever' ),
+			array( $this->display(), 'setting_checkbox' ),
+			'wherever_content',
+			'wherever_editing_section',
+			array(
+				'class' => 'checkbox-field',
+				'label_for' => 'optimize_siteorigin',
+				'option_key' => 'optimize_siteorigin',
+				'description' => __( 'Enabeling this feature will disable the Gutenberg editor and enable Wherever Content in Page Builder options.', 'wherever')
+			)
+		);
+		
+		
+	}
+	
+	/**
+	 * Executes after update_option('wherever_settings')
+	 * @param  array $old_settings previous DB value
+	 * @param  array $new_settings current DB value
+	 * @return void
+	 */
+	public function after_update_settings( $old_settings, $new_settings ) {
+		$this->siteorigin_optimize( $new_settings );
+	}
+	
+	/**
+	 * Filter get_option('wherever_status')
+	 * @param  array $options value from the DB
+	 * @return array          wherever_setaus value merge with default values
+	 */
+	public function filter_get_options_status( $options ) {
+		$options = ( empty( $options ) ? array() : $options );
+		$options = array_merge( $this->get_options_status_defaults(), $options );
+		return $options;
+	}
+	
+	/**
+	 * Filter get_option('wherever_settings')
+	 * @param  array $options value from the DB
+	 * @return array          wherever_setting value merge with default values
+	 */
+	public function filter_get_options_settings( $options ) {
+		$options = ( empty( $options ) ? array() : $options );
+		$options = array_merge( $this->get_options_settings_defaults(), $options );
+		return $options;
+	}
+	
+	/**
+	 * Applied before wherever_setting option saved to options table 
+	 * @param  mixed $new_options current options to be saved
+	 * @param  mixed $old_options previous options in wherever_setting
+	 * @return array              options to be saved to options table
+	 */
+	public function filter_update_options_settings( $new_options, $old_options ) {
+		
+		if ( null == $new_options && null ==  $old_options ) {
+			// first time setup
+			$new_options = $this->get_options_settings_defaults();
+		}
+
+		foreach( $this->get_options_settings_defaults() as $key => $value ) {
+			if ( empty( $new_options ) ) {
+				// Prepare for array_key_exists if $new_options == null
+				$new_options = array();
+			}
+			
+			$options[$key] = ( array_key_exists( $key, $new_options ) ? $new_options[$key] : 0 );
+			
+		}	
+		
+		return $options;
+	}
+	
 	
 }

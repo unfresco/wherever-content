@@ -71,7 +71,7 @@ class Wherever {
 	public function __construct() {
 		
 		$this->plugin_name = 'wherever';
-		$this->version = '1.0.12';
+		$this->version = $this->get_version();
 
 		$this->load_dependencies();
 		$this->set_locale();
@@ -132,6 +132,11 @@ class Wherever {
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-wherever-helpers.php';
 		
 		/**
+		 * Class with admin rendering functions
+		 */
+		 require_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/partials/class-wherever-admin-display.php';
+		
+		/**
 		 * The class responsible for defining all actions that occur in the admin area.
 		 */
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/class-wherever-admin.php';
@@ -180,20 +185,33 @@ class Wherever {
 		// WP
 		$this->loader->add_filter( 'save_post', $plugin_admin, 'save_post' );
 
-		// Carbon Fields
-		
+		// Wherever UI
 		if ( $this->metafields->is_loaded() ) {
 			
+			$this->loader->add_action( 'init', $plugin_admin, 'options_status_init' );
+			$this->loader->add_action( 'init', $plugin_admin, 'options_settings_init' );
+			$this->loader->add_action( 'init', $plugin_admin, 'check_version' );
 			$this->loader->add_action( 'init', $plugin_admin, 'place_taxonomy' );
 			$this->loader->add_action( 'init', $plugin_admin, 'setup_default_places' );
 			$this->loader->add_action( 'init', $plugin_admin, 'custom_post_types' );
-			$this->loader->add_action( 'carbon_fields_register_fields', $plugin_admin, 'carbon_fields' );
-			$this->loader->add_action( 'pll_get_post_types', $plugin_admin, 'polylang_compat', 10, 2 );
+			$this->loader->add_action( 'carbon_fields_register_fields', $plugin_admin, 'carbon_fields_post_meta' );
 			$this->loader->add_action( 'carbon_fields_post_meta_container_saved', $plugin_admin, 'carbon_fields_save' );
+			
+			$this->loader->add_action( 'admin_menu', $plugin_admin, 'settings_page');
+			$this->loader->add_action( 'admin_init', $plugin_admin, 'settings' );
+			$this->loader->add_action( 'update_option_wherever_settings', $plugin_admin, 'after_update_settings', 10, 2);
+			
+			$this->loader->add_filter( 'option_wherever_status', $plugin_admin, 'filter_get_options_status', 10, 1);
+			$this->loader->add_filter( 'option_wherever_settings', $plugin_admin, 'filter_get_options_settings', 10, 1);
+			$this->loader->add_filter( 'pre_update_option_wherever_settings', $plugin_admin, 'filter_update_options_settings', 10, 2);
+			
+			$this->loader->add_action( 'wherever_update_version', $plugin_admin, 'update_options_status_version' );
+			
+			$this->loader->add_action( 'pll_get_post_types', $plugin_admin, 'polylang_compat', 10, 2 );
 			
 		} else {
 			
-			$this->loader->add_action( 'admin_notices', $plugin_admin, 'framework_notice' );
+			$this->loader->add_action( 'admin_notices', $plugin_admin->display(), 'notice_framework' );
 			
 		}
 		
@@ -263,7 +281,17 @@ class Wherever {
 	 * @return    string    The version number of the plugin.
 	 */
 	public function get_version() {
+		if ( empty( $this->version ) ) {
+			if( !function_exists('get_plugin_data') ){
+				require_once( ABSPATH . 'wp-admin/includes/plugin.php' );
+			}
+			$plugin_data = get_plugin_data( plugin_dir_path( dirname( __FILE__ ) ) . 'wherever.php' );
+			$this->version = $plugin_data['Version'];
+		}
+		
 		return $this->version;
 	}
+	
+	
 
 }

@@ -79,11 +79,12 @@ A common and useful example would be to build a multi-column footer section as a
 2. Upload the “wherever-content” folder to the `/wp-content/plugins/` directory
 3. Activate the plugin through the 'Plugins' menu in WordPress
 
-## Roadmap
-
-Gutenberg compatibility is next. We would like to call it the *Wherever Blocks* edition ;-).
 
 ##  Changelog
+
+**2.1.0**
+- Gutenberg compatible
+- New settings page with options for disabling Gutenberg and SiteOrigin page builder optimization
 
 **2.0.0**
 - Distribution now includes Carbon fields framework (v2.2.0). If you depend on Carbon Fields 1.6 download the 1.0.12 version.
