@@ -82,6 +82,10 @@ A common and useful example would be to build a multi-column footer section as a
 
 ##  Changelog
 
+**2.1.1**
+- code refactoring
+- localisation update for spanish
+
 **2.1.0**
 - Gutenberg compatible
 - New settings page with options for disabling Gutenberg and SiteOrigin page builder optimization

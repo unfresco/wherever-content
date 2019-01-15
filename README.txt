@@ -17,6 +17,10 @@ This WordPress plugin will enable content distribution across your site in a pos
 
 === Changelog ===
 
+**2.1.1**
+- code refactoring
+- localisation update for spanish
+
 **2.1.0**
 - Gutenberg compatible
 - New settings page with options for disabling Gutenberg and SiteOrigin page builder optimization
