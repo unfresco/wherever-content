@@ -4,12 +4,21 @@ class Wherever_Admin_Display
 {
 	
 	function __construct() {
+		$this->setup_actions();
+	}
+	
+	public function setup_actions() {
+
+		add_action( 'wherever_display/settings', array( $this, 'settings') );
+		add_action( 'wherever_display/setting_editing_section', function( $arg ) { $this->setting_editing_section( $arg ); } );
+		add_action( 'wherever_display/setting_checkbox', function( $arg ) { $this->setting_checkbox( $arg ); } );
 		
 	}
 	
 	public function settings() {
 		?>
 		<div class="wrap">
+			<h1><?php _e( 'Settings for Wherever Content', 'wherever' ); ?></h1>
 			<form action="options.php" method="post">
 				<div class="wherever-settings">
 				<?php

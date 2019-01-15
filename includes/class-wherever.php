@@ -47,18 +47,7 @@ class Wherever {
 	 * @var      string    $plugin_name    The string used to uniquely identify this plugin.
 	 */
 	protected $plugin_name;
-
-	/**
-	 * The current version of the plugin.
-	 *
-	 * @since    1.0.0
-	 * @access   protected
-	 * @var      string    $version    The current version of the plugin.
-	 */
-	protected $version;
 	
-	
-	protected $default_places;
 	/**
 	 * Define the core functionality of the plugin.
 	 *
@@ -71,7 +60,6 @@ class Wherever {
 	public function __construct() {
 		
 		$this->plugin_name = 'wherever';
-		$this->version = $this->get_version();
 
 		$this->load_dependencies();
 		$this->set_locale();
@@ -98,14 +86,13 @@ class Wherever {
 	 */
 	private function load_dependencies() {
 		
-
-			
 		/**
 		 * The class responsible for orchestrating the actions and filters of the
 		 * core plugin.
 		 */
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-wherever-loader.php';
 		$this->loader = new Wherever_Loader();
+		
 		/**
 		 * The class responsible for defining internationalization functionality
 		 * of the plugin.
@@ -116,14 +103,14 @@ class Wherever {
 		 * Version control 
 		 */
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-wherever-version-control.php';
-		
+		$this->version_control = new Wherever_Version_Control();
+
 		/**
-		 * Composer autoload
+		 * Load Carbon fields with composer autoload
 		 */
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-wherever-metafields.php';
-		$this->metafields = new Wherever_Metafields();
-		$this->metafields->boot();
-		
+		$this->meta_fields = new Wherever_Metafields();
+		$this->meta_fields->boot();
 		
 		/**
 		 * The class for general purpuse functions
@@ -134,13 +121,28 @@ class Wherever {
 		/**
 		 * Class with admin rendering functions
 		 */
-		 require_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/partials/class-wherever-admin-display.php';
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/partials/class-wherever-admin-display.php';
 		
 		/**
 		 * The class responsible for defining all actions that occur in the admin area.
 		 */
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/class-wherever-admin.php';
-
+		
+		/**
+		 * Class for setting up the post-meta fields of the wherever CPT.
+		 */
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/partials/class-wherever-admin-postmeta-fields.php';
+		
+		/**
+		 * Class adding for vendor compatibility.
+		 */
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/partials/class-wherever-admin-vendor-compat.php';
+		
+		/**
+		 * Clas for setting up the settings page.
+		 */
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/partials/class-wherever-admin-settings.php';
+		
 		/**
 		 * The class responsible for defining all actions that occur in the public-facing
 		 * side of the site.
@@ -177,41 +179,42 @@ class Wherever {
 	 */
 	private function define_admin_hooks() {
 
-		$plugin_admin = new Wherever_Admin( $this->get_plugin_name(), $this->get_version() );
-
+		$plugin_admin = new Wherever_Admin( $this->get_plugin_name(), $this->version_control->get_version() );
+		$plugin_admin_postmeta = new Wherever_Admin_Postmeta_Fields();
+		$plugin_admin_settings = new Wherever_Admin_Settings( $this->get_plugin_name(), $this->version_control->get_version() );
+		$plugin_admin_vendor = new Wherever_Admin_Vendor_Compat();
+		$plugin_admin_display = new Wherever_Admin_Display();
+		
 		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_styles' );
 		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_scripts' );
 		$this->loader->add_action( 'all_plugins', $plugin_admin, 'localize_plugin_info' );
-		// WP
-		$this->loader->add_filter( 'save_post', $plugin_admin, 'save_post' );
 
-		// Wherever UI
-		if ( $this->metafields->is_loaded() ) {
+		if ( $this->meta_fields->is_loaded() ) {
 			
-			$this->loader->add_action( 'init', $plugin_admin, 'options_status_init' );
-			$this->loader->add_action( 'init', $plugin_admin, 'options_settings_init' );
-			$this->loader->add_action( 'init', $plugin_admin, 'check_version' );
+			$this->loader->add_action( 'init', $this->version_control, 'check_version' );
+
+			$this->loader->add_action( 'init', $plugin_admin_settings, 'options_status_init' );
+			$this->loader->add_action( 'init', $plugin_admin_settings, 'options_settings_init' );
+			$this->loader->add_action( 'admin_menu', $plugin_admin_settings, 'settings_page');
+			$this->loader->add_action( 'admin_init', $plugin_admin_settings, 'settings' );
+			$this->loader->add_action( 'update_option_wherever_settings', $plugin_admin_settings, 'after_update_settings', 10, 2);
+			$this->loader->add_filter( 'option_wherever_status', $plugin_admin_settings, 'filter_get_options_status', 10, 1);
+			$this->loader->add_filter( 'option_wherever_settings', $plugin_admin_settings, 'filter_get_options_settings', 10, 1);
+			$this->loader->add_filter( 'pre_update_option_wherever_settings', $plugin_admin_settings, 'filter_update_options_settings', 10, 2);
+
 			$this->loader->add_action( 'init', $plugin_admin, 'place_taxonomy' );
 			$this->loader->add_action( 'init', $plugin_admin, 'setup_default_places' );
 			$this->loader->add_action( 'init', $plugin_admin, 'custom_post_types' );
-			$this->loader->add_action( 'carbon_fields_register_fields', $plugin_admin, 'carbon_fields_post_meta' );
-			$this->loader->add_action( 'carbon_fields_post_meta_container_saved', $plugin_admin, 'carbon_fields_save' );
-			
-			$this->loader->add_action( 'admin_menu', $plugin_admin, 'settings_page');
-			$this->loader->add_action( 'admin_init', $plugin_admin, 'settings' );
-			$this->loader->add_action( 'update_option_wherever_settings', $plugin_admin, 'after_update_settings', 10, 2);
-			
-			$this->loader->add_filter( 'option_wherever_status', $plugin_admin, 'filter_get_options_status', 10, 1);
-			$this->loader->add_filter( 'option_wherever_settings', $plugin_admin, 'filter_get_options_settings', 10, 1);
-			$this->loader->add_filter( 'pre_update_option_wherever_settings', $plugin_admin, 'filter_update_options_settings', 10, 2);
-			
-			$this->loader->add_action( 'wherever_update_version', $plugin_admin, 'update_options_status_version' );
-			
-			$this->loader->add_action( 'pll_get_post_types', $plugin_admin, 'polylang_compat', 10, 2 );
+
+			$this->loader->add_action( 'carbon_fields_register_fields', $plugin_admin_postmeta, 'carbon_fields_post_meta' );
+			$this->loader->add_action( 'carbon_fields_post_meta_container_saved', $plugin_admin_postmeta, 'carbon_fields_save' );
+			$this->loader->add_filter( 'save_post', $plugin_admin_postmeta, 'save_post' );
+
+			$this->loader->add_action( 'pll_get_post_types', $plugin_admin_vendor, 'polylang_compat', 10, 2 );
 			
 		} else {
 			
-			$this->loader->add_action( 'admin_notices', $plugin_admin->display(), 'notice_framework' );
+			$this->loader->add_action( 'admin_notices', $plugin_admin_display, 'notice_framework' );
 			
 		}
 		
@@ -226,7 +229,7 @@ class Wherever {
 	 */
 	private function define_public_hooks() {
 
-		$plugin_public = new Wherever_Public( $this->get_plugin_name(), $this->get_version() );
+		$plugin_public = new Wherever_Public( $this->get_plugin_name(), $this->version_control->get_version() );
 
 		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_styles' );
 		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_scripts' );
@@ -273,25 +276,6 @@ class Wherever {
 	public function get_loader() {
 		return $this->loader;
 	}
-
-	/**
-	 * Retrieve the version number of the plugin.
-	 *
-	 * @since     1.0.0
-	 * @return    string    The version number of the plugin.
-	 */
-	public function get_version() {
-		if ( empty( $this->version ) ) {
-			if( !function_exists('get_plugin_data') ){
-				require_once( ABSPATH . 'wp-admin/includes/plugin.php' );
-			}
-			$plugin_data = get_plugin_data( plugin_dir_path( dirname( __FILE__ ) ) . 'wherever.php' );
-			$this->version = $plugin_data['Version'];
-		}
-		
-		return $this->version;
-	}
-	
 	
 
 }
