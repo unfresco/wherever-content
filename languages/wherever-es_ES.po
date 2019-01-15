@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Wherever Content\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-01-04 21:57+0100\n"
-"PO-Revision-Date: 2019-01-04 21:58+0100\n"
+"POT-Creation-Date: 2019-01-15 14:49+0100\n"
+"PO-Revision-Date: 2019-01-15 14:49+0100\n"
 "Last-Translator: Adrián Ortiz Arandes – GRELL <adrian@grell.es>\n"
 "Language-Team: \n"
 "Language: es\n"
@@ -18,369 +18,220 @@ msgstr ""
 "X-Poedit-SearchPath-0: .\n"
 "X-Poedit-SearchPathExcluded-0: vendor\n"
 
-#: admin/class-wherever-admin.php:99
+#: admin/class-wherever-admin.php:108
 msgid "Wherever Content"
 msgstr "Dondequieras Contenido"
 
-#: admin/class-wherever-admin.php:100
+#: admin/class-wherever-admin.php:109
 msgid "Put reusable content wherever you want."
 msgstr "Pon contenido reutilizable dondequieras."
 
-#: admin/class-wherever-admin.php:112
+#: admin/class-wherever-admin.php:124
 msgctxt "Post Type General Name"
 msgid "Wherever Contents"
 msgstr "Dondequieras Contenidos"
 
-#: admin/class-wherever-admin.php:113
+#: admin/class-wherever-admin.php:125
 msgctxt "Post Type Singular Name"
 msgid "Wherever Content"
 msgstr "Dondequieras Contenido"
 
-#: admin/class-wherever-admin.php:114
+#: admin/class-wherever-admin.php:126
+#: admin/partials/class-wherever-admin-settings.php:121
 msgid "Wherever"
 msgstr "Dondequieras"
 
-#: admin/class-wherever-admin.php:116
+#: admin/class-wherever-admin.php:128
 msgid "Item Archives"
 msgstr "Archivo de ítemes"
 
-#: admin/class-wherever-admin.php:117 admin/class-wherever-admin.php:198
+#: admin/class-wherever-admin.php:129 admin/class-wherever-admin.php:186
 msgid "Parent Item:"
 msgstr "Elemento padre:"
 
-#: admin/class-wherever-admin.php:118
+#: admin/class-wherever-admin.php:130
 msgid "All contents"
 msgstr "Todos los contenidos"
 
-#: admin/class-wherever-admin.php:119
+#: admin/class-wherever-admin.php:131
 msgid "Add New Content"
 msgstr "Añadir nuevo contenido"
 
-#: admin/class-wherever-admin.php:120
+#: admin/class-wherever-admin.php:132
 msgid "Add New"
 msgstr "Añadir nuevo"
 
-#: admin/class-wherever-admin.php:121
+#: admin/class-wherever-admin.php:133
 msgid "New Content"
 msgstr "Nuevo contenido"
 
-#: admin/class-wherever-admin.php:122
+#: admin/class-wherever-admin.php:134
 msgid "Edit Content"
 msgstr "Editar contenido"
 
-#: admin/class-wherever-admin.php:123
+#: admin/class-wherever-admin.php:135
 msgid "Update Content"
 msgstr "Actualizar contenido"
 
-#: admin/class-wherever-admin.php:124
+#: admin/class-wherever-admin.php:136
 msgid "View Content"
 msgstr "Ver contenido"
 
-#: admin/class-wherever-admin.php:125
+#: admin/class-wherever-admin.php:137
 msgid "Search Content"
 msgstr "Buscar contenido"
 
-#: admin/class-wherever-admin.php:126
+#: admin/class-wherever-admin.php:138
 msgid "Not found"
 msgstr "No encontrado"
 
-#: admin/class-wherever-admin.php:127
+#: admin/class-wherever-admin.php:139
 msgid "Not found in Trash"
 msgstr "No encontrado en papelera"
 
-#: admin/class-wherever-admin.php:128
+#: admin/class-wherever-admin.php:140
 msgid "Featured Image"
 msgstr "Imagen destacada"
 
-#: admin/class-wherever-admin.php:129
+#: admin/class-wherever-admin.php:141
 msgid "Set featured image"
 msgstr "Establecer imagen destacada"
 
-#: admin/class-wherever-admin.php:130
+#: admin/class-wherever-admin.php:142
 msgid "Remove featured image"
 msgstr "Eliminar imagen destacada"
 
-#: admin/class-wherever-admin.php:131
+#: admin/class-wherever-admin.php:143
 msgid "Use as featured image"
 msgstr "Usar como imagen destacada"
 
-#: admin/class-wherever-admin.php:132
+#: admin/class-wherever-admin.php:144
 msgid "Insert into item"
 msgstr "Insertar en el ítem"
 
-#: admin/class-wherever-admin.php:133
+#: admin/class-wherever-admin.php:145
 msgid "Uploaded to this Wherever"
 msgstr "Subido a éste Dondequiera"
 
-#: admin/class-wherever-admin.php:134
+#: admin/class-wherever-admin.php:146
 msgid "Items list"
 msgstr "Listado de ítemes"
 
-#: admin/class-wherever-admin.php:135
+#: admin/class-wherever-admin.php:147
 msgid "Items list navigation"
 msgstr "Navegación de listado de ítemes"
 
-#: admin/class-wherever-admin.php:136
+#: admin/class-wherever-admin.php:148
 msgid "Filter items list"
 msgstr "Filtrar listado de ítemes"
 
-#: admin/class-wherever-admin.php:139 admin/class-wherever-admin.php:277
+#: admin/class-wherever-admin.php:151 admin/class-wherever-admin.php:265
 msgid "Content"
 msgstr "Contenido"
 
-#: admin/class-wherever-admin.php:140
+#: admin/class-wherever-admin.php:152
 msgid "Post Type Description"
 msgstr "Descripción tipo de entrada"
 
-#: admin/class-wherever-admin.php:193
+#: admin/class-wherever-admin.php:181
 msgctxt "Taxonomy General Name"
 msgid "Places"
 msgstr "Lugares"
 
-#: admin/class-wherever-admin.php:194
+#: admin/class-wherever-admin.php:182
 msgctxt "Taxonomy Singular Name"
 msgid "Place"
 msgstr "Lugar"
 
-#: admin/class-wherever-admin.php:195
+#: admin/class-wherever-admin.php:183
 msgid "Places"
 msgstr "Lugar"
 
-#: admin/class-wherever-admin.php:196
+#: admin/class-wherever-admin.php:184
 msgid "All Places"
 msgstr "Todos los lugares"
 
-#: admin/class-wherever-admin.php:197
+#: admin/class-wherever-admin.php:185
 msgid "Parent Place"
 msgstr "Lugar padre"
 
-#: admin/class-wherever-admin.php:199
+#: admin/class-wherever-admin.php:187
 msgid "New Place Name"
 msgstr "Nuevo nombre del lugar"
 
-#: admin/class-wherever-admin.php:200
+#: admin/class-wherever-admin.php:188
 msgid "Add New Place"
 msgstr "Añadir nuevo lugar"
 
-#: admin/class-wherever-admin.php:201
+#: admin/class-wherever-admin.php:189
 msgid "Edit Place"
 msgstr "Editar lugar"
 
-#: admin/class-wherever-admin.php:202
+#: admin/class-wherever-admin.php:190
 msgid "Update Place"
 msgstr "Actualizar lugar"
 
-#: admin/class-wherever-admin.php:203
+#: admin/class-wherever-admin.php:191
 msgid "View Place"
 msgstr "Ver lugar"
 
-#: admin/class-wherever-admin.php:204
+#: admin/class-wherever-admin.php:192
 msgid "Separate places with commas"
 msgstr "Separar lugares con comas"
 
-#: admin/class-wherever-admin.php:205
+#: admin/class-wherever-admin.php:193
 msgid "Add or remove Places"
 msgstr "Añadir o eliminar lugares"
 
-#: admin/class-wherever-admin.php:206
+#: admin/class-wherever-admin.php:194
 msgid "Choose from the most used"
 msgstr "Elige entre los más utilizados"
 
-#: admin/class-wherever-admin.php:207
+#: admin/class-wherever-admin.php:195
 msgid "Popular Places"
 msgstr "Lugares populares"
 
-#: admin/class-wherever-admin.php:208
+#: admin/class-wherever-admin.php:196
 msgid "Search Places"
 msgstr "Buscar lugares"
 
-#: admin/class-wherever-admin.php:209
+#: admin/class-wherever-admin.php:197
 msgid "Not Found"
 msgstr "No encontrado"
 
-#: admin/class-wherever-admin.php:210
+#: admin/class-wherever-admin.php:198
 msgid "No Places"
 msgstr "Ningún lugar"
 
-#: admin/class-wherever-admin.php:211
+#: admin/class-wherever-admin.php:199
 msgid "Places list"
 msgstr "Listados de lugares"
 
-#: admin/class-wherever-admin.php:212
+#: admin/class-wherever-admin.php:200
 msgid "Places list navigation"
 msgstr "Navegación de listado de lugares"
 
-#: admin/class-wherever-admin.php:282
+#: admin/class-wherever-admin.php:270
 msgid "Sidebar"
 msgstr "Barra lateral"
 
-#: admin/class-wherever-admin.php:287
+#: admin/class-wherever-admin.php:275
 msgid "Footer"
 msgstr "Pié"
 
-#: admin/class-wherever-admin.php:498
-msgid "Show"
-msgstr "Mostrar"
+#: admin/partials/class-wherever-admin-display.php:21
+msgid "Settings for Wherever Content"
+msgstr "Ajustes de Dondequieras Contenido"
 
-#: admin/class-wherever-admin.php:498
-msgid "Don’t show"
-msgstr "No mostrar"
+#: admin/partials/class-wherever-admin-display.php:37
+msgid "Editing"
+msgstr "Edición"
 
-#: admin/class-wherever-admin.php:501
-msgid ""
-"Show on all posts, pages and custom post types. Good for general purpose "
-"like site navigation and footers."
-msgstr ""
-"Mostrar en todas las entradas, páginas y custom post type. Útil para "
-"propósitos genéricos como navegación del sitio y piés de página."
+#: admin/partials/class-wherever-admin-display.php:44
+msgid "Enabled"
+msgstr "Habilitado"
 
-#: admin/class-wherever-admin.php:502
-#, php-format
-msgid "%s on the selected post."
-msgstr "%s en la entrada seleccionada."
-
-#: admin/class-wherever-admin.php:503
-#, php-format
-msgid "%s on the selected post type."
-msgstr "%s en el tipo de entrada seleccionada."
-
-#: admin/class-wherever-admin.php:504
-#, php-format
-msgid "%s on the selected post category."
-msgstr "%s en la categoría de entrada seleccionada."
-
-#: admin/class-wherever-admin.php:505
-#, php-format
-msgid "%s on the selected page."
-msgstr "%s en la página seleccionada."
-
-#: admin/class-wherever-admin.php:506
-#, php-format
-msgid "%s on the selected page type."
-msgstr "%s en el tipo de página seleccionada."
-
-#: admin/class-wherever-admin.php:507
-#, php-format
-msgid "%s on children of the selected page."
-msgstr "%s en hijos de la página seleccionada."
-
-#: admin/class-wherever-admin.php:513
-msgid "No description yet for this rule"
-msgstr "Ninguna descripcción para ésta regla"
-
-#: admin/class-wherever-admin.php:550
-msgid "Configuration"
-msgstr "Configuración"
-
-#: admin/class-wherever-admin.php:561
-msgid "Show this content if:"
-msgstr "Mostrar este contenido si:"
-
-#: admin/class-wherever-admin.php:563
-msgid "rule"
-msgstr "regla"
-
-#: admin/class-wherever-admin.php:564
-msgid "rules"
-msgstr "reglas"
-
-#: admin/class-wherever-admin.php:567
-msgid "Location"
-msgstr "Ubicación"
-
-#: admin/class-wherever-admin.php:569
-msgid "Everywhere"
-msgstr "En todos lados"
-
-#: admin/class-wherever-admin.php:570 admin/class-wherever-admin.php:591
-msgid "Post"
-msgstr "Entrada"
-
-#: admin/class-wherever-admin.php:571 admin/class-wherever-admin.php:600
-msgid "Post Type"
-msgstr "Tipo de entrada"
-
-#: admin/class-wherever-admin.php:572 admin/class-wherever-admin.php:609
-msgid "Post Category"
-msgstr "Categoría de entrada"
-
-#: admin/class-wherever-admin.php:573 admin/class-wherever-admin.php:618
-msgid "Page"
-msgstr "Página"
-
-#: admin/class-wherever-admin.php:574 admin/class-wherever-admin.php:627
-msgid "Page Type"
-msgstr "Tipo de página"
-
-#: admin/class-wherever-admin.php:575
-msgid "Page Parent"
-msgstr "Padre de página"
-
-#: admin/class-wherever-admin.php:579
-msgid "Condition"
-msgstr "Condición"
-
-#: admin/class-wherever-admin.php:581
-msgid "is"
-msgstr "es"
-
-#: admin/class-wherever-admin.php:582
-msgid "is not"
-msgstr "no es"
-
-#: admin/class-wherever-admin.php:629
-msgid "Home (Blog & Front Page )"
-msgstr "Inicio (Blog & página de inicio)"
-
-#: admin/class-wherever-admin.php:630
-msgid "Front Page"
-msgstr "Página de inicio"
-
-#: admin/class-wherever-admin.php:631
-msgid "Archive"
-msgstr "Archivo"
-
-#: admin/class-wherever-admin.php:640
-msgid "Archive Post Type"
-msgstr "Tipo de entrada archivo"
-
-#: admin/class-wherever-admin.php:833
-msgid "Place(s) to show this content:"
-msgstr "Lugar(es) donde mostrar este contenido:"
-
-#: admin/class-wherever-admin.php:835
-msgid "place"
-msgstr "lugar"
-
-#: admin/class-wherever-admin.php:836
-msgid "places"
-msgstr "lugares"
-
-#: admin/class-wherever-admin.php:839
-msgid "Place"
-msgstr "Lugar"
-
-#: admin/class-wherever-admin.php:842
-msgid "Placement"
-msgstr "Ubicación"
-
-#: admin/class-wherever-admin.php:844
-msgid "Before"
-msgstr "Antes"
-
-#: admin/class-wherever-admin.php:845
-msgid "Instead"
-msgstr "En vez de"
-
-#: admin/class-wherever-admin.php:846
-msgid "After"
-msgstr "Después"
-
-#: admin/class-wherever-admin.php:856
-msgid "Order"
-msgstr "Orden"
-
-#: admin/class-wherever-admin.php:880
+#: admin/partials/class-wherever-admin-display.php:65
 msgid ""
 "The <strong>Wherever Content</strong> plugin is not ready yet to work. "
 "Please deactivate the Carbon fields plugin or update it to a version higher "
@@ -391,6 +242,202 @@ msgstr ""
 "funcionar. Por favor desactiva el plugin Carbon fields o actualizalo a una "
 "versión superior a la 2.0. Si necesitas trabajar con carbon fields inferior "
 "a 2.0, instala una versión 1.x de Wherever Content."
+
+#: admin/partials/class-wherever-admin-postmeta-fields.php:140
+msgid "Show"
+msgstr "Mostrar"
+
+#: admin/partials/class-wherever-admin-postmeta-fields.php:140
+msgid "Don’t show"
+msgstr "No mostrar"
+
+#: admin/partials/class-wherever-admin-postmeta-fields.php:143
+msgid ""
+"Show on all posts, pages and custom post types. Good for general purpose "
+"like site navigation and footers."
+msgstr ""
+"Mostrar en todas las entradas, páginas y custom post type. Útil para "
+"propósitos genéricos como navegación del sitio y piés de página."
+
+#: admin/partials/class-wherever-admin-postmeta-fields.php:144
+#, php-format
+msgid "%s on the selected post."
+msgstr "%s en la entrada seleccionada."
+
+#: admin/partials/class-wherever-admin-postmeta-fields.php:145
+#, php-format
+msgid "%s on the selected post type."
+msgstr "%s en el tipo de entrada seleccionada."
+
+#: admin/partials/class-wherever-admin-postmeta-fields.php:146
+#, php-format
+msgid "%s on the selected post category."
+msgstr "%s en la categoría de entrada seleccionada."
+
+#: admin/partials/class-wherever-admin-postmeta-fields.php:147
+#, php-format
+msgid "%s on the selected page."
+msgstr "%s en la página seleccionada."
+
+#: admin/partials/class-wherever-admin-postmeta-fields.php:148
+#, php-format
+msgid "%s on the selected page type."
+msgstr "%s en el tipo de página seleccionada."
+
+#: admin/partials/class-wherever-admin-postmeta-fields.php:149
+#, php-format
+msgid "%s on children of the selected page."
+msgstr "%s en hijos de la página seleccionada."
+
+#: admin/partials/class-wherever-admin-postmeta-fields.php:155
+msgid "No description yet for this rule"
+msgstr "Ninguna descripcción para ésta regla"
+
+#: admin/partials/class-wherever-admin-postmeta-fields.php:194
+msgid "Configuration"
+msgstr "Configuración"
+
+#: admin/partials/class-wherever-admin-postmeta-fields.php:205
+msgid "Show this content if:"
+msgstr "Mostrar este contenido si:"
+
+#: admin/partials/class-wherever-admin-postmeta-fields.php:207
+msgid "rule"
+msgstr "regla"
+
+#: admin/partials/class-wherever-admin-postmeta-fields.php:208
+msgid "rules"
+msgstr "reglas"
+
+#: admin/partials/class-wherever-admin-postmeta-fields.php:211
+msgid "Location"
+msgstr "Ubicación"
+
+#: admin/partials/class-wherever-admin-postmeta-fields.php:213
+msgid "Everywhere"
+msgstr "En todos lados"
+
+#: admin/partials/class-wherever-admin-postmeta-fields.php:214
+#: admin/partials/class-wherever-admin-postmeta-fields.php:235
+msgid "Post"
+msgstr "Entrada"
+
+#: admin/partials/class-wherever-admin-postmeta-fields.php:215
+#: admin/partials/class-wherever-admin-postmeta-fields.php:244
+msgid "Post Type"
+msgstr "Tipo de entrada"
+
+#: admin/partials/class-wherever-admin-postmeta-fields.php:216
+#: admin/partials/class-wherever-admin-postmeta-fields.php:253
+msgid "Post Category"
+msgstr "Categoría de entrada"
+
+#: admin/partials/class-wherever-admin-postmeta-fields.php:217
+#: admin/partials/class-wherever-admin-postmeta-fields.php:262
+msgid "Page"
+msgstr "Página"
+
+#: admin/partials/class-wherever-admin-postmeta-fields.php:218
+#: admin/partials/class-wherever-admin-postmeta-fields.php:271
+msgid "Page Type"
+msgstr "Tipo de página"
+
+#: admin/partials/class-wherever-admin-postmeta-fields.php:219
+msgid "Page Parent"
+msgstr "Padre de página"
+
+#: admin/partials/class-wherever-admin-postmeta-fields.php:223
+msgid "Condition"
+msgstr "Condición"
+
+#: admin/partials/class-wherever-admin-postmeta-fields.php:225
+msgid "is"
+msgstr "es"
+
+#: admin/partials/class-wherever-admin-postmeta-fields.php:226
+msgid "is not"
+msgstr "no es"
+
+#: admin/partials/class-wherever-admin-postmeta-fields.php:273
+msgid "Home (Blog & Front Page )"
+msgstr "Inicio (Blog & página de inicio)"
+
+#: admin/partials/class-wherever-admin-postmeta-fields.php:274
+msgid "Front Page"
+msgstr "Página de inicio"
+
+#: admin/partials/class-wherever-admin-postmeta-fields.php:275
+msgid "Archive"
+msgstr "Archivo"
+
+#: admin/partials/class-wherever-admin-postmeta-fields.php:284
+msgid "Archive Post Type"
+msgstr "Tipo de entrada archivo"
+
+#: admin/partials/class-wherever-admin-postmeta-fields.php:477
+msgid "Place(s) to show this content:"
+msgstr "Lugar(es) donde mostrar este contenido:"
+
+#: admin/partials/class-wherever-admin-postmeta-fields.php:479
+msgid "place"
+msgstr "lugar"
+
+#: admin/partials/class-wherever-admin-postmeta-fields.php:480
+msgid "places"
+msgstr "lugares"
+
+#: admin/partials/class-wherever-admin-postmeta-fields.php:483
+msgid "Place"
+msgstr "Lugar"
+
+#: admin/partials/class-wherever-admin-postmeta-fields.php:486
+msgid "Placement"
+msgstr "Ubicación"
+
+#: admin/partials/class-wherever-admin-postmeta-fields.php:488
+msgid "Before"
+msgstr "Antes"
+
+#: admin/partials/class-wherever-admin-postmeta-fields.php:489
+msgid "Instead"
+msgstr "En vez de"
+
+#: admin/partials/class-wherever-admin-postmeta-fields.php:490
+msgid "After"
+msgstr "Después"
+
+#: admin/partials/class-wherever-admin-postmeta-fields.php:500
+msgid "Order"
+msgstr "Orden"
+
+#: admin/partials/class-wherever-admin-settings.php:120
+msgid "Wherever Settings"
+msgstr "Ajustes de Dondequieras Contenidos"
+
+#: admin/partials/class-wherever-admin-settings.php:139
+msgid "Backend editing"
+msgstr "Edición en administración"
+
+#: admin/partials/class-wherever-admin-settings.php:146
+msgid "Block editor (Gutenberg)"
+msgstr "Editor de bloques (Gutenberg)"
+
+#: admin/partials/class-wherever-admin-settings.php:162
+msgid "SiteOrigin optimisation"
+msgstr "Optimización de SiteOrigin"
+
+#: admin/partials/class-wherever-admin-settings.php:168
+msgid ""
+"Enabeling this feature will disable the block editor (Gutenberg) for "
+"Wherever Contents and include Wherever Content to the post types option in "
+"SiteOrigin Page Builder options."
+msgstr ""
+"Habilitando esta prestación se desactivará el editor de bloques (Gutenberg) "
+"para Dondequieras Contenidos y se incluirá Dondequieras Contenidos a las "
+"opciones de post types de SiteOrigin Page Builder."
+
+#~ msgid "Gutenberg editor"
+#~ msgstr "Editor de Gutenberg"
 
 #~ msgid "%s on the selected page parent."
 #~ msgstr "%s en el padre de página seleccionado."
