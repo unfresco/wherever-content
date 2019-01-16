@@ -2,7 +2,8 @@
 
 
 function register_wherever_places( $places = array() ){
-		
-	Wherever_Public::register_wherever_places( $places );	
+	
+	$helpers = new Wherever_Helpers();
+	$helpers->register_wherever_places( $places );	
 	
 }

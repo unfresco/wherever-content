@@ -163,21 +163,28 @@ class Wherever_Admin_Postmeta_Fields {
 	 * @return array of terms
 	 */
 	public function get_places_for_options() {
+		$theme = wp_get_theme();
+		$theme_stylesheet = $theme->get_stylesheet();
 		
-		$args = array(
-			'taxonomy' => 'wherever_place',
-			'hide_empty' => false
-		);
-		
-		$terms = get_terms( $args );
-		
+		$options = get_option('wherever_status');
+		$default_places = $options['default_places'][$theme_stylesheet];
+		$registered_places = $options['registered_places'][$theme_stylesheet];
 		$options_terms = array();
 		
-		foreach ( $terms as $term ) {
-			
+		// Add default places
+		foreach( $default_places as $term_id ) {
+			$term = get_term_by('id', $term_id, 'wherever_place' );
 			$options_terms[ $term->slug ] = __( $term->name, 'wherever' );
-			
-		};
+		}
+		
+		// Add registered places
+		foreach( $registered_places as $term_id ) {
+			$term = get_term_by('id', $term_id, 'wherever_place' );
+			$options_terms[ $term->slug ] = $term->name . ' (' . __( 'Custom', 'wherever') . ')';
+		}
+		
+		// Sort alfabetical
+		asort( $options_terms );
 		
 		return $options_terms;
 		

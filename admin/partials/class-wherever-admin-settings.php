@@ -4,10 +4,9 @@ use Carbon_Fields\Container;
 use Carbon_Fields\Field;
 
 
-class Wherever_Admin_Settings extends Wherever_Admin {
+class Wherever_Admin_Settings {
 	
-	function __construct( $plugin_name, $version ) {
-		parent::__construct( $plugin_name, $version );
+	function __construct() {
 		
 		$this->setup_actions();
 		
@@ -25,8 +24,8 @@ class Wherever_Admin_Settings extends Wherever_Admin {
 	
 	/**
 	 * Executes on version update
-	 * @param  array $arg array( 'old_version' => {version}, 'new_version' => {version} )
-	 * @return [type]      [description]
+	 * @param  array $arg  array( 'old_version' => {version}, 'new_version' => {version} )
+	 * @return void
 	 */
 	public function update_status_version( $arg ) {
 		
@@ -37,6 +36,11 @@ class Wherever_Admin_Settings extends Wherever_Admin {
 	
 	}
 	
+	/**
+	 * Executes o version downgrade
+	 * @param  array $arg  array( 'old_version' => {version}, 'new_version' => {version} )
+	 * @return void
+	 */
 	public function downgrade_status_version( $arg ) {
 		// TODO Do stuff if downgrading
 		

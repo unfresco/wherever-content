@@ -49,7 +49,7 @@ class Wherever_Public {
 	 * @access   private
 	 * @var      array    $wherevers    Holds an array of all wherever posts.
 	 */
-	private static $wherevers = array();
+	private $wherevers;
 	
 	/**
 	 * All places currently associated to wherever posts.
@@ -58,7 +58,7 @@ class Wherever_Public {
 	 * @access   private
 	 * @var      array    $places    All places currently associated to wherever posts.
 	 */
-	private static $places = array();
+	private $places;
 	
 	/**
 	 * Initialize the class and set its properties.
@@ -67,10 +67,14 @@ class Wherever_Public {
 	 * @param      string    $plugin_name       The name of the plugin.
 	 * @param      string    $version    The version of this plugin.
 	 */
-	public function __construct( $plugin_name, $version ) {
+	public function __construct( $plugin_name, $version, $helpers ) {
 
 		$this->plugin_name = $plugin_name;
 		$this->version = $version;
+		$this->helpers = $helpers;
+		
+		$this->wherevers = array();
+		$this->places = array();
 		
 	}
 
@@ -96,21 +100,8 @@ class Wherever_Public {
 
 	}
 	
-	public function enqueue_page_builder_scripts() {
-
-		wp_register_script( 'siteorigin-panels-front-styles', plugin_dir_url( __FILE__ ) . 'js/siteorigin-panels/styling' . SITEORIGIN_PANELS_VERSION_SUFFIX . SITEORIGIN_PANELS_JS_SUFFIX . '.js', array('jquery'), SITEORIGIN_PANELS_VERSION );
-		wp_register_script( 'siteorigin-parallax', plugin_dir_url( __FILE__ ) . 'js/siteorigin-panels/siteorigin-parallax' . SITEORIGIN_PANELS_JS_SUFFIX . '.js', array('jquery'), SITEORIGIN_PANELS_VERSION );
-	
-	}
-
-	public function enqueue_page_builder_styles() {
-
-		wp_enqueue_style( 'siteorigin-panels-front', plugin_dir_url( __FILE__ ) . 'css/siteorigin-panels/front.css', array(), $this->version, 'all' );
-	
-	}
-	
 	/**
-	 * Setup static vars $wherever and $places.
+	 * Setup $wherever and $places.
 	 *
 	 * @see		Wherever::define_public_hooks()
 	 * @since	1.0.0
@@ -127,10 +118,10 @@ class Wherever_Public {
 		
 		if ( !$query->have_posts() )
 			return;
-					
+			
 		while ( $query->have_posts() ): $query->the_post();
 			
-			self::$wherevers[] = array(
+			$this->wherevers[] = array(
 				'post'	=> $post,
 				'the_content' => apply_filters('the_content', $post->post_content ), // Todo: apply_filters only on wherevers to display in build_wherevers
 				'wherever_rules' => carbon_get_the_post_meta('wherever_rules'),
@@ -142,12 +133,12 @@ class Wherever_Public {
 		
 		wp_reset_postdata();
 		
-		foreach( self::$wherevers as $key => $wherever ){
+		foreach( $this->wherevers as $key => $wherever ){
 		
 			// Set if in current location
 			if ( $this->in_current_location( $wherever ) ) {
 				
-				self::$wherevers[$key]['in_current_location'] = true;
+				$this->wherevers[$key]['in_current_location'] = true;
 				
 				// Setup page builder styles for $wherever['post']->ID
 				if ( function_exists('siteorigin_panels_render') ) {
@@ -165,13 +156,13 @@ class Wherever_Public {
 					
 					if( 'post' ==  $location['location_type'] ){
 						
-						self::$wherevers[$key]['wherever_rules'][$location_key]['post'] = get_post( $location['post'] );
+						$this->wherevers[$key]['wherever_rules'][$location_key]['post'] = get_post( $location['post'] );
 					
 					}
 					
 					if( 'page' ==  $location['location_type'] ){
 					
-						self::$wherevers[$key]['wherever_rules'][$location_key]['page'] = get_post( $location['page'] );
+						$this->wherevers[$key]['wherever_rules'][$location_key]['page'] = get_post( $location['page'] );
 					
 					}
 					
@@ -184,29 +175,15 @@ class Wherever_Public {
 
 				foreach ( $wherever['wherever_places'] as $place_key => $place ) {
 
-					if ( !array_key_exists( $place['place'], self::$places ) ) {
+					if ( !array_key_exists( $place['place'], $this->places ) ) {
 					
-						self::$places[ $place['place'] ] = array();
+						$this->places[ $place['place'] ] = array();
 					
 					}
 					
-					self::$places[ $place['place'] ][] = self::$wherevers[$key];
+					$this->places[ $place['place'] ][] = $this->wherevers[$key];
 					
 				}
-				
-			}
-			
-		}
-									
-	}
-	
-	public static function register_wherever_places( $places ){
-
-		if ( !empty( $places ) ) {
-			
-			foreach( $places as $place ){
-				
-				Wherever_Admin::setup_wherever_place( $place );
 				
 			}
 			
@@ -219,7 +196,7 @@ class Wherever_Public {
 	 *
 	 * @since	1.0.0
 	 */
-	private function in_current_location( $wherever ){
+	private function in_current_location( $wherever ) {
 		global $wp_query, $post;
 		
 		$is_in = array();
@@ -314,7 +291,12 @@ class Wherever_Public {
 		
 	}
 	
-	private static function get_wherevers( $place_name ) {
+	/**
+	 * Build an array of Wherever posts grouped by placement
+	 * @param  string $place_name [description]
+	 * @return array            [description]
+	 */
+	private function get_wherevers( $place_name ) {
 		
 		$return_wherevers = array(
 			'before' => array(),
@@ -322,10 +304,10 @@ class Wherever_Public {
 			'after' => array()
 		);
 		
-		if ( !empty( self::$places ) && array_key_exists( $place_name, self::$places ) ) {
+		if ( !empty( $this->places ) && array_key_exists( $place_name, $this->places ) ) {
 			
-			// Get wherevers by place from self::$places
-			foreach( self::$places[ $place_name ] as $wherever ){
+			// Get wherevers by place from $this->places
+			foreach( $this->places[ $place_name ] as $wherever ){
 				
 				// Add if wherever can be displayed in this location
 				if ( $wherever['in_current_location'] ) {
@@ -365,7 +347,7 @@ class Wherever_Public {
 
 				}
 			}
-						
+			
 		}
 		
 		return $return_wherevers;
@@ -373,7 +355,7 @@ class Wherever_Public {
 	}
 	
 	// Build html output of wherevers for a place
-	private static function build_wherevers( $place, $content, $wherevers_by_placement ) {	
+	private function build_wherevers( $place, $content, $wherevers_by_placement ) {
 		
 		$wherever_contents = array(
 			'before' => array(),
@@ -429,16 +411,16 @@ class Wherever_Public {
 	}
 	
 	// Filter for the_content place
-	public static function the_content( $content ) {
+	public function the_content( $content ) {
 		global $post;
 
 		if ( 'wherever' != get_post_type($post) ) {		
 			
-			$wherevers = self::get_wherevers( 'content' );
+			$wherevers = $this->get_wherevers( 'content' );
 			
 			if ( !( empty( $wherevers['before'] ) && empty( $wherevers['instead'] ) && empty( $wherevers['after'] ) ) ) {
 				
-				$content = self::build_wherevers( 'content', $content, $wherevers );
+				$content = $this->build_wherevers( 'content', $content, $wherevers );
 				
 			}
 			
@@ -449,42 +431,42 @@ class Wherever_Public {
 	}
 	
 	// Action/Filter for get_sidebar place
-	public static function get_sidebar( $place ) {
+	public function get_sidebar( $place ) {
 
-		$wherevers = self::get_wherevers( 'sidebar' );
+		$wherevers = $this->get_wherevers( 'sidebar' );
 		
 		if ( empty( $wherevers['before'] ) && empty( $wherevers['instead'] ) && empty( $wherevers['after'] ) )
 			return;
 		
-		$wherevers_content = self::build_wherevers( 'sidebar', '', $wherevers );
+		$wherevers_content = $this->build_wherevers( 'sidebar', '', $wherevers );
 		
 		echo $wherevers_content;
 		
 	}
 	
 	// Action/Filter for get_footer place
-	public static function get_footer( $place ) {
+	public function get_footer( $place ) {
 
-		$wherevers = self::get_wherevers( 'footer' );
+		$wherevers = $this->get_wherevers( 'footer' );
 
 		if ( empty( $wherevers['before'] ) && empty( $wherevers['instead'] ) && empty( $wherevers['after'] ) )
 			return;
 		
-		$wherevers_content = self::build_wherevers( 'footer', '', $wherevers );
+		$wherevers_content = $this->build_wherevers( 'footer', '', $wherevers );
 				
 		echo $wherevers_content;
 		
 	}
 	
 	// Public api function for places in themes
-	public static function api_get_wherever_place( $place ) {
+	public function api_get_wherever_place( $place ) {
 		
-		$wherevers = self::get_wherevers( $place );
+		$wherevers = $this->get_wherevers( $place );
 		
 		if( empty( $wherevers['before'] ) && empty( $wherevers['instead'] ) && empty( $wherevers['after'] ) )
 			return;
 			
-		$wherevers_content = self::build_wherevers( $place, '', $wherevers );
+		$wherevers_content = $this->build_wherevers( $place, '', $wherevers );
 		
 		echo $wherevers_content;
 		

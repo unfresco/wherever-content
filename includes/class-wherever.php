@@ -117,6 +117,7 @@ class Wherever {
 		 *
 		 */
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-wherever-helpers.php';
+		$this->helpers = new Wherever_Helpers();
 		
 		/**
 		 * Class with admin rendering functions
@@ -178,10 +179,10 @@ class Wherever {
 	 * @access   private
 	 */
 	private function define_admin_hooks() {
-
-		$plugin_admin = new Wherever_Admin( $this->get_plugin_name(), $this->version_control->get_version() );
+		
+		$plugin_admin = new Wherever_Admin( $this->get_plugin_name(), $this->version_control->get_version(), $this->helpers );
 		$plugin_admin_postmeta = new Wherever_Admin_Postmeta_Fields();
-		$plugin_admin_settings = new Wherever_Admin_Settings( $this->get_plugin_name(), $this->version_control->get_version() );
+		$plugin_admin_settings = new Wherever_Admin_Settings();
 		$plugin_admin_vendor = new Wherever_Admin_Vendor_Compat();
 		$plugin_admin_display = new Wherever_Admin_Display();
 		
@@ -229,7 +230,7 @@ class Wherever {
 	 */
 	private function define_public_hooks() {
 
-		$plugin_public = new Wherever_Public( $this->get_plugin_name(), $this->version_control->get_version() );
+		$plugin_public = new Wherever_Public( $this->get_plugin_name(), $this->version_control->get_version(), $this->helpers  );
 
 		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_styles' );
 		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_scripts' );

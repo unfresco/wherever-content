@@ -66,13 +66,11 @@ class Wherever_Admin {
 	 * @param      string    $plugin_name       The name of this plugin.
 	 * @param      string    $version    The version of this plugin.
 	 */
-	public function __construct( $plugin_name, $version ) {
+	public function __construct( $plugin_name, $version, $helpers ) {
 
 		$this->plugin_name = $plugin_name;
 		$this->version = $version;
-				
-		self::$theme = wp_get_theme();
-		self::$wherever_places_terms = array();
+		$this->helpers = $helpers;
 		
 	}
 	
@@ -214,45 +212,6 @@ class Wherever_Admin {
 	
 	}
 	
-	public static function get_wherever_place_terms() {
-		$terms = self::$wherever_places_terms;
-		
-		if ( empty( $terms ) ){
-			$terms = get_terms(array(
-				'taxonomy' => 'wherever_place',
-				'hide_empty' => false
-			));
-			self::$wherever_places_terms = $terms;
-		}
-		
-		return $terms;
-	}
-	
-	public static function wherever_place_term_exist( $term_check ) {
-		$exist = false;
-
-		foreach( self::get_wherever_place_terms() as $term ){
-			if ( $term_check == $term->slug ) {
-				$exist = true;
-				break;
-			}
-		}
-		
-		return $exist;
-	}
-	
-	public static function wherever_place_get_term_by( $by, $term_check ) {
-		foreach( self::get_wherever_place_terms() as $term ){
-			if ( 'slug' == $by && $term_check == $term->slug ) {
-				return $term;
-				break;
-			} else if ( 'id' == $by && $term_check == $term->term_id ) {
-				return $term;
-				break;
-			}
-		}
-	}
-	
 	/**
 	 * Setup default places for the wherever_place custom taxonomy
 	 *
@@ -280,98 +239,11 @@ class Wherever_Admin {
 		
 		foreach( $default_places as $place ){
 			
-			self::setup_wherever_place( $place, true );
+			$this->helpers->setup_wherever_place( $place, true );
 			
 		}
 		
 	}
-	
-	/**
-	 * Setup default and theme defined places by inserting wherever_place terms or 
-	 * recovering them from wherever options.
-	 *
-	 * @since    1.0.1
-	 */
-	public static function setup_wherever_place( $place, $is_default = false ) {
-		
-		if( !current_user_can('edit_posts' ) )
-			return;
-		
-		$options = get_option( 'wherever_status' );
-
-		$save_options_places_to = ( $is_default ? 'default_places' : 'registered_places' );
-		
-		$update_options = false;
-		
-		if ( ! self::wherever_place_term_exist( $place['slug'] ) ) {
-			// Term doesn’t exist in DB -> insert
-			
-			$args = array(
-				'slug' => $place['slug'],
-			);
-			
-			if ( !empty( $place['description'] )) {
-				
-				$args['description'] = $place['description'];
-				
-			}
-
-			$term = wp_insert_term( $place['name'], 'wherever_place', $args );
-
-			if ( $is_default ) {
-				// for default_places save right away
-				
-				$options[ $save_options_places_to ][] = $term['term_id'];
-				
-			} else {
-				// for registered_places save theme dependent 
-				
-				if ( !in_array( self::$theme->stylesheet, $options[ $save_options_places_to ] ) ) {
-					
-					$options[ $save_options_places_to ][ self::$theme->stylesheet ] = array();
-				
-				}
-				
-				$options[ $save_options_places_to ][ self::$theme->stylesheet ][] = $term->term_id;
-				
-			}
-			
-			
-			$update_options = true;
-			
-		} else {
-			// Term already exists in DB. 
-			
-			$term = self::wherever_place_get_term_by( 'slug', $place['slug'] );
-			
-			// Check if theme already exists
-			if ( !array_key_exists( self::$theme->stylesheet, $options[ $save_options_places_to ] ) ) {
-				$options[ $save_options_places_to ][ self::$theme->stylesheet ] = array();
-			
-			}
-			
-			if ( !in_array( $term->term_id, $options[ $save_options_places_to ][ self::$theme->stylesheet ] ) ) {
-				// Not present in wherever options -> recover theme dependent
-				$options[ $save_options_places_to ][ self::$theme->stylesheet ][] = $term->term_id;
-				$update_options = true;
-				
-			}
-			
-		}
-		
-		
-		if ( $update_options ) {
-			
-			update_option( 'wherever_status', $options );
-			
-		}
-		
-		/* 
-			ToDo:
-			Handle unused, once registered places when there is no UI for deleting places 		
-		*/
-	}
-
 
 	
 }
