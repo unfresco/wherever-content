@@ -17,6 +17,10 @@ This WordPress plugin will enable content distribution across your site in a pos
 
 === Changelog ===
 
+**2.1.2**
+- code refactoring
+- place select options based on current registered places
+
 **2.1.1**
 - code refactoring
 - localisation update for spanish

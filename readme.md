@@ -82,6 +82,10 @@ A common and useful example would be to build a multi-column footer section as a
 
 ##  Changelog
 
+**2.1.2**
+- code refactoring
+- place select options based on current registered places
+
 **2.1.1**
 - code refactoring
 - localisation update for spanish
