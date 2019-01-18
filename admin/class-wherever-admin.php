@@ -91,9 +91,12 @@ class Wherever_Admin {
 	 * @since    1.0.0
 	 */
 	public function enqueue_scripts() {
-
-		wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/wherever-admin.js', array( 'jquery' ), $this->version, false );
-
+		
+		$handle = $this->plugin_name . '-admin';
+		
+		wp_enqueue_script( $handle, plugin_dir_url( __FILE__ ) . 'js/wherever-admin.js', array( 'jquery', 'underscore' ), $this->version, false );
+		wp_localize_script( $handle, 'wherever_admin_js', $this->helpers->get_admin_js() );
+		
 	}
 	
 	/**
@@ -174,7 +177,7 @@ class Wherever_Admin {
 	 * @since    1.0.0
 	 */
 	public function place_taxonomy() {
-	
+		
 		$labels = array(
 			'name'                       => _x( 'Places', 'Taxonomy General Name', 'wherever' ),
 			'singular_name'              => _x( 'Place', 'Taxonomy Singular Name', 'wherever' ),
@@ -223,17 +226,17 @@ class Wherever_Admin {
 			array(
 				'name'			=> __( 'Content', 'wherever' ),
 				'slug'			=> 'content',
-				#'description'	=> __( 'Puts content arround the content. Default place.', 'wherever' )
+				'description'	=> __( 'Place content before, instead or after the content. See <strong>the_content();</strong> template function.', 'wherever' )
 			),
 			array(
 				'name'			=> __( 'Sidebar', 'wherever' ),
 				'slug'			=> 'sidebar',
-				#'description'	=> __( 'Puts content before the template sidebar. Default place.', 'wherever' )
+				'description'	=> __( 'Place content before the template sidebar. See <strong>get_sidebar();</strong> template function.', 'wherever' )
 			),
 			array(
 				'name'			=> __( 'Footer', 'wherever' ),
 				'slug'			=> 'footer',
-				#'description'	=> __( 'Puts content before the template footer. Default place.', 'wherever' )
+				'description'	=> __( 'Place content before the template footer. See <strong>get_footer();</strong> template function.', 'wherever' )
 			) 
 		);
 		
@@ -244,6 +247,27 @@ class Wherever_Admin {
 		}
 		
 	}
-
 	
+	/**
+	 * Adds wherever_place terms to the admin_js localisation variable
+	 * @param  array $js 
+	 * @return array     with wherever_place terms
+	 */
+	public function wherever_places_for_admin_js( $js ) {
+		
+		$js['wherever_places'] = array();
+		
+		$terms = $this->helpers->get_wherever_place_terms();
+		
+		foreach( $terms  as $term ) {
+			$js['wherever_places'][] = array(
+				'term_id' => $term->term_id,
+				'name' => $term->name,
+				'slug' => $term->slug,
+				'description' => $term->description
+			);
+		}
+		
+		return $js;
+	}
 }

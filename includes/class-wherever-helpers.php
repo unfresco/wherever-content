@@ -42,6 +42,14 @@ class Wherever_Helpers {
 	
 	}
 	
+	public function get_admin_js() {
+		
+		$js = array();
+		$js = apply_filters( 'wherever_helpers/admin_js', $js );
+		
+		return $js;
+	}
+	
 	public function get_wherever_place_terms() {
 		$terms = $this->wherever_places_terms;
 		
@@ -106,13 +114,8 @@ class Wherever_Helpers {
 			
 			$args = array(
 				'slug' => $place['slug'],
+				'description' => ( array_key_exists( 'description', $place ) ? $place['description'] : '' ) 
 			);
-			
-			if ( !empty( $place['description'] )) {
-				
-				$args['description'] = $place['description'];
-				
-			}
 
 			$term = wp_insert_term( $place['name'], 'wherever_place', $args );
 
@@ -138,7 +141,7 @@ class Wherever_Helpers {
 			$update_options = true;
 			
 		} else {
-			// Term already exists in DB. 
+			// Term already exists in DB -> update
 			
 			$term = $this->wherever_place_get_term_by( 'slug', $place['slug'] );
 			
@@ -148,12 +151,50 @@ class Wherever_Helpers {
 			
 			}
 			
+			// Check if terms saved to current theme
 			if ( !in_array( $term->term_id, $options[ $save_options_places_to ][ $this->theme_stylesheet ] ) ) {
 				// Not present in wherever options -> recover theme dependent
 				$options[ $save_options_places_to ][ $this->theme_stylesheet ][] = $term->term_id;
 				$update_options = true;
 				
 			}
+			
+			
+			$post_type = ( isset( $_GET['post'] ) ? get_post_type($_GET['post']) : '' );
+			// If in admin and editing wherever content may update term descriptions
+			if ( is_admin() && 'wherever' == $post_type ) {
+				
+				// Update description of places for UI guidance (both default & registered )
+				if ( array_key_exists( 'description', $place ) && $term->description !== $place['description'] ) {
+					
+					$args = array(
+						'description' => $place['description']
+					);
+					
+					$term_id = wp_update_term( $term->term_id, 'wherever_place', $args );
+				
+				}
+				
+				// Update description of registered places for UI guidance
+				if ( ! $is_default && ! array_key_exists( 'description', $place ) ) {
+					
+					$default_registed_description = sprintf( __( 'Place content into the custom place "%1$s" refered by the slug "%2$s". See the <strong>do_action( \'wherever_place\', \'%2$s\' );</strong> theme function.', 'wherever' ), $place['name'], $place['slug'] );
+					
+					$args = array(
+						'description' => $default_registed_description
+					);
+					
+					if ( empty( $term->description ) || $term->description  != $default_registed_description ) {
+						
+						$term_id = wp_update_term( $term->term_id, 'wherever_place', $args );
+					
+					}
+					
+				}
+				
+			}
+			
+
 			
 		}
 		
@@ -163,11 +204,7 @@ class Wherever_Helpers {
 			update_option( 'wherever_status', $options );
 			
 		}
-		
-		/* 
-			ToDo:
-			Handle unused, once registered places when there is no UI for deleting places 		
-		*/
+
 	}
 
 	public function register_wherever_places( $places ) {

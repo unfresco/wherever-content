@@ -506,7 +506,11 @@ class Wherever_Admin_Postmeta_Fields {
 							)),
 						Field::make('text', 'order', __( 'Order', 'wherever' ) )
 							->set_default_value(5)
-							->set_classes('number')
+							->set_classes('number'),
+						// Place descriptions
+						Field::make( 'html', 'place_content_info' )
+							->set_html( '<p><span class="dashicons dashicons-location"></p>' )
+							->set_classes('place-content-info'),
 					))
 					->set_default_value(array(
 						array(

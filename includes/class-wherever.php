@@ -206,6 +206,8 @@ class Wherever {
 			$this->loader->add_action( 'init', $plugin_admin, 'place_taxonomy' );
 			$this->loader->add_action( 'init', $plugin_admin, 'setup_default_places' );
 			$this->loader->add_action( 'init', $plugin_admin, 'custom_post_types' );
+			
+			$this->loader->add_filter( 'wherever_helpers/admin_js', $plugin_admin, 'wherever_places_for_admin_js' );
 
 			$this->loader->add_action( 'carbon_fields_register_fields', $plugin_admin_postmeta, 'carbon_fields_post_meta' );
 			$this->loader->add_action( 'carbon_fields_post_meta_container_saved', $plugin_admin_postmeta, 'carbon_fields_save' );

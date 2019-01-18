@@ -3,61 +3,83 @@
 
 (function( $ ) {
 	'use strict';
-
-	var inlineEditCatalog = {
 	
-		init : function(){
-			var t = this;
+	var carbonfieldsApi = null;
 	
-			$('#doaction, #doaction2').click(function(e){
-				var n = $(this).attr('id').substr(2);
-				if ( 'edit' === $( 'select[name="' + n + '"]' ).val() ) {
-					e.preventDefault();
-					t.edit();
-				}
-			});	
-		},
+	function getPlaceDescription( key ) {
+		var string = '';
 
-		edit : function() {
-			var tax;
-			
-			// Add catalog suggestions
-			if ( 'wherever' === typenow ) {
-				tax = 'wherever_place';
-				window.setTimeout(function() {
-					$('tr.inline-editor textarea[name="tax_input['+tax+']"]').suggest( ajaxurl + '?action=ajax-tag-search&tax=' + tax, { delay: 500, minchars: 2, multiple: true, multipleSep: inlineEditL10n.comma } );
-				}, 200);
+		_.each( wherever_admin_js['wherever_places'], function( value ){
+			if ( key === value.slug ) {
+				string = '<p><span class="dashicons dashicons-location"></span> ' + value.description + '</p>';
 			}
+		});
 		
-			return false;
+		return string;
+		
+	}
+	
+	function setPlacesInfoInit() {
+		var complexFieldValues = carbonfieldsApi.getFieldValue('wherever_places');
+		
+		if ( ! complexFieldValues.length ) {
+			return;
 		}
+		
+		_.each( complexFieldValues, function( value, index ){
+			var fieldName = 'wherever_places[' +  index + ']:_/place';
+			setPlacesInfo(fieldName);
+		});
+		
+	}
 	
-	};
-	
-	/*
-	// Comment out because taxonomy’s UI (show_ui) is disabled 
-	var disableEditDefaultPlaces = {
-		init: function(){
+	function setPlacesInfo( fieldName ) {
+		var 
+		fieldValue = carbonfieldsApi.getFieldValue(fieldName),
+		isWhereverPlacesField = fieldName.startsWith('wherever_places'),
+		isPlaceField = fieldName.endsWith(':_/place'),
+		regexBrackets = /\[(.*?)\]/g,
+		indexBrackets = fieldName.match(regexBrackets)[0], // match the index "[n]"
+		selectFieldName = '_wherever_places' + indexBrackets + '[_place]';
+		
+		// Check if it is the right field
+		if ( ! isWhereverPlacesField || ! isPlaceField ) {
+			return;
+		} 
+		
+		setTimeout( function(){
+			var 
+			$selectField = $('select[name="' + selectFieldName + '"]'),
+			$htmlContainer = $selectField.closest('.fields-container').find('.place-content-info .field-holder div');
 
-			$('.edit-tags-php.taxonomy-wherever_place #the-list > tr').each(function( index ){
-				var dom_row_name_wrapper = $(this).find('.column-name strong'),
-					dom_row_name_link = $(this).find('.column-name a.row-title'),
-					dom_row_name = dom_row_name_link.text(),
-					dom_row_action = $(this).find('.row-actions');
-				
-				if( dom_row_action.css('display') === 'none' ){
-					dom_row_name_wrapper.addClass('row-title');
-					dom_row_name_link.remove();
-					dom_row_name_wrapper.text(dom_row_name);
-				}
-			});
-		}
-	};
-	*/
+			if ( $htmlContainer.length ) {
+				$htmlContainer.html( getPlaceDescription( fieldValue ) );
+			}
+		}, 100 );
+	
+	}
+	
+	$(document).on('carbonFields.apiLoaded', function(e, api) {
+		
+		carbonfieldsApi = api;
+
+		setPlacesInfoInit();
+		
+		$(document).on('carbonFields.fieldUpdated', function(e, fieldName) {
+			
+			if ( 'wherever_places' === fieldName ) {
+				setPlacesInfoInit();
+			} else {
+				setPlacesInfo( fieldName );
+			}
+			
+		});
+
+	});
+
 	
 	$( document ).ready( function(){ 
-		inlineEditCatalog.init(); 
-		//disableEditDefaultPlaces.init();
+		
 	});
 	
 	

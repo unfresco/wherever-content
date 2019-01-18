@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Wherever Content\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-01-16 15:42+0100\n"
-"PO-Revision-Date: 2019-01-16 15:42+0100\n"
+"POT-Creation-Date: 2019-01-18 16:54+0100\n"
+"PO-Revision-Date: 2019-01-18 16:54+0100\n"
 "Last-Translator: Adrián Ortiz Arandes – GRELL <adrian@grell.es>\n"
 "Language-Team: \n"
 "Language: es\n"
@@ -18,206 +18,230 @@ msgstr ""
 "X-Poedit-SearchPath-0: .\n"
 "X-Poedit-SearchPathExcluded-0: vendor\n"
 
-#: admin/class-wherever-admin.php:106
+#: admin/class-wherever-admin.php:109
 msgid "Wherever Content"
 msgstr "Dondequieras Contenido"
 
-#: admin/class-wherever-admin.php:107
+#: admin/class-wherever-admin.php:110
 msgid "Put reusable content wherever you want."
 msgstr "Pon contenido reutilizable dondequieras."
 
-#: admin/class-wherever-admin.php:122
+#: admin/class-wherever-admin.php:125
 msgctxt "Post Type General Name"
 msgid "Wherever Contents"
 msgstr "Dondequieras Contenidos"
 
-#: admin/class-wherever-admin.php:123
+#: admin/class-wherever-admin.php:126
 msgctxt "Post Type Singular Name"
 msgid "Wherever Content"
 msgstr "Dondequieras Contenido"
 
-#: admin/class-wherever-admin.php:124
+#: admin/class-wherever-admin.php:127
 #: admin/partials/class-wherever-admin-settings.php:125
 msgid "Wherever"
 msgstr "Dondequieras"
 
-#: admin/class-wherever-admin.php:126
+#: admin/class-wherever-admin.php:129
 msgid "Item Archives"
 msgstr "Archivo de ítemes"
 
-#: admin/class-wherever-admin.php:127 admin/class-wherever-admin.php:184
+#: admin/class-wherever-admin.php:130 admin/class-wherever-admin.php:187
 msgid "Parent Item:"
 msgstr "Elemento padre:"
 
-#: admin/class-wherever-admin.php:128
+#: admin/class-wherever-admin.php:131
 msgid "All contents"
 msgstr "Todos los contenidos"
 
-#: admin/class-wherever-admin.php:129
+#: admin/class-wherever-admin.php:132
 msgid "Add New Content"
 msgstr "Añadir nuevo contenido"
 
-#: admin/class-wherever-admin.php:130
+#: admin/class-wherever-admin.php:133
 msgid "Add New"
 msgstr "Añadir nuevo"
 
-#: admin/class-wherever-admin.php:131
+#: admin/class-wherever-admin.php:134
 msgid "New Content"
 msgstr "Nuevo contenido"
 
-#: admin/class-wherever-admin.php:132
+#: admin/class-wherever-admin.php:135
 msgid "Edit Content"
 msgstr "Editar contenido"
 
-#: admin/class-wherever-admin.php:133
+#: admin/class-wherever-admin.php:136
 msgid "Update Content"
 msgstr "Actualizar contenido"
 
-#: admin/class-wherever-admin.php:134
+#: admin/class-wherever-admin.php:137
 msgid "View Content"
 msgstr "Ver contenido"
 
-#: admin/class-wherever-admin.php:135
+#: admin/class-wherever-admin.php:138
 msgid "Search Content"
 msgstr "Buscar contenido"
 
-#: admin/class-wherever-admin.php:136
+#: admin/class-wherever-admin.php:139
 msgid "Not found"
 msgstr "No encontrado"
 
-#: admin/class-wherever-admin.php:137
+#: admin/class-wherever-admin.php:140
 msgid "Not found in Trash"
 msgstr "No encontrado en papelera"
 
-#: admin/class-wherever-admin.php:138
+#: admin/class-wherever-admin.php:141
 msgid "Featured Image"
 msgstr "Imagen destacada"
 
-#: admin/class-wherever-admin.php:139
+#: admin/class-wherever-admin.php:142
 msgid "Set featured image"
 msgstr "Establecer imagen destacada"
 
-#: admin/class-wherever-admin.php:140
+#: admin/class-wherever-admin.php:143
 msgid "Remove featured image"
 msgstr "Eliminar imagen destacada"
 
-#: admin/class-wherever-admin.php:141
+#: admin/class-wherever-admin.php:144
 msgid "Use as featured image"
 msgstr "Usar como imagen destacada"
 
-#: admin/class-wherever-admin.php:142
+#: admin/class-wherever-admin.php:145
 msgid "Insert into item"
 msgstr "Insertar en el ítem"
 
-#: admin/class-wherever-admin.php:143
+#: admin/class-wherever-admin.php:146
 msgid "Uploaded to this Wherever"
 msgstr "Subido a éste Dondequiera"
 
-#: admin/class-wherever-admin.php:144
+#: admin/class-wherever-admin.php:147
 msgid "Items list"
 msgstr "Listado de ítemes"
 
-#: admin/class-wherever-admin.php:145
+#: admin/class-wherever-admin.php:148
 msgid "Items list navigation"
 msgstr "Navegación de listado de ítemes"
 
-#: admin/class-wherever-admin.php:146
+#: admin/class-wherever-admin.php:149
 msgid "Filter items list"
 msgstr "Filtrar listado de ítemes"
 
-#: admin/class-wherever-admin.php:149 admin/class-wherever-admin.php:224
+#: admin/class-wherever-admin.php:152 admin/class-wherever-admin.php:227
 msgid "Content"
 msgstr "Contenido"
 
-#: admin/class-wherever-admin.php:150
+#: admin/class-wherever-admin.php:153
 msgid "Post Type Description"
 msgstr "Descripción tipo de entrada"
 
-#: admin/class-wherever-admin.php:179
+#: admin/class-wherever-admin.php:182
 msgctxt "Taxonomy General Name"
 msgid "Places"
 msgstr "Lugares"
 
-#: admin/class-wherever-admin.php:180
+#: admin/class-wherever-admin.php:183
 msgctxt "Taxonomy Singular Name"
 msgid "Place"
 msgstr "Lugar"
 
-#: admin/class-wherever-admin.php:181
+#: admin/class-wherever-admin.php:184
 msgid "Places"
 msgstr "Lugar"
 
-#: admin/class-wherever-admin.php:182
+#: admin/class-wherever-admin.php:185
 msgid "All Places"
 msgstr "Todos los lugares"
 
-#: admin/class-wherever-admin.php:183
+#: admin/class-wherever-admin.php:186
 msgid "Parent Place"
 msgstr "Lugar padre"
 
-#: admin/class-wherever-admin.php:185
+#: admin/class-wherever-admin.php:188
 msgid "New Place Name"
 msgstr "Nuevo nombre del lugar"
 
-#: admin/class-wherever-admin.php:186
+#: admin/class-wherever-admin.php:189
 msgid "Add New Place"
 msgstr "Añadir nuevo lugar"
 
-#: admin/class-wherever-admin.php:187
+#: admin/class-wherever-admin.php:190
 msgid "Edit Place"
 msgstr "Editar lugar"
 
-#: admin/class-wherever-admin.php:188
+#: admin/class-wherever-admin.php:191
 msgid "Update Place"
 msgstr "Actualizar lugar"
 
-#: admin/class-wherever-admin.php:189
+#: admin/class-wherever-admin.php:192
 msgid "View Place"
 msgstr "Ver lugar"
 
-#: admin/class-wherever-admin.php:190
+#: admin/class-wherever-admin.php:193
 msgid "Separate places with commas"
 msgstr "Separar lugares con comas"
 
-#: admin/class-wherever-admin.php:191
+#: admin/class-wherever-admin.php:194
 msgid "Add or remove Places"
 msgstr "Añadir o eliminar lugares"
 
-#: admin/class-wherever-admin.php:192
+#: admin/class-wherever-admin.php:195
 msgid "Choose from the most used"
 msgstr "Elige entre los más utilizados"
 
-#: admin/class-wherever-admin.php:193
+#: admin/class-wherever-admin.php:196
 msgid "Popular Places"
 msgstr "Lugares populares"
 
-#: admin/class-wherever-admin.php:194
+#: admin/class-wherever-admin.php:197
 msgid "Search Places"
 msgstr "Buscar lugares"
 
-#: admin/class-wherever-admin.php:195
+#: admin/class-wherever-admin.php:198
 msgid "Not Found"
 msgstr "No encontrado"
 
-#: admin/class-wherever-admin.php:196
+#: admin/class-wherever-admin.php:199
 msgid "No Places"
 msgstr "Ningún lugar"
 
-#: admin/class-wherever-admin.php:197
+#: admin/class-wherever-admin.php:200
 msgid "Places list"
 msgstr "Listados de lugares"
 
-#: admin/class-wherever-admin.php:198
+#: admin/class-wherever-admin.php:201
 msgid "Places list navigation"
 msgstr "Navegación de listado de lugares"
 
 #: admin/class-wherever-admin.php:229
+msgid ""
+"Place content before, instead or after the content. See "
+"<strong>the_content();</strong> template function."
+msgstr ""
+"Coloca contenido antes, en vez de o después del contenido. Ver función de "
+"plantilla <strong>the_content();</strong>."
+
+#: admin/class-wherever-admin.php:232
 msgid "Sidebar"
 msgstr "Barra lateral"
 
 #: admin/class-wherever-admin.php:234
+msgid ""
+"Place content before the template sidebar. See <strong>get_sidebar();</"
+"strong> template function."
+msgstr ""
+"Coloca contenido antes del sidebar de la plantilla. Ver función de plantilla "
+"<strong>get_sidebar();</strong>."
+
+#: admin/class-wherever-admin.php:237
 msgid "Footer"
 msgstr "Pié"
+
+#: admin/class-wherever-admin.php:239
+msgid ""
+"Place content before the template footer. See <strong>get_footer();</strong> "
+"template function."
+msgstr ""
+"Coloca contenido antes del pié de la plantilla. Ver función de plantilla "
+"<strong>get_footer();</strong>."
 
 #: admin/partials/class-wherever-admin-display.php:21
 msgid "Settings for Wherever Content"
@@ -439,6 +463,17 @@ msgstr ""
 "Habilitando esta prestación se desactivará el editor de bloques (Gutenberg) "
 "para Dondequieras Contenidos y se incluirá Dondequieras Contenidos a las "
 "opciones de post types de SiteOrigin Page Builder."
+
+#: includes/class-wherever-helpers.php:178
+#, php-format
+msgid ""
+"Place content into the custom place \"%1$s\" refered by the slug \"%2$s\". "
+"See the <strong>do_action( 'wherever_place', '%2$s' );</strong> theme "
+"function."
+msgstr ""
+"Coloca contenido en el lugar personalizado \"%1$s\" referido por la clave "
+"\"%2$s\". Ver función de tema <strong>do_action(  'wherever_place',  "
+"'%2$s'  );</strong>"
 
 #~ msgid "Gutenberg editor"
 #~ msgstr "Editor de Gutenberg"
