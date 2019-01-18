@@ -18,11 +18,11 @@ More specifically, useful and tested – and the why everything started – it e
 3. Publish!
 
 ### Custom Wherever Places
-By default you can put Wherever Contents in 3 places:
+By default you can decide Wherever Contents to show in 3 places:
 
-- before, instead and after **the content** of other post and pages.
-- before the **footer** (see the `get_footer()` function in your theme) 
-- before the **sidebar** (see the `get_sidebar()` function in your theme)
+- before, instead and after **the content** of other post and pages (see the `the_content()` function in your theme).
+- before the **footer** (see the `get_footer()` function in your theme).
+- before the **sidebar** (see the `get_sidebar()` function in your theme).
 
 But you can add **custom places** to your theme wherever you want by registering new places in your themes function.php (like registering menus or sidebars) and declaring in your theme files where the custom places should display Wherever Content.
 
@@ -81,6 +81,9 @@ A common and useful example would be to build a multi-column footer section as a
 
 
 ##  Changelog
+
+**2.1.3**
+- UI guidance editing places
 
 **2.1.2**
 - code refactoring

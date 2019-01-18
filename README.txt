@@ -17,6 +17,9 @@ This WordPress plugin will enable content distribution across your site in a pos
 
 === Changelog ===
 
+**2.1.3**
+- UI guidance editing places
+
 **2.1.2**
 - code refactoring
 - place select options based on current registered places
