@@ -101,7 +101,7 @@ class Wherever_Public {
 	}
 	
 	/**
-	 * Setup $wherever and $places.
+	 * Setup $wherever and $places on wp_head action
 	 *
 	 * @see		Wherever::define_public_hooks()
 	 * @since	1.0.0
@@ -458,7 +458,11 @@ class Wherever_Public {
 		
 	}
 	
-	// Public api function for places in themes
+	/**
+	 * Output wherevers into custom places with do_action('wherever_place', '{place-slug}');
+	 * @param  string $place  place slug declared in do_action(); theme function
+	 * @return html           
+	 */
 	public function api_get_wherever_place( $place ) {
 		
 		$wherevers = $this->get_wherevers( $place );
