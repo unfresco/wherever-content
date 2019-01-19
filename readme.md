@@ -82,6 +82,9 @@ A common and useful example would be to build a multi-column footer section as a
 
 ##  Changelog
 
+**2.1.4**
+- UI guidance editing rules (switch to JS based)
+
 **2.1.3**
 - UI guidance editing places
 

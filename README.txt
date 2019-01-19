@@ -17,6 +17,9 @@ This WordPress plugin will enable content distribution across your site in a pos
 
 === Changelog ===
 
+**2.1.4**
+- UI guidance editing rules (switch to JS based)
+
 **2.1.3**
 - UI guidance editing places
 
