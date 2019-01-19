@@ -270,4 +270,89 @@ class Wherever_Admin {
 		
 		return $js;
 	}
+
+	/**
+	 * Adds wherever_place terms to the admin_js localisation variable
+	 * @param  array $js 
+	 * @return array     with wherever_place terms
+	 */
+	public function wherever_rules_for_admin_js( $js ) {
+		
+		$all = __( 'Show on all posts, pages and custom post types. Good for general purpose like site navigation and footers.', 'wherever' );
+		
+		$js['wherever_rules'] = array(
+			array(
+				'location_type' => 'all',
+				'condition' => '==',
+				'description' => $all,
+			),
+			array(
+				'location_type' => 'all',
+				'condition' => '!=',
+				'description' => $all,
+			),
+			array(
+				'location_type' => 'post',
+				'condition' => '==',
+				'description' => __( 'Show on the selected post.', 'wherever' ),
+			),
+			array(
+				'location_type' => 'post',
+				'condition' => '!=',
+				'description' => __( 'Don’t show on the selected post.', 'wherever' ),
+			),
+			array(
+				'location_type' => 'post_type',
+				'condition' => '==',
+				'description' => __( 'Show on the selected post type.', 'wherever' ),
+			),
+			array(
+				'location_type' => 'post_type',
+				'condition' => '!=',
+				'description' => __( 'Don’t show on the selected post type.', 'wherever' ),
+			),
+			array(
+				'location_type' => 'post_cat',
+				'condition' => '==',
+				'description' => __( 'Show on the selected post category.', 'wherever' ),
+			),
+			array(
+				'location_type' => 'post_cat',
+				'condition' => '!=',
+				'description' => __( 'Don’t show on the selected post category.', 'wherever' ),
+			),
+			array(
+				'location_type' => 'page',
+				'condition' => '==',
+				'description' => __( 'Show on the selected page.', 'wherever' ),
+			),
+			array(
+				'location_type' => 'page',
+				'condition' => '!=',
+				'description' => __( 'Don’t show on the selected page.', 'wherever' ),
+			),
+			array(
+				'location_type' => 'page_type',
+				'condition' => '==',
+				'description' => __( 'Show on the selected page type.', 'wherever' ),
+			),
+			array(
+				'location_type' => 'page_type',
+				'condition' => '!=',
+				'description' => __( 'Don’t on the selected page type.', 'wherever' ),
+			),
+			array(
+				'location_type' => 'page_parent',
+				'condition' => '==',
+				'description' => __( 'Show on children of the selected page.', 'wherever' ),
+			),
+			array(
+				'location_type' => 'page_parent',
+				'condition' => '!=',
+				'description' => __( 'Don’t show on children of the selected page.', 'wherever' ),
+			),
+		);
+		
+		return $js;
+	}
 }
