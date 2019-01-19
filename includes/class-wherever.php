@@ -113,7 +113,7 @@ class Wherever {
 		$this->meta_fields->boot();
 		
 		/**
-		 * The class for general purpuse functions
+		 * The class for general purpuse helper functions
 		 *
 		 */
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-wherever-helpers.php';
@@ -134,6 +134,21 @@ class Wherever {
 		 */
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/partials/class-wherever-admin-postmeta-fields.php';
 		
+		/**
+		 * Class for setting up the post-meta rules for the admin.
+		 */
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/partials/class-wherever-admin-postmeta-fields-rules.php';
+		
+		/**
+		 * Class for setting up the post-meta places for the admin.
+		 */
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/partials/class-wherever-admin-postmeta-fields-places.php';
+		
+		/**
+		 * Class helpers por setting up postmeta rule and place fields for the admin.
+		 */
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/partials/class-wherever-admin-postmeta-fields-helpers.php';
+
 		/**
 		 * Class adding for vendor compatibility.
 		 */
@@ -181,7 +196,10 @@ class Wherever {
 	private function define_admin_hooks() {
 		
 		$plugin_admin = new Wherever_Admin( $this->get_plugin_name(), $this->version_control->get_version(), $this->helpers );
-		$plugin_admin_postmeta = new Wherever_Admin_Postmeta_Fields();
+		$plugin_admin_postmeta_field_helpers = new Wherever_Admin_Postmeta_Fields_Helpers();
+		$plugin_admin_postmeta_field_rules = new Wherever_Admin_Postmeta_Fields_Rules( $plugin_admin_postmeta_field_helpers );
+		$plugin_admin_postmeta_field_places = new Wherever_Admin_Postmeta_Fields_Places( $plugin_admin_postmeta_field_helpers );
+		$plugin_admin_postmeta_fields = new Wherever_Admin_Postmeta_Fields();
 		$plugin_admin_settings = new Wherever_Admin_Settings();
 		$plugin_admin_vendor = new Wherever_Admin_Vendor_Compat();
 		$plugin_admin_display = new Wherever_Admin_Display();
@@ -210,9 +228,25 @@ class Wherever {
 			$this->loader->add_filter( 'wherever_helpers/admin_js', $plugin_admin, 'wherever_places_for_admin_js' );
 			$this->loader->add_filter( 'wherever_helpers/admin_js', $plugin_admin, 'wherever_rules_for_admin_js' );
 
-			$this->loader->add_action( 'carbon_fields_register_fields', $plugin_admin_postmeta, 'carbon_fields_post_meta' );
-			$this->loader->add_action( 'carbon_fields_post_meta_container_saved', $plugin_admin_postmeta, 'carbon_fields_save' );
-			$this->loader->add_filter( 'save_post', $plugin_admin_postmeta, 'save_post' );
+			$this->loader->add_action( 'carbon_fields_register_fields', $plugin_admin_postmeta_fields, 'carbon_fields_post_meta' );
+			$this->loader->add_action( 'carbon_fields_post_meta_container_saved', $plugin_admin_postmeta_fields, 'carbon_fields_save' );
+			
+			$this->loader->add_filter( 'wherever_postmeta_rules', $plugin_admin_postmeta_field_rules, 'location_type', 10, 1 );
+			$this->loader->add_filter( 'wherever_postmeta_rules', $plugin_admin_postmeta_field_rules, 'location_condition', 10, 1 );
+			$this->loader->add_filter( 'wherever_postmeta_rules', $plugin_admin_postmeta_field_rules, 'post', 10, 1 );
+			$this->loader->add_filter( 'wherever_postmeta_rules', $plugin_admin_postmeta_field_rules, 'post_type', 10, 1 );
+			$this->loader->add_filter( 'wherever_postmeta_rules', $plugin_admin_postmeta_field_rules, 'post_cat', 10, 1 );
+			$this->loader->add_filter( 'wherever_postmeta_rules', $plugin_admin_postmeta_field_rules, 'page', 10, 1 );
+			$this->loader->add_filter( 'wherever_postmeta_rules', $plugin_admin_postmeta_field_rules, 'page_type', 10, 1 );
+			$this->loader->add_filter( 'wherever_postmeta_rules', $plugin_admin_postmeta_field_rules, 'archive_post_type', 10, 1 );
+			$this->loader->add_filter( 'wherever_postmeta_rules', $plugin_admin_postmeta_field_rules, 'rule_info', 10, 1 );
+			
+			$this->loader->add_filter( 'wherever_postmeta_places', $plugin_admin_postmeta_field_places, 'place', 10, 1 );
+			$this->loader->add_filter( 'wherever_postmeta_places', $plugin_admin_postmeta_field_places, 'placement', 10, 1 );
+			$this->loader->add_filter( 'wherever_postmeta_places', $plugin_admin_postmeta_field_places, 'order', 10, 1 );
+			$this->loader->add_filter( 'wherever_postmeta_places', $plugin_admin_postmeta_field_places, 'place_info', 10, 1 );
+			
+			$this->loader->add_filter( 'save_post', $plugin_admin_postmeta_fields, 'save_post' );
 
 			$this->loader->add_action( 'pll_get_post_types', $plugin_admin_vendor, 'polylang_compat', 10, 2 );
 			
