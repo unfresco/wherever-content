@@ -95,7 +95,7 @@ class Wherever_Admin {
 		$handle = $this->plugin_name . '-admin';
 		
 		wp_enqueue_script( $handle, plugin_dir_url( __FILE__ ) . 'js/wherever-admin.js', array( 'jquery', 'underscore' ), $this->version, false );
-		wp_localize_script( $handle, 'wherever_admin_js', $this->helpers->get_admin_js() );
+		wp_localize_script( $handle, 'wherever_admin_js', apply_filters( 'wherever_admin/admin_js', array() ) );
 		
 	}
 	
@@ -332,14 +332,14 @@ class Wherever_Admin {
 				'description' => __( 'Don’t show on the selected page.', 'wherever' ),
 			),
 			array(
-				'location_type' => 'page_type',
+				'location_type' => 'template_type',
 				'condition' => '==',
-				'description' => __( 'Show on the selected page type.', 'wherever' ),
+				'description' => __( 'Show on the selected template type.', 'wherever' ),
 			),
 			array(
-				'location_type' => 'page_type',
+				'location_type' => 'template_type',
 				'condition' => '!=',
-				'description' => __( 'Don’t on the selected page type.', 'wherever' ),
+				'description' => __( 'Don’t on the selected template type.', 'wherever' ),
 			),
 			array(
 				'location_type' => 'page_parent',

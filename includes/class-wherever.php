@@ -155,7 +155,7 @@ class Wherever {
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/partials/class-wherever-admin-vendor-compat.php';
 		
 		/**
-		 * Clas for setting up the settings page.
+		 * Class for setting up the settings page.
 		 */
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/partials/class-wherever-admin-settings.php';
 		
@@ -165,7 +165,11 @@ class Wherever {
 		 */
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'public/class-wherever-public.php';
 		
-		
+		/**
+		 * Class for setting up the rules for the public display logic.
+		 * 
+		 */
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'public/partials/class-wherever-public-rules.php';
 
 	}
 
@@ -225,26 +229,29 @@ class Wherever {
 			$this->loader->add_action( 'init', $plugin_admin, 'setup_default_places' );
 			$this->loader->add_action( 'init', $plugin_admin, 'custom_post_types' );
 			
-			$this->loader->add_filter( 'wherever_helpers/admin_js', $plugin_admin, 'wherever_places_for_admin_js' );
-			$this->loader->add_filter( 'wherever_helpers/admin_js', $plugin_admin, 'wherever_rules_for_admin_js' );
+			$this->loader->add_filter( 'wherever_admin/admin_js', $plugin_admin, 'wherever_places_for_admin_js' );
+			$this->loader->add_filter( 'wherever_admin/admin_js', $plugin_admin, 'wherever_rules_for_admin_js' );
 
 			$this->loader->add_action( 'carbon_fields_register_fields', $plugin_admin_postmeta_fields, 'carbon_fields_post_meta' );
 			$this->loader->add_action( 'carbon_fields_post_meta_container_saved', $plugin_admin_postmeta_fields, 'carbon_fields_save' );
 			
-			$this->loader->add_filter( 'wherever_postmeta_rules', $plugin_admin_postmeta_field_rules, 'location_type', 10, 1 );
-			$this->loader->add_filter( 'wherever_postmeta_rules', $plugin_admin_postmeta_field_rules, 'location_condition', 10, 1 );
-			$this->loader->add_filter( 'wherever_postmeta_rules', $plugin_admin_postmeta_field_rules, 'post', 10, 1 );
-			$this->loader->add_filter( 'wherever_postmeta_rules', $plugin_admin_postmeta_field_rules, 'post_type', 10, 1 );
-			$this->loader->add_filter( 'wherever_postmeta_rules', $plugin_admin_postmeta_field_rules, 'post_cat', 10, 1 );
-			$this->loader->add_filter( 'wherever_postmeta_rules', $plugin_admin_postmeta_field_rules, 'page', 10, 1 );
-			$this->loader->add_filter( 'wherever_postmeta_rules', $plugin_admin_postmeta_field_rules, 'page_type', 10, 1 );
-			$this->loader->add_filter( 'wherever_postmeta_rules', $plugin_admin_postmeta_field_rules, 'archive_post_type', 10, 1 );
-			$this->loader->add_filter( 'wherever_postmeta_rules', $plugin_admin_postmeta_field_rules, 'rule_info', 10, 1 );
+			$this->loader->add_filter( 'wherever_admin/rules', $plugin_admin_postmeta_field_rules, 'location_type', 1, 1 );
+			$this->loader->add_filter( 'wherever_admin/rules/location_type', $plugin_admin_postmeta_field_rules, 'location_type_options', 10, 1 );
+			$this->loader->add_filter( 'wherever_admin/rules', $plugin_admin_postmeta_field_rules, 'location_condition', 2, 1 );
+			$this->loader->add_filter( 'wherever_admin/rules', $plugin_admin_postmeta_field_rules, 'post', 10, 1 );
+			$this->loader->add_filter( 'wherever_admin/rules', $plugin_admin_postmeta_field_rules, 'post_type', 20, 1 );
+			$this->loader->add_filter( 'wherever_admin/rules', $plugin_admin_postmeta_field_rules, 'post_cat', 30, 1 );
+			$this->loader->add_filter( 'wherever_admin/rules', $plugin_admin_postmeta_field_rules, 'page', 40, 1 );
+			$this->loader->add_filter( 'wherever_admin/rules', $plugin_admin_postmeta_field_rules, 'template_type', 50, 1 );
+			$this->loader->add_filter( 'wherever_admin/rules', $plugin_admin_postmeta_field_rules, 'archive_post_type', 60, 1 );
+			$this->loader->add_filter( 'wherever_admin/rules', $plugin_admin_postmeta_field_rules, 'rule_info', 100, 1 );
+			// TODO: Into plugin
+			#$this->loader->add_filter( 'wherever_admin/rules', $plugin_admin_postmeta_field_rules, 'user_state', 10, 1 );
 			
-			$this->loader->add_filter( 'wherever_postmeta_places', $plugin_admin_postmeta_field_places, 'place', 10, 1 );
-			$this->loader->add_filter( 'wherever_postmeta_places', $plugin_admin_postmeta_field_places, 'placement', 10, 1 );
-			$this->loader->add_filter( 'wherever_postmeta_places', $plugin_admin_postmeta_field_places, 'order', 10, 1 );
-			$this->loader->add_filter( 'wherever_postmeta_places', $plugin_admin_postmeta_field_places, 'place_info', 10, 1 );
+			$this->loader->add_filter( 'wherever_admin/places', $plugin_admin_postmeta_field_places, 'place', 10, 1 );
+			$this->loader->add_filter( 'wherever_admin/places', $plugin_admin_postmeta_field_places, 'placement', 10, 1 );
+			$this->loader->add_filter( 'wherever_admin/places', $plugin_admin_postmeta_field_places, 'order', 10, 1 );
+			$this->loader->add_filter( 'wherever_admin/places', $plugin_admin_postmeta_field_places, 'place_info', 10, 1 );
 			
 			$this->loader->add_filter( 'save_post', $plugin_admin_postmeta_fields, 'save_post' );
 
@@ -268,7 +275,8 @@ class Wherever {
 	private function define_public_hooks() {
 
 		$plugin_public = new Wherever_Public( $this->get_plugin_name(), $this->version_control->get_version(), $this->helpers  );
-
+		$plugin_public_rules = new Wherever_Public_Rules();
+		
 		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_styles' );
 		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_scripts' );
 		
@@ -277,6 +285,19 @@ class Wherever {
 		
 		// API
 		$this->loader->add_action( 'wherever_place', $plugin_public, 'api_get_wherever_place', 10, 1 );
+		
+		// Rule for displaying wherevers
+		$this->loader->add_filter( 'wherever_public/rules', $plugin_public_rules, 'cleanup', 10, 1 );
+		$this->loader->add_filter( 'wherever_public/rules/location_type/all', $plugin_public_rules, 'all', 10, 2 );
+		$this->loader->add_filter( 'wherever_public/rules/location_type/post', $plugin_public_rules, 'post', 10, 2 );
+		$this->loader->add_filter( 'wherever_public/rules/location_type/post_cat', $plugin_public_rules, 'post_cat', 10, 2 );
+		$this->loader->add_filter( 'wherever_public/rules/location_type/post_type', $plugin_public_rules, 'post_type', 10, 2 );
+		$this->loader->add_filter( 'wherever_public/rules/location_type/page', $plugin_public_rules, 'page', 10, 2 );
+		$this->loader->add_filter( 'wherever_public/rules/location_type/page_parent', $plugin_public_rules, 'page_parent', 10, 2 );
+		$this->loader->add_filter( 'wherever_public/rules/location_type/page_type', $plugin_public_rules, 'template_type', 10, 2 );
+		$this->loader->add_filter( 'wherever_public/rules/location_type/template_type', $plugin_public_rules, 'template_type', 10, 2 );
+		// TODO: user state rule into plugin
+		#$this->loader->add_filter( 'wherever_public/rules/location_type/user_state', $plugin_public_rules, 'user_state', 10, 2 );
 		
 		// Filters
 		$this->loader->add_filter( 'the_content', $plugin_public, 'the_content' );

@@ -121,11 +121,22 @@ class Wherever_Public {
 			
 		while ( $query->have_posts() ): $query->the_post();
 			
+			$wherever_rules = carbon_get_the_post_meta('wherever_rules');
+			$wherever_places = carbon_get_the_post_meta('wherever_places');
+			
+			foreach( $wherever_rules as $key => $rules ) {
+				$wherever_rules[$key] = apply_filters( 'wherever_public/rules', $rules );
+			}
+			
+			foreach( $wherever_places as $key => $places ) {
+				$wherever_places[$key] = apply_filters( 'wherever_public/places', $places );
+			}
+			
 			$this->wherevers[] = array(
 				'post'	=> $post,
 				'the_content' => apply_filters('the_content', $post->post_content ), // Todo: apply_filters only on wherevers to display in build_wherevers
-				'wherever_rules' => carbon_get_the_post_meta('wherever_rules'),
-				'wherever_places' => carbon_get_the_post_meta('wherever_places'),
+				'wherever_rules' => $wherever_rules,
+				'wherever_places' => $wherever_places,
 				'in_current_location' => false
 			);
 			
@@ -201,93 +212,28 @@ class Wherever_Public {
 		
 		$is_in = array();
 		
-		// Check every location on this wherever
-		foreach( $wherever['wherever_rules'] as $location ){
+		// Hook every location_type on this wherever
+		foreach( $wherever['wherever_rules'] as $rules ) {
 			
-			$condition = ( '==' == $location['location_condition'] ? true : false );
+			foreach( $rules as $key => $value ) {
+				$rule_hook_tag = 'wherever_public/rules';
+				$rule_key_hook_tag = $rule_hook_tag . '/' . $key;
+				$rule_key_value_hook_tag= $rule_hook_tag . '/' . $key . '/' . $value;
+				
+				$is_in = apply_filters( $rule_key_hook_tag, $is_in, $rules );
+				$is_in = apply_filters( $rule_key_value_hook_tag, $is_in, $rules );
 			
-			switch ( $location['location_type'] ) {
-				
-				case 'all' : // Show everywhere
-				
-					$is_in[] = true;
-					
-					break;
-				
-				case get_post_type( $post ) : // Has a rule about this post_type’s location_type f.e. 'page' == $location['location_type']
-					
-					// Has a rule on this specific post_type
-					if ( $location[ get_post_type( $post ) ] == $post->ID ) {	
-						
-						$is_in[] = $condition;
-						
-					}
-					
-					break;
-				
-				case 'post_type' : // Has a rule on the post_type location_type
-					
-					// Has a rule on this specific post_type
-					if ( $location['post_type'] == get_post_type( $post ) ) {
-						
-						$is_in[] = $condition;
-						
-					}
-					
-					break;
-				
-				case 'page_parent' : // Has a rule on the page parent
-					
-					// Has a rule on this post parent
-					if ( $location['page'] == wp_get_post_parent_id( $post->ID ) ) {
-
-						$is_in[] = $condition;
-						
-					}
-					
-					break;
-				
-				case 'page_type' : // Has a rule on the page type
-					
-					if ( 'archive' == $location['page_type'] && is_archive() ) {
-						
-						$is_in[] = $condition;
-						
-					} else if ( 'front_page' == $location['page_type']  && is_front_page() ) {
-						
-						$is_in[] = $condition;
-						
-					} else if ( 'blog' == $location['page_type']  && is_home() ) {
-						
-						$is_in[] = $condition;
-						
-					}
-					
-					break;
-					
-				case 'post_cat' : // Has a rule on a specific post category
-					
-					$terms = get_the_terms( $post, 'category' );
-				
-					if ( !empty( $terms ) ) {
-						
-						foreach( $terms as $term ) {
-							
-							if ( $term->term_id == $location['post_cat'] ) {
-								$is_in[] = $condition;
-							}
-							
-						}
-						
-					}
-					
-					break;
 			}
-			
+
 		}
 		
+		$is_in_result = ( !empty($is_in) && ! in_array( '!=', $is_in ) ? true : false );
+		
+		if ( $is_in_result ) {
+			$wherever = apply_filters('wherever_rules/is_in', $wherever );
+		}
 		// Returns only true if no false in array
-		return ( !empty($is_in) && !in_array( false, $is_in ) ? true : false );
+		return $is_in_result;
 		
 	}
 	
@@ -461,7 +407,7 @@ class Wherever_Public {
 	/**
 	 * Output wherevers into custom places with do_action('wherever_place', '{place-slug}');
 	 * @param  string $place  place slug declared in do_action(); theme function
-	 * @return html           
+	 * @return string html output
 	 */
 	public function api_get_wherever_place( $place ) {
 		

@@ -34,7 +34,7 @@ class Wherever_Admin_Postmeta_Fields {
 						'singular_name' => __( 'rule', 'wherever' ),
 						'plural_name' => __( 'rules', 'wherever' )
 					))
-					->add_fields( apply_filters( 'wherever_postmeta_rules', array() ) )
+					->add_fields( apply_filters( 'wherever_admin/rules', array() ) )
 					->set_default_value(array(
 						array( 'location_type' => 'all' )
 					))
@@ -45,7 +45,7 @@ class Wherever_Admin_Postmeta_Fields {
 						'singular_name' => __( 'place', 'wherever' ),
 						'plural_name' => __( 'places', 'wherever' )
 					))
-					->add_fields( apply_filters( 'wherever_postmeta_places', array() ) )
+					->add_fields( apply_filters( 'wherever_admin/places', array() ) )
 					->set_default_value(array(
 						array(
 							'place' => 'content',

@@ -117,13 +117,19 @@
 	}
 	
 	function getRuleDescription( locationTypeFieldValue, locationConditionFieldValue ) {
-		var string = '';
+		var
+		dashicon = '<span class="dashicons dashicons-move"></span>',
+		string = '';
 
 		_.each( wherever_admin_js['wherever_rules'], function( value ){
 			if ( locationTypeFieldValue === value.location_type && locationConditionFieldValue === value.condition ) {
-				string = '<p><span class="dashicons dashicons-move"></span> ' + value.description + '</p>';
+				string = '<p>' + dashicon + ' ' + value.description + '</p>';
 			}
 		});
+		
+		if ( '' === string ) {
+			string = '<p>' + dashicon + ' No description available</p>';
+		}
 		
 		return string;
 		

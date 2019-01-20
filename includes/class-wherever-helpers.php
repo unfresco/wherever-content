@@ -42,14 +42,6 @@ class Wherever_Helpers {
 	
 	}
 	
-	public function get_admin_js() {
-		
-		$js = array();
-		$js = apply_filters( 'wherever_helpers/admin_js', $js );
-		
-		return $js;
-	}
-	
 	public function get_wherever_place_terms() {
 		$terms = $this->wherever_places_terms;
 		
