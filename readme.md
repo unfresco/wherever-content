@@ -82,6 +82,11 @@ A common and useful example would be to build a multi-column footer section as a
 
 ##  Changelog
 
+**2.1.5**
+- Filter based rules setup in admin and public
+- New template type location rules with check for 404, authors and search
+- Fix Blog (is_home()) template type  
+
 **2.1.4**
 - UI guidance editing rules (switch to JS based)
 

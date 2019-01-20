@@ -17,6 +17,11 @@ This WordPress plugin will enable content distribution across your site in a pos
 
 === Changelog ===
 
+**2.1.5**
+- Filter based rules setup in admin and public
+- New template type location rules with check for 404, authors and search
+- Fix Blog (is_home()) template type 
+
 **2.1.4**
 - UI guidance editing rules (switch to JS based)
 
