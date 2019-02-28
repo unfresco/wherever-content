@@ -1,5 +1,8 @@
 <?php
 
+
+namespace Wherever_Content;
+
 /**
  * Define the internationalization functionality
  *
@@ -24,7 +27,7 @@
  * @subpackage Wherever/includes
  * @author     Adrián Ortiz Arandes <adrian@grell.es>
  */
-class Wherever_i18n {
+class i18n {
 
 
 	/**

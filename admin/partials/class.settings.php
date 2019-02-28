@@ -1,10 +1,12 @@
 <?php
 
+namespace Wherever_Content\Admin;
+
 use Carbon_Fields\Container;
 use Carbon_Fields\Field;
 
 
-class Wherever_Admin_Settings {
+class Settings {
 	
 	function __construct() {
 		

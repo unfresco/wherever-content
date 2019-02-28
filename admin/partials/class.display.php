@@ -1,7 +1,8 @@
 <?php
 
-class Wherever_Admin_Display 
-{
+namespace Wherever_Content\Admin;
+
+class Display {
 	
 	function __construct() {
 		$this->setup_actions();

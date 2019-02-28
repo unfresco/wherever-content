@@ -1,7 +1,9 @@
 <?php
 
+namespace Wherever_Content\Admin;
 
-class Wherever_Admin_Postmeta_Fields_Helpers {
+
+class Postmeta_Fields_Helpers {
 	
 	function __construct() {
 		
@@ -59,7 +61,7 @@ class Wherever_Admin_Postmeta_Fields_Helpers {
 				'posts_per_page' => -1
 			);
 			
-			$query = new WP_Query( $args );
+			$query = new \WP_Query( $args );
 	
 			if ( $query->have_posts() ){
 				

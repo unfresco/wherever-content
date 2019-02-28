@@ -1,9 +1,12 @@
 <?php
 
+namespace Wherever_Content\Wherever_Public;
+
+
 /**
  * 
  */
-class Wherever_Public_Rules {
+class Rules {
 	
 	function __construct() {
 		

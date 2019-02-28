@@ -1,10 +1,11 @@
 <?php 
 
+namespace Wherever_Content\Admin;
+
 /**
  * All functions relating other plugins come here
  */
-class Wherever_Admin_Vendor_Compat
-{
+class Vendor_Compat {
 	
 	function __construct() {
 		

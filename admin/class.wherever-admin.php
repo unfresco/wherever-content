@@ -10,6 +10,8 @@
  * @subpackage Wherever/admin
  */
 
+namespace Wherever_Content;
+
 use Carbon_Fields\Container;
 use Carbon_Fields\Field;
 

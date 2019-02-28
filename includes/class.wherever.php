@@ -1,32 +1,7 @@
 <?php
 
-/**
- * The file that defines the core plugin class
- *
- * A class definition that includes attributes and functions used across both the
- * public-facing side of the site and the admin area.
- *
- * @link       http://grell.es
- * @since      1.0.0
- *
- * @package    Wherever
- * @subpackage Wherever/includes
- */
+namespace Wherever_Content;
 
-/**
- * The core plugin class.
- *
- * This is used to define internationalization, admin-specific hooks, and
- * public-facing site hooks.
- *
- * Also maintains the unique identifier of this plugin as well as the current
- * version of the plugin.
- *
- * @since      1.0.0
- * @package    Wherever
- * @subpackage Wherever/includes
- * @author     Adrián Ortiz Arandes <adrian@grell.es>
- */
 class Wherever {
 
 	/**
@@ -90,86 +65,91 @@ class Wherever {
 		 * The class responsible for orchestrating the actions and filters of the
 		 * core plugin.
 		 */
-		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-wherever-loader.php';
-		$this->loader = new Wherever_Loader();
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class.loader.php';
+		$this->loader = new Loader();
 		
 		/**
 		 * The class responsible for defining internationalization functionality
 		 * of the plugin.
 		 */
-		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-wherever-i18n.php';
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class.i18n.php';
 		
 		/**
 		 * Version control 
 		 */
-		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-wherever-version-control.php';
-		$this->version_control = new Wherever_Version_Control();
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class.version-control.php';
+		$this->version_control = new Version_Control();
 
 		/**
-		 * Load Carbon fields with composer autoload
+		 * Load Carbon fields as plugin
 		 */
-		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-wherever-metafields.php';
-		$this->meta_fields = new Wherever_Metafields();
-		$this->meta_fields->boot();
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class.metafields.php';
+		$this->meta_fields = new Metafields();
 		
 		/**
 		 * The class for general purpuse helper functions
 		 *
 		 */
-		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-wherever-helpers.php';
-		$this->helpers = new Wherever_Helpers();
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class.helpers.php';
+		$this->helpers = new Helpers();
 		
 		/**
 		 * Class with admin rendering functions
 		 */
-		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/partials/class-wherever-admin-display.php';
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/partials/class.display.php';
 		
 		/**
 		 * The class responsible for defining all actions that occur in the admin area.
 		 */
-		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/class-wherever-admin.php';
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/class.wherever-admin.php';
 		
 		/**
 		 * Class for setting up the post-meta fields of the wherever CPT.
 		 */
-		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/partials/class-wherever-admin-postmeta-fields.php';
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/partials/class.postmeta-fields.php';
 		
 		/**
 		 * Class for setting up the post-meta rules for the admin.
 		 */
-		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/partials/class-wherever-admin-postmeta-fields-rules.php';
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/partials/class.postmeta-fields-rules.php';
 		
 		/**
 		 * Class for setting up the post-meta places for the admin.
 		 */
-		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/partials/class-wherever-admin-postmeta-fields-places.php';
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/partials/class.postmeta-fields-places.php';
 		
 		/**
 		 * Class helpers por setting up postmeta rule and place fields for the admin.
 		 */
-		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/partials/class-wherever-admin-postmeta-fields-helpers.php';
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/partials/class.postmeta-fields-helpers.php';
 
 		/**
 		 * Class adding for vendor compatibility.
 		 */
-		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/partials/class-wherever-admin-vendor-compat.php';
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/partials/class.vendor-compat.php';
 		
 		/**
 		 * Class for setting up the settings page.
 		 */
-		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/partials/class-wherever-admin-settings.php';
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/partials/class.settings.php';
 		
 		/**
 		 * The class responsible for defining all actions that occur in the public-facing
 		 * side of the site.
 		 */
-		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'public/class-wherever-public.php';
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'public/class.wherever-public.php';
 		
 		/**
 		 * Class for setting up the rules for the public display logic.
 		 * 
 		 */
-		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'public/partials/class-wherever-public-rules.php';
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'public/partials/class.rules.php';
+		
+		/**
+		 * Public API functions
+		 * 
+		 */
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'public/functions.php';
 
 	}
 
@@ -184,7 +164,7 @@ class Wherever {
 	 */
 	private function set_locale() {
 
-		$plugin_i18n = new Wherever_i18n();
+		$plugin_i18n = new i18n();
 
 		$this->loader->add_action( 'plugins_loaded', $plugin_i18n, 'load_plugin_textdomain' );
 
@@ -200,13 +180,13 @@ class Wherever {
 	private function define_admin_hooks() {
 		
 		$plugin_admin = new Wherever_Admin( $this->get_plugin_name(), $this->version_control->get_version(), $this->helpers );
-		$plugin_admin_postmeta_field_helpers = new Wherever_Admin_Postmeta_Fields_Helpers();
-		$plugin_admin_postmeta_field_rules = new Wherever_Admin_Postmeta_Fields_Rules( $plugin_admin_postmeta_field_helpers );
-		$plugin_admin_postmeta_field_places = new Wherever_Admin_Postmeta_Fields_Places( $plugin_admin_postmeta_field_helpers );
-		$plugin_admin_postmeta_fields = new Wherever_Admin_Postmeta_Fields();
-		$plugin_admin_settings = new Wherever_Admin_Settings();
-		$plugin_admin_vendor = new Wherever_Admin_Vendor_Compat();
-		$plugin_admin_display = new Wherever_Admin_Display();
+		$plugin_admin_postmeta_field_helpers = new \Wherever_Content\Admin\Postmeta_Fields_Helpers();
+		$plugin_admin_postmeta_field_rules = new \Wherever_Content\Admin\Postmeta_Fields_Rules( $plugin_admin_postmeta_field_helpers );
+		$plugin_admin_postmeta_field_places = new \Wherever_Content\Admin\Postmeta_Fields_Places( $plugin_admin_postmeta_field_helpers );
+		$plugin_admin_postmeta_fields = new \Wherever_Content\Admin\Postmeta_Fields();
+		$plugin_admin_settings = new \Wherever_Content\Admin\Settings();
+		$plugin_admin_vendor = new \Wherever_Content\Admin\Vendor_Compat();
+		$plugin_admin_display = new \Wherever_Content\Admin\Display();
 		
 		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_styles' );
 		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_scripts' );
@@ -273,9 +253,9 @@ class Wherever {
 	 * @access   private
 	 */
 	private function define_public_hooks() {
-
+		
 		$plugin_public = new Wherever_Public( $this->get_plugin_name(), $this->version_control->get_version(), $this->helpers  );
-		$plugin_public_rules = new Wherever_Public_Rules();
+		$plugin_public_rules = new \Wherever_Content\Wherever_Public\Rules();
 		
 		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_styles' );
 		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_scripts' );

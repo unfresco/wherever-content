@@ -1,9 +1,11 @@
 <?php
 
+namespace Wherever_Content;
+
 /**
  * 
  */
-class Wherever_Version_Control extends Wherever {
+class Version_Control extends Wherever {
 	
 	protected $version;
 	

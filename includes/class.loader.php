@@ -1,5 +1,7 @@
 <?php
 
+namespace Wherever_Content;
+
 /**
  * Register all actions and filters for the plugin
  *
@@ -21,7 +23,7 @@
  * @subpackage Wherever/includes
  * @author     Adrián Ortiz Arandes <adrian@grell.es>
  */
-class Wherever_Loader {
+class Loader {
 
 	/**
 	 * The array of actions registered with WordPress.

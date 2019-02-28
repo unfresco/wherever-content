@@ -1,10 +1,12 @@
 <?php
 
+namespace Wherever_Content\Admin;
+
 use Carbon_Fields\Container;
 use Carbon_Fields\Field;
 
 
-class Wherever_Admin_Postmeta_Fields_Places {
+class Postmeta_Fields_Places {
 	
 	private $helpers;
 	

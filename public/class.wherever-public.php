@@ -1,5 +1,7 @@
 <?php
 
+namespace Wherever_Content;
+
 /**
  * The public-facing functionality of the plugin.
  *
@@ -9,8 +11,6 @@
  * @package    Wherever
  * @subpackage Wherever/public
  */
-
-require_once plugin_dir_path( dirname( __FILE__ ) ) . 'public/wherever-public-api.php';
 
 /**
  * The public-facing functionality of the plugin.
@@ -114,7 +114,7 @@ class Wherever_Public {
 			'post_status' => 'publish'
 		);
 		
-		$query = new WP_Query($args);
+		$query = new \WP_Query($args);
 		
 		if ( !$query->have_posts() )
 			return;

@@ -1,5 +1,7 @@
 <?php
 
+namespace Wherever_Content;
+
 /**
  * The file to have a place to put all the general purpuse helper functions
  *
@@ -13,7 +15,7 @@
  * @subpackage Wherever/includes
  */
 
-class Wherever_Helpers {
+class Helpers {
 	
 	private $theme;
 	
@@ -40,6 +42,17 @@ class Wherever_Helpers {
 		
 		return $bIsRest;
 	
+	}
+	
+	public function is_metafields_loaded() {
+		
+		if ( empty( $this->metafields_loaded ) ) {
+			$metafields = new Metafields();
+			$this->metafields_loaded = $metafields->is_loaded();
+		}
+		
+		return $this->metafields_loaded;
+
 	}
 	
 	public function get_wherever_place_terms() {
@@ -200,7 +213,11 @@ class Wherever_Helpers {
 	}
 
 	public function register_wherever_places( $places ) {
-
+		
+		if ( ! $this->is_metafields_loaded() ) {
+			return;
+		}
+		
 		if ( !empty( $places ) ) {
 			// Check if current registered is lower than the registered in wherever_status registered places
 			$options = get_option( 'wherever_status' );
