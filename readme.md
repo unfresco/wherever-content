@@ -82,6 +82,9 @@ A common and useful example would be to build a multi-column footer section as a
 
 ##  Changelog
 
+**2.1.6**
+- Fix carbon fields initialization errors
+
 **2.1.5**
 - Filter based rules setup in admin and public
 - New template type location rules with check for 404, authors and search

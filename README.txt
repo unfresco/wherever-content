@@ -17,6 +17,9 @@ This WordPress plugin will enable content distribution across your site in a pos
 
 === Changelog ===
 
+**2.1.6**
+- Fix carbon fields initialization errors
+
 **2.1.5**
 - Filter based rules setup in admin and public
 - New template type location rules with check for 404, authors and search

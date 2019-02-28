@@ -11,7 +11,7 @@
  * Plugin URI:        http://wherever.grell.es
  * GitHub Plugin URI: boquiabierto/wherever-content
  * Description:       Put reusable content wherever you want.
- * Version:           2.1.5
+ * Version:           2.1.6
  * Author:            Adrián Ortiz Arandes
  * Author URI:        http://grell.es
  * License:           GPL-2.0+
@@ -19,6 +19,7 @@
  * Text Domain:       wherever
  * Domain Path:       /languages
  */
+
 
 // If this file is called directly, abort.
 if ( ! defined( 'WPINC' ) ) {
@@ -29,28 +30,28 @@ if ( ! defined( 'WPINC' ) ) {
  * The code that runs during plugin activation.
  * This action is documented in includes/class-wherever-activator.php
  */
-function activate_wherever() {
-	require_once plugin_dir_path( __FILE__ ) . 'includes/class-wherever-activator.php';
-	Wherever_Activator::activate();
+function activate_wherever_content() {
+	require_once plugin_dir_path( __FILE__ ) . 'includes/class.activator.php';
+	Wherever_Content_Activator::activate();
 }
 
 /**
  * The code that runs during plugin deactivation.
  * This action is documented in includes/class-wherever-deactivator.php
  */
-function deactivate_wherever() {
-	require_once plugin_dir_path( __FILE__ ) . 'includes/class-wherever-deactivator.php';
-	Wherever_Deactivator::deactivate();
+function deactivate_wherever_content() {
+	require_once plugin_dir_path( __FILE__ ) . 'includes/class.deactivator.php';
+	Wherever_Content_Deactivator::deactivate();
 }
 
-register_activation_hook( __FILE__, 'activate_wherever' );
-register_deactivation_hook( __FILE__, 'deactivate_wherever' );
+register_activation_hook( __FILE__, 'activate_wherever_content' );
+register_deactivation_hook( __FILE__, 'deactivate_wherever_content' );
 
 /**
  * The core plugin class that is used to define internationalization,
  * admin-specific hooks, and public-facing site hooks.
  */
-require plugin_dir_path( __FILE__ ) . 'includes/class-wherever.php';
+require plugin_dir_path( __FILE__ ) . 'includes/class.wherever.php';
 
 /**
  * Begins execution of the plugin.
@@ -61,10 +62,10 @@ require plugin_dir_path( __FILE__ ) . 'includes/class-wherever.php';
  *
  * @since    1.0.0
  */
-function run_wherever() {
+function run_wherever_content() {
 
-	$plugin = new Wherever();
+	$plugin = new \Wherever_Content\Wherever();
 	$plugin->run();
 
 }
-run_wherever();
+run_wherever_content();
