@@ -232,7 +232,7 @@ class Helpers {
 						$new_registered_places[] = $place_term_id;
 					}
 					
-					$options['registered_places'] = $new_registered_places;
+					$options['registered_places'][$this->theme_stylesheet] = $new_registered_places;
 					
 					update_option( 'wherever_status', $options );
 					
