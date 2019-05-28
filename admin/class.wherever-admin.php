@@ -223,7 +223,7 @@ class Wherever_Admin {
 	 * @since    1.0.0
 	 */
 	public function setup_default_places() {
-				
+		
 		$default_places = array(
 			array(
 				'name'			=> __( 'Content', 'wherever' ),
@@ -244,9 +244,11 @@ class Wherever_Admin {
 		
 		foreach( $default_places as $place ){
 			
-			$this->helpers->setup_wherever_place( $place, true );
+			$this->helpers->setup_wherever_default_place( $place );
 			
 		}
+		
+		$this->helpers->save_wherever_status_option();
 		
 	}
 	

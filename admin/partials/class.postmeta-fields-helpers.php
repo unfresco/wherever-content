@@ -138,7 +138,7 @@ class Postmeta_Fields_Helpers {
 		$theme_stylesheet = $theme->get_stylesheet();
 		
 		$options = get_option('wherever_status');
-		$default_places = $options['default_places'][$theme_stylesheet];
+		$default_places = $options['default_places'];
 		$registered_places = $options['registered_places'][$theme_stylesheet];
 		$options_terms = array();
 

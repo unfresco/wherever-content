@@ -184,7 +184,7 @@ class Wherever {
 		$plugin_admin_postmeta_field_rules = new \Wherever_Content\Admin\Postmeta_Fields_Rules( $plugin_admin_postmeta_field_helpers );
 		$plugin_admin_postmeta_field_places = new \Wherever_Content\Admin\Postmeta_Fields_Places( $plugin_admin_postmeta_field_helpers );
 		$plugin_admin_postmeta_fields = new \Wherever_Content\Admin\Postmeta_Fields();
-		$plugin_admin_settings = new \Wherever_Content\Admin\Settings();
+		$plugin_admin_settings = new \Wherever_Content\Admin\Settings( $this->helpers );
 		$plugin_admin_vendor = new \Wherever_Content\Admin\Vendor_Compat();
 		$plugin_admin_display = new \Wherever_Content\Admin\Display();
 		
@@ -202,6 +202,7 @@ class Wherever {
 			$this->loader->add_action( 'admin_init', $plugin_admin_settings, 'settings' );
 			$this->loader->add_action( 'update_option_wherever_settings', $plugin_admin_settings, 'after_update_settings', 10, 2);
 			$this->loader->add_filter( 'option_wherever_status', $plugin_admin_settings, 'filter_get_options_status', 10, 1);
+			$this->loader->add_filter( 'option_wherever_status', $plugin_admin_settings, 'filter_get_options_status_registered_places', 10, 1);
 			$this->loader->add_filter( 'option_wherever_settings', $plugin_admin_settings, 'filter_get_options_settings', 10, 1);
 			$this->loader->add_filter( 'pre_update_option_wherever_settings', $plugin_admin_settings, 'filter_update_options_settings', 10, 2);
 

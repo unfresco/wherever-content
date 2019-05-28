@@ -8,7 +8,15 @@ use Carbon_Fields\Field;
 
 class Settings {
 	
-	function __construct() {
+	private $options_wherever_settings;
+	
+	private $options_wherever_status;
+	
+	function __construct( $helpers ) {
+		
+		$this->theme = wp_get_theme();
+		$this->theme_stylesheet = $this->theme->get_stylesheet();
+		$this->helpers = $helpers;
 		
 		$this->setup_actions();
 		
@@ -16,12 +24,17 @@ class Settings {
 	
 	public function setup_actions() {
 		
+		// exec in class.version-control.php
 		add_action( 'wherever_settings/update_status_version', array( $this, 'update_status_version' ), 10, 1 );
 		add_action( 'wherever_settings/downgrade_status_version', function( $arg ) {
 			$this->update_status_version( $arg );
 			$this->downgrade_status_version( $arg );
 		}, 10, 1 );
-	
+		
+		// exec in functions.php
+		add_action( 'wherever_settings/register_places', function( $arg ){
+			$this->setup_registered_places( $arg );
+		});
 	}
 	
 	/**
@@ -30,11 +43,11 @@ class Settings {
 	 * @return void
 	 */
 	public function update_status_version( $arg ) {
+
+		$this->options_wherever_status = get_option( 'wherever_status' );
+		$this->options_wherever_status['plugin_version'] = $arg['new_version'];
 		
-		$options = get_option( 'wherever_status' );
-		$options['plugin_version'] = $arg['new_version'];
-		
-		update_option('wherever_status', $options );
+		update_option('wherever_status', $this->options_wherever_status );
 	
 	}
 	
@@ -54,19 +67,19 @@ class Settings {
 	 */
 	public function options_status_init() {
 		
-		$options_old = get_option( 'wherever' ); // < v2.0		
-		$options = get_option( 'wherever_status' );
+		$options_old = get_option( 'wherever' ); // < v2.0
+		$this->options_wherever_status = get_option( 'wherever_status' );
 		
-		if ( empty( $options ) ) {
+		if ( empty( $this->options_wherever_status ) ) {
 			// First time setup
 			update_option('wherever_status', array() ); // Filtered by filter_get_options_status
-			$options = get_option( 'wherever_status' );
+			$this->options_wherever_status = get_option( 'wherever_status' );
 		}
 		
 		if ( !empty( $options_old ) ) {
-			$options = array_merge( $options, $options_old );
+			$this->options_wherever_status = array_merge( $this->options_wherever_status, $options_old );
 			delete_option('wherever');
-			update_option('wherever_status', $options );
+			update_option('wherever_status', $this->options_wherever_status );
 		}
 		
 	}
@@ -77,12 +90,12 @@ class Settings {
 	 */
 	public function options_settings_init() {
 		
-		$options_settings = get_option( 'wherever_settings' );
+		$this->options_wherever_settings = get_option( 'wherever_settings' );
 		
-		if ( empty( $options_settings ) ) {
+		if ( empty( $this->options_wherever_settings ) ) {
 			// First time setup
 			update_option('wherever_settings', array() );
-			$options_settings = get_option( 'wherever_settings' );
+			$this->options_wherever_settings = get_option( 'wherever_settings' );
 		}
 		
 	}
@@ -206,6 +219,15 @@ class Settings {
 		return $options;
 	}
 	
+	public function filter_get_options_status_registered_places( $options ) {
+		
+		if ( ! array_key_exists( $this->theme_stylesheet, $options['registered_places'] ) ) {
+			$options['registered_places'][$this->theme_stylesheet] = array();
+		}
+		
+		return $options;
+	}
+	
 	/**
 	 * Filter get_option('wherever_settings')
 	 * @param  array $options value from the DB
@@ -243,5 +265,43 @@ class Settings {
 		return $options;
 	}
 	
+	/**
+	 * Registers and saves custom registered places
+	 * @param  [type] $places [description]
+	 * @return [type]         [description]
+	 */
+	public function setup_registered_places( $places ) {
+		
+		if ( ! $this->helpers->is_metafields_loaded() ) {
+			return;
+		}
+		
+		if ( !empty( $places ) ) {
+			// Check if current registered is lower than the registered in wherever_status registered places
+			$registered_places = $this->helpers->get_wherever_status_options_registered_places();
+			
+			if ( count($places) < $registered_places ) {
+				// unregister places from options
+				$new_registered_places = array();
+				
+				foreach( $registered_places as $place_term_id ) {
+					$new_registered_places[] = $place_term_id;
+				}
+				
+				$this->helpers->reset_wherever_status_options_registered_places( $new_registered_places );
+				$this->helpers->save_wherever_status_option();
+				
+			}
 
+			if ( count($places) !=  $registered_places ) {
+				// register current
+				$this->helpers->setup_wherever_status_options_registered_places( $places );
+				$this->helpers->save_wherever_status_option();
+				
+			}
+			
+		}
+		
+	}
+	
 }
