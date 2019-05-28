@@ -20,14 +20,14 @@ class Vendor_Compat {
 	}
 	
 	public function polylang_compat( $post_types, $is_settings ) {
-		error_log( "polylang_compat" );
+		
 		$polylang_options = get_option( 'polylang' );
-
+		
 		if ( ! in_array( 'wherever', $polylang_options['post_types'] ) ) {
 			// Auto-include wherever post_type into Polylang options
 			$polylang_options['post_types'][] = 'wherever';
 			update_option( 'polylang', $polylang_options );
-		} 
+		}
 		
 		if ( $is_settings ) {
 			// hides 'wherever' from the list of custom post types in Polylang settings
