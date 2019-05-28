@@ -206,7 +206,7 @@ class Wherever_Admin {
 		$args = array(
 			'labels'                     => $labels,
 			'hierarchical'               => false,
-			'public'                     => true,
+			'public'                     => false,
 			'show_ui'                    => false,
 			'show_admin_column'          => true,
 			'show_in_nav_menus'          => false,
