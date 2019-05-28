@@ -82,6 +82,10 @@ A common and useful example would be to build a multi-column footer section as a
 
 ##  Changelog
 
+**2.1.7**
+- Fix Polylang plugin compatibility when taxonomy sync is enabled
+- Improved handling of DB options interaction
+
 **2.1.6**
 - Fix carbon fields initialization errors
 

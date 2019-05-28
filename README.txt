@@ -17,6 +17,10 @@ This WordPress plugin will enable content distribution across your site in a pos
 
 === Changelog ===
 
+**2.1.7**
+- Fix Polylang plugin compatibility when taxonomy sync is enabled
+- Improved handling of DB options interaction
+
 **2.1.6**
 - Fix carbon fields initialization errors
 
