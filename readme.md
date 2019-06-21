@@ -1,23 +1,22 @@
 
-### About
-This WordPress plugin will enable content distribution across your site in a post-like way with the power of a flexible set of rules and an expandable set of places which tell WordPress where to show the Wherever Content.
+## About
+This WordPress plugin will enable content distribution across your site in a post-like way with the power of a flexible set of rules and an expandable set of places which tell WordPress where to show the Wherever Content on your site.
 
-### Why
-WordPress’s native solution for static and/or reusable contents are – beside the specific theme-options – sidebars and widgets. Managing them is very different to post and pages. Not only the interface is completely different, the users actually need to know and understand the current theme’s internal structure: when and where it uses it’s sidebars, footers, navigations, etc. Changing a theme means mostly to learn and rebuild it’s widgets and widget areas. Not to mention repeating same widgets across different sidebars. 
+## Installation
+**Option A:** install through the WordPress “Add new” plugin interface:
+1. [Download](https://github.com/unfresco/wherever-content/archive/master.zip) the zip file from this repo
+2. Upload through the interface
+3. Activate
 
-Wherever Content on the other hand is simple to understand: manage content in a post-like way with a configuration that relates each of them to your site’s contents and places.
-
-Changing a banner spread across the blog, header images on a category archive page, footer logos, etc. is much easier in a searchable Wherever Content post-list than in the usual multiple sidebar widget-hell. 
-
-More specifically, useful and tested – and the why everything started – it enables the use of siteorigin’s [page builder](https://wordpress.org/plugins/siteorigin-panels/) inside a Wherever Content post and to display it wherever you want. This means f.e. no more duplicated layouts and site-wide page-builder built footers.
+**Option B:** install through the [github-updater](https://github.com/afragen/github-updater) plugin searching for “wherever-content” by unfresco
 
 
-### Quickstart
+## Quickstart
 1. Add a new Wherever Content from the left admin menu (under Posts). Edit it like a normal post.
 2. Edit it’s rules and places in the configuration panel below WP’s richtext/block editor. 
 3. Publish!
 
-### Custom Wherever Places
+## Custom Wherever Places
 By default you can decide Wherever Contents to show in 3 places:
 
 - before, instead and after **the content** of other post and pages (see the `the_content()` function in your theme).
@@ -27,7 +26,6 @@ By default you can decide Wherever Contents to show in 3 places:
 But you can add **custom places** to your theme wherever you want by registering new places in your themes function.php (like registering menus or sidebars) and declaring in your theme files where the custom places should display Wherever Content.
 
 #### Registering Custom Places for your theme
-
 1. Open your themes functions.php
 2. On an 'init' action register as many places you want with `register_wherever_places( $arguments )` being $arguments an array of arrays, each with the name and a slug for the custom place:
 
@@ -60,27 +58,28 @@ add_action( 'init', 'my_custom_wherever_places' );
 
 
 #### Specifying the place of the custom place in your theme
-
 1.	Open the theme file you want to place Wherever Contents. 
 2.	Use `<?php do_action('wherever_place', '{slug}' ); ?>`  to print out the Wherever content(s) at that place. 
 
 ## Example
-
 A common and useful example would be to build a multi-column footer section as a Wherever Content and to display it after the content (or in the footer) of all pages but not on that nice splash screen type front page!
 
 ## Requirements
-
 - The theme must contain the `wp_head()` function.
 
+## Why
+WordPress’s native solution for static and/or reusable contents are – beside the specific theme-options – sidebars and widgets. Managing them is very different to post and pages. Not only the interface is completely different, the users actually need to know and understand the current theme’s internal structure: when and where it uses it’s sidebars, footers, navigations, etc. Changing a theme means mostly to learn and rebuild it’s widgets and widget areas. Not to mention repeating same widgets across different sidebars. 
 
-## Installation
+Wherever Content on the other hand is simple to understand: manage content in a post-like way with a configuration that relates each of them to your site’s contents and places.
 
-1. Download and unzip
-2. Upload the “wherever-content” folder to the `/wp-content/plugins/` directory
-3. Activate the plugin through the 'Plugins' menu in WordPress
+Changing a banner spread across the blog, header images on a category archive page, footer logos, etc. is much easier in a searchable Wherever Content post-list than in the usual multiple sidebar widget-hell. 
 
+More specifically, useful and tested – and the why everything started – it enables the use of siteorigin’s [page builder](https://wordpress.org/plugins/siteorigin-panels/) inside a Wherever Content post and to display it wherever you want. This means f.e. no more duplicated layouts and site-wide page-builder built footers.
 
 ##  Changelog
+
+**2.1.8**
+- migration from boquiabierto to unfresco user also in github-updater config
 
 **2.1.7**
 - Fix Polylang plugin compatibility when taxonomy sync is enabled

@@ -2,18 +2,14 @@
 
 /**
  *
- * @link              http://grell.es
- * @since             1.0.0
- * @package           Wherever
- *
  * @wordpress-plugin
  * Plugin Name:       Wherever Content
- * Plugin URI:        http://wherever.grell.es
- * GitHub Plugin URI: boquiabierto/wherever-content
+ * Plugin URI:        https://unfresco.com/plugins/wherever-content
+ * GitHub Plugin URI: unfresco/wherever-content
  * Description:       Put reusable content wherever you want.
- * Version:           2.1.7
+ * Version:           2.1.8
  * Author:            Adrián Ortiz Arandes
- * Author URI:        http://grell.es
+ * Author URI:        http://unfresco.com
  * License:           GPL-2.0+
  * License URI:       http://www.gnu.org/licenses/gpl-2.0.txt
  * Text Domain:       wherever
