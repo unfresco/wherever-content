@@ -1,6 +1,6 @@
 {
     "name": "unfresco/wherever-content",
     "require": {
-	    
+        "htmlburger/carbon-fields": "2.2.0"
     }
 }
