@@ -15,6 +15,8 @@ Put reusable content wherever you want.
 This WordPress plugin will enable content distribution across your site in a post-like way with the power of a flexible set of rules and an expandable set of places which tell WordPress where to show the Wherever Content on your site.
 
 === Changelog ===
+**2.1.9**
+- Changes in dependency loading
 
 **2.1.8**
 - migration from boquiabierto to unfresco user also in github-updater config
