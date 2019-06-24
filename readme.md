@@ -78,6 +78,9 @@ More specifically, useful and tested – and the why everything started – it e
 
 ##  Changelog
 
+**2.1.11**
+- release with included submodules as part of the github release assets (see: https://github.com/afragen/github-updater/issues/349)
+
 **2.1.10**
 - fix submodule config
 
