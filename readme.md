@@ -78,6 +78,9 @@ More specifically, useful and tested – and the why everything started – it e
 
 ##  Changelog
 
+**2.1.10**
+- fix submodule config
+
 **2.1.9**
 - Changes in dependency loading
 
