@@ -62,17 +62,6 @@ class Helpers {
 	
 	}
 	
-	public function is_metafields_loaded() {
-		
-		if ( empty( $this->metafields_loaded ) ) {
-			$metafields = new Metafields();
-			$this->metafields_loaded = $metafields->is_loaded();
-		}
-		
-		return $this->metafields_loaded;
-
-	}
-	
 	public function get_wherever_status_options() {
 		
 		if ( empty( $this->wherever_status_options ) ) {

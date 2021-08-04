@@ -2,7 +2,7 @@
 
 namespace Wherever_Content;
 
-class Metafields extends Wherever {
+class Metafields {
 	
 	private $loaded;
 	
@@ -70,7 +70,7 @@ class Metafields extends Wherever {
 			if ( class_exists( 'Carbon_Fields\\Container' ) ) {
 				$this->boot();
 			} else {
-				$this->loader->add_action( 'admin_notices', $this->plugin_admin_display, 'notice_framework_missing' );
+				add_action( 'admin_notices', $this->plugin_admin_display, 'notice_framework_missing' );
 			}
 			
 			$this->loaded = true;
@@ -78,7 +78,7 @@ class Metafields extends Wherever {
 		} else if ( $this->use_available_framework() ) {
 			$this->loaded = true;
 		} else {
-			$this->loader->add_action( 'admin_notices', $this->plugin_admin_display, 'notice_framework' );
+			add_action( 'admin_notices', $this->plugin_admin_display, 'notice_framework' );
 		}
 		
 	}

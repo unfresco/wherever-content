@@ -86,7 +86,7 @@ class Rules {
 	 */
 	public function page( $is_in, $rules ) {
 		global $post;
-		
+
 		if ( $rules['page'] === $post->ID ) {
 			$is_in[] = $this->get_location_condition( $rules );
 		}

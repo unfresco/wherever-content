@@ -57,6 +57,8 @@ class Postmeta_Fields {
 					))
 					->set_min(1)
 					->set_width(50),
+				Field::make( 'checkbox', 'disable_wpautop', __('Disable content formatting') )
+					->set_option_value( '1' )
 			));
 	}
 
@@ -90,8 +92,20 @@ class Postmeta_Fields {
 	 * @since    1.0.0
 	 */
 	public function save_post( $post_ID ) {
-		
-		if ( ! function_exists( 'get_current_screen' ) )
+
+		$locale = '';
+
+		if ( function_exists('pll_current_language') ) {
+			$locale = pll_current_language('locale');
+		}
+
+		$transient_key = 'Wherever_Content-Wherever_Public-setup_wherevers-wherevers_query_' . $locale;
+
+        if ( 'wherever' == get_post_type( $post_ID )){
+            delete_transient( $transient_key ); //From \Wherever_Content\Wherever_Public::setup_wherevers
+        }
+
+        if ( ! function_exists( 'get_current_screen' ) )
 			return;
 		
 		if ( 'wherever' == get_post_type( $post_ID ) && empty( get_current_screen() ) && ! wp_is_post_autosave( $post_ID )) {
@@ -105,8 +119,7 @@ class Postmeta_Fields {
 				$meta_terms[] = $term->slug;
 			}
 			
-			update_post_meta( $post_ID, '_wherever_place', $meta_terms );			
-			
+			update_post_meta( $post_ID, '_wherever_place', $meta_terms );
 		}
 		
 	}

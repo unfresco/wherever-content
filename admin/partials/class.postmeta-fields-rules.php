@@ -43,7 +43,7 @@ class Postmeta_Fields_Rules {
 	}
 	
 	public function location_condition( $fields ) {
-		
+
 		$fields[] = Field::make('select', 'location_condition', __( 'Condition', 'wherever' ) )
 			->add_options(array(
 				'==' => __( 'is', 'wherever' ),
@@ -77,7 +77,7 @@ class Postmeta_Fields_Rules {
 	}
 	
 	public function post_type( $fields ) {
-		
+
 		$fields[] = Field::make('select', 'post_type', __( 'Post Type', 'wherever' ) )
 			->add_options( $this->helpers->get_post_types_for_select() )
 			->set_conditional_logic(array(
@@ -92,7 +92,7 @@ class Postmeta_Fields_Rules {
 	}
 	
 	public function post_cat( $fields ) {
-		
+
 		$fields[] = Field::make('select', 'post_cat', __( 'Post Category', 'wherever' ) )
 			->add_options( $this->helpers->get_post_categories_for_select( 'category' ) )
 			->set_conditional_logic(array(
@@ -107,7 +107,7 @@ class Postmeta_Fields_Rules {
 	}
 	
 	public function page( $fields ) {
-		
+
 		$fields[] = Field::make('select', 'page', __( 'Page', 'wherever' ) )
 			->add_options( $this->helpers->get_posts_for_select('page') )
 			->set_conditional_logic(array(
@@ -169,7 +169,7 @@ class Postmeta_Fields_Rules {
 	}
 	
 	public function archive_post_type( $fields ) {
-		
+
 		$fields[] = Field::make('select', 'archive_post_type', __( 'Archive Post Types', 'wherever' ) )
 			->add_options( $this->helpers->get_post_types_for_select() )
 			->set_conditional_logic(array(

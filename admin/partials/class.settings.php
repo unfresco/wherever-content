@@ -271,11 +271,7 @@ class Settings {
 	 * @return [type]         [description]
 	 */
 	public function setup_registered_places( $places ) {
-		
-		if ( ! $this->helpers->is_metafields_loaded() ) {
-			return;
-		}
-		
+
 		if ( !empty( $places ) ) {
 			// Check if current registered is lower than the registered in wherever_status registered places
 			$registered_places = $this->helpers->get_wherever_status_options_registered_places();
