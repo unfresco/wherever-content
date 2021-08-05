@@ -220,7 +220,7 @@ class Wherever {
 		$this->loader->add_filter( 'wherever_admin/rules', $plugin_admin_postmeta_field_rules, 'location_type', 1, 1 );
 		$this->loader->add_filter( 'wherever_admin/rules/location_type', $plugin_admin_postmeta_field_rules, 'location_type_options', 10, 1 );
 		
-		if ( is_admin() && $pagenow=='post.php' ) {
+		if ( is_admin() && ( $pagenow == 'post.php' || $pagenow == 'post-new.php' ) ) {
 			$this->loader->add_action( 'init', $plugin_admin, 'setup_default_places' );
 			
 			$this->loader->add_filter('wherever_admin/rules', $plugin_admin_postmeta_field_rules, 'location_condition', 2, 1);
