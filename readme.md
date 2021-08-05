@@ -78,6 +78,14 @@ More specifically, useful and tested – and the why everything started – it e
 
 ##  Changelog
 
+**2.2.0**
+- Optimize queries through transients
+- Optimize requests with native function calls instead of expensive carbon field functions
+- Optimize by reducing hooks execution to only when it is needed
+- Tweaks on dependency management
+- Add editing option for disabeling wpautop on wherever post content
+- Impove polylang compatibility
+
 **2.1.12**
 - match release tag to release asset spelling for it to work with github-updater
 

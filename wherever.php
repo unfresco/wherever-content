@@ -7,9 +7,9 @@
  * Plugin URI:        https://unfresco.com/plugins/wherever-content
  * GitHub Plugin URI: unfresco/wherever-content
  * Description:       Put reusable content wherever you want.
- * Version:           2.1.12
+ * Version:           2.2.0
  * Author:            Adrián Ortiz Arandes
- * Author URI:        http://unfresco.com
+ * Author URI:        https://unfresco.com
  * License:           GPL-2.0+
  * License URI:       http://www.gnu.org/licenses/gpl-2.0.txt
  * Text Domain:       wherever
