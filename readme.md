@@ -78,6 +78,9 @@ More specifically, useful and tested – and the why everything started – it e
 
 ##  Changelog
 
+**2.2.1**
+- Fix first-time setup of default places to happen on creating a new post 
+
 **2.2.0**
 - Optimize queries through transients
 - Optimize requests with native function calls instead of expensive carbon field functions
