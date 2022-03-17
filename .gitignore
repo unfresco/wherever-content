@@ -1,0 +1,6 @@
+# OS X metadata
+.DS_Store
+
+# Composer
+/vendor
+composer.lock
