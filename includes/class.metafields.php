@@ -19,31 +19,28 @@ class Metafields {
 		
 		$carbon_fields_plugin_file = 'carbon-fields/carbon-fields-plugin.php';
 		$all_plugins = get_plugins();
+		$framework_version = ( defined( '\Carbon_Fields\VERSION' ) ? \Carbon_Fields\VERSION : '3' );
 
 		// Carbon fields exist as plugin
 		if ( array_key_exists( $carbon_fields_plugin_file, $all_plugins ) ) {
 			
 			$current_active_plugins = get_option('active_plugins');
 
-			// Check if is active as plugin or as framework
+			// Check if is active as plugin on same site. Does not catch network activation but carbon-fields won’t load multiple times 
 			if ( in_array( $carbon_fields_plugin_file, $current_active_plugins ) ) {
 				// Is active as plugin
 				$framework_version = $all_plugins[$carbon_fields_plugin_file]['Version'];
-			} else {
-				// Is active as framework
-				$framework_version = \Carbon_Fields\VERSION ;
 			}
-			
-		} else {
-			// Carbon fields already exist as framework. Asume version is >= 2
-			$framework_version = \Carbon_Fields\VERSION ;
+
 		}
-		
+
 		if ( version_compare( $framework_version, '3'  ) >= 0 ) {
-			// Included Carbon field plugin is higher than 2
+			// Included Carbon field plugin is higher than 3
+			// Use available framework
 			return true;
 		} else {
-			// Carbon_Fields version is lower than 2
+			// Carbon_Fields version is lower than 3
+			// Use included framework
 			return false;
 		} 
 
