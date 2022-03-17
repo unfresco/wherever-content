@@ -39,7 +39,7 @@ class Metafields {
 			$framework_version = \Carbon_Fields\VERSION ;
 		}
 		
-		if ( version_compare( $framework_version, '2'  ) >= 0 ) {
+		if ( version_compare( $framework_version, '3'  ) >= 0 ) {
 			// Included Carbon field plugin is higher than 2
 			return true;
 		} else {

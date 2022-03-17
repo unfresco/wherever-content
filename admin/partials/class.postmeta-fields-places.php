@@ -50,17 +50,9 @@ class Postmeta_Fields_Places {
 			->set_default_value(5)
 			->set_attribute('type', 'number')
 			->set_classes('number');
-		
+
 		return $fields;
 	}
-	
-	public function place_info( $fields ) {
-		
-		$fields[] = Field::make( 'html', 'place_info' )
-			->set_html( '<p><span class="dashicons dashicons-location"></p>' )
-			->set_classes('place-content-info');
-		
-		return $fields;
-	}
+
 	
 }

@@ -42,7 +42,7 @@ class Rules {
 	 */
 	public function post( $is_in, $rules ) {
 		global $post;
-		
+
 		if ( $rules['post'] === $post->ID ) {
 			$is_in[] = $this->get_location_condition( $rules );
 		}
@@ -66,7 +66,7 @@ class Rules {
 			
 			foreach( $terms as $term ) {
 				
-				if ( $term->term_id == $location['post_cat'] ) {
+				if ( 'post_cat' === $rules['location_type'] && $term->term_id == $rules['post_cat'] ) {
 					$is_in[] = $this->get_location_condition( $rules );
 				}
 				
@@ -87,7 +87,7 @@ class Rules {
 	public function page( $is_in, $rules ) {
 		global $post;
 
-		if ( $rules['page'] === $post->ID ) {
+		if ( !empty( $post ) && $rules['page'] === $post->ID ) {
 			$is_in[] = $this->get_location_condition( $rules );
 		}
 		

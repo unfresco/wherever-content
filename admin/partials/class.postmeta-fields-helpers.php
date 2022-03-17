@@ -103,21 +103,12 @@ class Postmeta_Fields_Helpers {
 		global $wp_version;
 		
 		$select_terms = array();
-		
-		
-		if ( version_compare( $wp_version, '4.5'  ) >= 0 ) {
+
+		$post_terms = get_terms(array(
+			'taxonomy' => $taxonomy,
+			'hide_empty' => false
+		));
 			
-			$post_terms = get_terms(array(
-				'taxonomy' => $taxonomy,
-				'hide_empty' => false
-			));
-			
-		} else {
-			
-			$post_terms = get_terms( $taxonomy );
-		
-		}
-		
 		foreach ( $post_terms as $term ) {
 			
 			$select_terms[$term->term_id] = $term->name  . ' (' . $term->count . ')';
@@ -129,7 +120,7 @@ class Postmeta_Fields_Helpers {
 	}
 	
 	/**
-	 * get terms for poplating places in carbon fields
+	 * get terms for populating places in carbon fields
 	 * @return array of terms
 	 */
 	public function get_places_for_options() {
@@ -142,6 +133,7 @@ class Postmeta_Fields_Helpers {
 		$registered_places = $options['registered_places'][$theme_stylesheet];
 		$options_terms = array();
 
+		
 		// Add default places
 		foreach( $default_places as $term_id ) {
 			$term = get_term_by('id', $term_id, 'wherever_place' );
@@ -160,6 +152,5 @@ class Postmeta_Fields_Helpers {
 		return $options_terms;
 		
 	}
-	
 	
 }

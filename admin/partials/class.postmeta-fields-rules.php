@@ -46,7 +46,7 @@ class Postmeta_Fields_Rules {
 
 		$fields[] = Field::make('select', 'location_condition', __( 'Condition', 'wherever' ) )
 			->add_options(array(
-				'==' => __( 'is', 'wherever' ),
+				'=' => __( 'is', 'wherever' ),
 				'!=' => __( 'is not', 'wherever' )
 			))
 			->set_conditional_logic(array(
@@ -210,11 +210,111 @@ class Postmeta_Fields_Rules {
 	
 	public function rule_info( $fields ) {
 		
-		$fields[] = Field::make( 'html', 'rule_info' )
-			->set_html( '<p><span class="dashicons dashicons-move"></p>' )
-			->set_classes('rule-content-info');
+		foreach( $this->wherever_rule_infos() as $key => $info ) {
+			$fields[] = Field::make( 'html', 'rule_info_' .  $key  )
+			->set_html( '<p><span class="dashicons dashicons-move"></span> <span class="description">' . $info['description'] . '</span></p>' )
+			->set_classes('rule-content-info')
+			->set_conditional_logic(array(
+				array(
+				'field' => 'location_type',
+				'value' => $info['location_type'],
+				'compare' => "="
+				),
+				array(
+				'field' => 'location_condition',
+				'value' => $info['condition'],
+				'compare' => "="
+				),
+
+			));
+		}
 		
 		return $fields;
+	}
+
+	/**
+	 * Adds wherever_place terms to the admin_js localisation variable
+	 * @return array     with wherever_place terms
+	 */
+	private function wherever_rule_infos() {
+		
+		$all = __( 'Show on all posts, pages and custom post types. Good for general purpose like site navigation and footers.', 'wherever' );
+		
+		$wherever_rule_infos = array(
+			array(
+				'location_type' => 'all',
+				'condition' => '=',
+				'description' => $all,
+			),
+			array(
+				'location_type' => 'all',
+				'condition' => '!=',
+				'description' => $all,
+			),
+			array(
+				'location_type' => 'post',
+				'condition' => '=',
+				'description' => __( 'Show on the selected post.', 'wherever' ),
+			),
+			array(
+				'location_type' => 'post',
+				'condition' => '!=',
+				'description' => __( 'Don’t show on the selected post.', 'wherever' ),
+			),
+			array(
+				'location_type' => 'post_type',
+				'condition' => '=',
+				'description' => __( 'Show on the selected post type.', 'wherever' ),
+			),
+			array(
+				'location_type' => 'post_type',
+				'condition' => '!=',
+				'description' => __( 'Don’t show on the selected post type.', 'wherever' ),
+			),
+			array(
+				'location_type' => 'post_cat',
+				'condition' => '=',
+				'description' => __( 'Show on the selected post category.', 'wherever' ),
+			),
+			array(
+				'location_type' => 'post_cat',
+				'condition' => '!=',
+				'description' => __( 'Don’t show on the selected post category.', 'wherever' ),
+			),
+			array(
+				'location_type' => 'page',
+				'condition' => '=',
+				'description' => __( 'Show on the selected page.', 'wherever' ),
+			),
+			array(
+				'location_type' => 'page',
+				'condition' => '!=',
+				'description' => __( 'Don’t show on the selected page.', 'wherever' ),
+			),
+			array(
+				'location_type' => 'template_type',
+				'condition' => '=',
+				'description' => __( 'Show on the selected template type.', 'wherever' ),
+			),
+			array(
+				'location_type' => 'template_type',
+				'condition' => '!=',
+				'description' => __( 'Don’t on the selected template type.', 'wherever' ),
+			),
+			array(
+				'location_type' => 'page_parent',
+				'condition' => '=',
+				'description' => __( 'Show on children of the selected page.', 'wherever' ),
+			),
+			array(
+				'location_type' => 'page_parent',
+				'condition' => '!=',
+				'description' => __( 'Don’t show on children of the selected page.', 'wherever' ),
+			),
+		);
+		
+		return $wherever_rule_infos;
+		
 	}
 	
 }

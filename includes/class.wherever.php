@@ -207,12 +207,7 @@ class Wherever {
 		$this->loader->add_filter( 'pre_update_option_wherever_settings', $plugin_admin_settings, 'filter_update_options_settings', 10, 2);
 
 		$this->loader->add_action( 'init', $plugin_admin, 'place_taxonomy' );
-        $this->loader->add_action( 'init', $plugin_admin, 'custom_post_types' );
-		
-		$this->loader->add_filter( 'wherever_admin/admin_js', $plugin_admin, 'wherever_places_for_admin_js' );
-		$this->loader->add_filter( 'wherever_admin/admin_js', $plugin_admin, 'wherever_rules_for_admin_js' );
-
-
+		$this->loader->add_action( 'init', $plugin_admin, 'custom_post_types' );
 		
 		$this->loader->add_action( 'carbon_fields_register_fields', $plugin_admin_postmeta_fields, 'carbon_fields_post_meta' );
 		$this->loader->add_action( 'carbon_fields_post_meta_container_saved', $plugin_admin_postmeta_fields, 'carbon_fields_save' );
@@ -221,6 +216,7 @@ class Wherever {
 		$this->loader->add_filter( 'wherever_admin/rules/location_type', $plugin_admin_postmeta_field_rules, 'location_type_options', 10, 1 );
 		
 		if ( is_admin() && ( $pagenow == 'post.php' || $pagenow == 'post-new.php' ) ) {
+
 			$this->loader->add_action( 'init', $plugin_admin, 'setup_default_places' );
 			
 			$this->loader->add_filter('wherever_admin/rules', $plugin_admin_postmeta_field_rules, 'location_condition', 2, 1);
@@ -237,7 +233,6 @@ class Wherever {
 		$this->loader->add_filter( 'wherever_admin/places', $plugin_admin_postmeta_field_places, 'place', 10, 1 );
 		$this->loader->add_filter( 'wherever_admin/places', $plugin_admin_postmeta_field_places, 'placement', 10, 1 );
 		$this->loader->add_filter( 'wherever_admin/places', $plugin_admin_postmeta_field_places, 'order', 10, 1 );
-		$this->loader->add_filter( 'wherever_admin/places', $plugin_admin_postmeta_field_places, 'place_info', 10, 1 );
 
 		$this->loader->add_filter( 'save_post', $plugin_admin_postmeta_fields, 'save_post' );
 			

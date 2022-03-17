@@ -77,6 +77,8 @@ Changing a banner spread across the blog, header images on a category archive pa
 More specifically, useful and tested – and the why everything started – it enables the use of siteorigin’s [page builder](https://wordpress.org/plugins/siteorigin-panels/) inside a Wherever Content post and to display it wherever you want. This means f.e. no more duplicated layouts and site-wide page-builder built footers.
 
 ##  Changelog
+**3.0.0**
+- Update carbon-fields to version 3+
 
 **2.2.1**
 - Fix first-time setup of default places to happen on creating a new post 

@@ -115,7 +115,6 @@ class Wherever_Public {
 		if ( function_exists('pll_current_language') ) {
 			$locale = pll_current_language('locale');
 		}
-
 		$transient_key = 'Wherever_Content-Wherever_Public-setup_wherevers-wherevers_query_' . $locale;
 
 		if ( false === ( $this->wherevers = get_transient( $transient_key ) ) ) {
@@ -127,7 +126,7 @@ class Wherever_Public {
 
 			$query = new \WP_Query($args);
 
-            if (!$query->have_posts())
+			if (!$query->have_posts())
                 return;
 
             while ($query->have_posts()): $query->the_post();
@@ -182,7 +181,7 @@ class Wherever_Public {
 
 			set_transient( $transient_key, $this->wherevers, HOUR_IN_SECONDS * 6);
         }
-		
+
 		foreach( $this->wherevers as $key => $wherever ){
 
 			// Set if in current location
