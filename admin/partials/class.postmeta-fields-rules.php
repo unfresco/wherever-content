@@ -121,25 +121,6 @@ class Postmeta_Fields_Rules {
 		return $fields;
 	}
 	
-	public function page_type( $fields ) {
-		
-		$fields[] = Field::make('select', 'page_type', __( 'Page Type', 'wherever' ) )
-			->add_options(array(
-				'home' => __( 'Home (Blog & Front Page )', 'wherever' ),
-				'front_page' => __( 'Front Page', 'wherever' ),
-				'archive' => __( 'Archive', 'wherever' )
-			))
-			->set_conditional_logic(array(
-				array(
-				'field' => 'location_type',
-				'value' => 'page_type',
-				'compare' => '='
-				)
-			));
-		
-		return $fields;
-	}
-	
 	public function template_type( $fields ) {
 		
 		$fields[] = Field::make('select', 'template_type', __( 'Template Type', 'wherever' ) )
@@ -152,15 +133,9 @@ class Postmeta_Fields_Rules {
 				'404' => __( '404', 'wherever' ),
 			))
 			->set_conditional_logic(array(
-				'relation' => 'OR',
 				array(
 					'field' => 'location_type',
 					'value' => 'template_type',
-					'compare' => '='
-				),
-				array(
-					'field' => 'location_type',
-					'value' => 'page_type',
 					'compare' => '='
 				)
 			));
@@ -173,12 +148,6 @@ class Postmeta_Fields_Rules {
 		$fields[] = Field::make('select', 'archive_post_type', __( 'Archive Post Types', 'wherever' ) )
 			->add_options( $this->helpers->get_post_types_for_select() )
 			->set_conditional_logic(array(
-				'relation' => 'OR',
-				array(
-					'field' => 'page_type',
-					'value' => 'archive',
-					'compare' => '='
-				),
 				array(
 					'field' => 'template_type',
 					'value' => 'archive',
@@ -299,7 +268,7 @@ class Postmeta_Fields_Rules {
 			array(
 				'location_type' => 'template_type',
 				'condition' => '!=',
-				'description' => __( 'Don’t on the selected template type.', 'wherever' ),
+				'description' => __( 'Don’t show on the selected template type.', 'wherever' ),
 			),
 			array(
 				'location_type' => 'page_parent',

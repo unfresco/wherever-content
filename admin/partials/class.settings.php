@@ -69,6 +69,8 @@ class Settings {
 		
 		$options_old = get_option( 'wherever' ); // < v2.0
 		$this->options_wherever_status = get_option( 'wherever_status' );
+		$theme = wp_get_theme();
+		$theme_stylesheet = $theme->get_stylesheet();
 		
 		if ( empty( $this->options_wherever_status ) ) {
 			// First time setup
@@ -79,6 +81,12 @@ class Settings {
 		if ( !empty( $options_old ) ) {
 			$this->options_wherever_status = array_merge( $this->options_wherever_status, $options_old );
 			delete_option('wherever');
+			update_option('wherever_status', $this->options_wherever_status );
+		}
+
+		// Cleanup default_places from < v2.0 $theme_stylesheet
+		if ( array_key_exists( $theme_stylesheet, $this->options_wherever_status['default_places'] ) ) {
+			unset( $this->options_wherever_status['default_places'][$theme_stylesheet] );
 			update_option('wherever_status', $this->options_wherever_status );
 		}
 		

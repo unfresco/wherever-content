@@ -142,12 +142,7 @@ class Rules {
 	public function template_type( $is_in, $rules ) {
 		global $post;
 		
-		// Backward compatible to page_type option
-		if ( 'page_type' === $rules['location_type'] ) {
-			$type = $rules['page_type'];
-		} else if ( 'template_type' === $rules['location_type'] ) {
-			$type = $rules['template_type'];
-		}
+		$type = $rules['template_type'];
 		
 		if ( 'archive' == $type && is_archive() ) {
 			

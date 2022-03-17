@@ -271,7 +271,6 @@ class Wherever {
 		$this->loader->add_filter( 'wherever_public/rules/location_type/post_type', $plugin_public_rules, 'post_type', 10, 2 );
 		$this->loader->add_filter( 'wherever_public/rules/location_type/page', $plugin_public_rules, 'page', 10, 2 );
 		$this->loader->add_filter( 'wherever_public/rules/location_type/page_parent', $plugin_public_rules, 'page_parent', 10, 2 );
-		$this->loader->add_filter( 'wherever_public/rules/location_type/page_type', $plugin_public_rules, 'template_type', 10, 2 );
 		$this->loader->add_filter( 'wherever_public/rules/location_type/template_type', $plugin_public_rules, 'template_type', 10, 2 );
 		// TODO: user state rule into plugin
 		#$this->loader->add_filter( 'wherever_public/rules/location_type/user_state', $plugin_public_rules, 'user_state', 10, 2 );

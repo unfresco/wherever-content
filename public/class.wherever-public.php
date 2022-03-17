@@ -5,10 +5,10 @@ namespace Wherever_Content;
 /**
  * The public-facing functionality of the plugin.
  *
- * @link       http://grell.es
- * @since      1.0.0
+ * @link	   http://grell.es
+ * @since	  1.0.0
  *
- * @package    Wherever
+ * @package	Wherever
  * @subpackage Wherever/public
  */
 
@@ -18,54 +18,54 @@ namespace Wherever_Content;
  * Defines the plugin name, version, and two examples hooks for how to
  * enqueue the admin-specific stylesheet and JavaScript.
  *
- * @package    Wherever
+ * @package	Wherever
  * @subpackage Wherever/public
- * @author     Adrián Ortiz Arandes <adrian@grell.es>
+ * @author	 Adrián Ortiz Arandes <adrian@grell.es>
  */
 class Wherever_Public {
 
 	/**
 	 * The ID of this plugin.
 	 *
-	 * @since    1.0.0
+	 * @since	1.0.0
 	 * @access   private
-	 * @var      string    $plugin_name    The ID of this plugin.
+	 * @var	  string	$plugin_name	The ID of this plugin.
 	 */
 	private $plugin_name;
 
 	/**
 	 * The version of this plugin.
 	 *
-	 * @since    1.0.0
+	 * @since	1.0.0
 	 * @access   private
-	 * @var      string    $version    The current version of this plugin.
+	 * @var	  string	$version	The current version of this plugin.
 	 */
 	private $version;
 	
 	/**
 	 * Holds an array of all wherever posts.
 	 *
-	 * @since    1.0.0
+	 * @since	1.0.0
 	 * @access   private
-	 * @var      array    $wherevers    Holds an array of all wherever posts.
+	 * @var	  array	$wherevers	Holds an array of all wherever posts.
 	 */
 	private $wherevers;
 	
 	/**
 	 * All places currently associated to wherever posts.
 	 *
-	 * @since    1.0.0
+	 * @since	1.0.0
 	 * @access   private
-	 * @var      array    $places    All places currently associated to wherever posts.
+	 * @var	  array	$places	All places currently associated to wherever posts.
 	 */
 	private $places;
 	
 	/**
 	 * Initialize the class and set its properties.
 	 *
-	 * @since    1.0.0
-	 * @param      string    $plugin_name       The name of the plugin.
-	 * @param      string    $version    The version of this plugin.
+	 * @since	1.0.0
+	 * @param	  string	$plugin_name	   The name of the plugin.
+	 * @param	  string	$version	The version of this plugin.
 	 */
 	public function __construct( $plugin_name, $version, $helpers ) {
 
@@ -81,7 +81,7 @@ class Wherever_Public {
 	/**
 	 * Register the stylesheets for the public-facing side of the site.
 	 *
-	 * @since    1.0.0
+	 * @since	1.0.0
 	 */
 	public function enqueue_styles() {
 
@@ -92,7 +92,7 @@ class Wherever_Public {
 	/**
 	 * Register the JavaScript for the public-facing side of the site.
 	 *
-	 * @since     1.0.0
+	 * @since	 1.0.0
 	 */
 	public function enqueue_scripts() {
 
@@ -118,69 +118,85 @@ class Wherever_Public {
 		$transient_key = 'Wherever_Content-Wherever_Public-setup_wherevers-wherevers_query_' . $locale;
 
 		if ( false === ( $this->wherevers = get_transient( $transient_key ) ) ) {
-            $args = array(
-                'post_type' => 'wherever',
-                'post_status' => 'publish',
-                'posts_per_page' => -1
-            );
+			$args = array(
+				'post_type' => 'wherever',
+				'post_status' => 'publish',
+				'posts_per_page' => -1
+			);
 
 			$query = new \WP_Query($args);
 
 			if (!$query->have_posts())
-                return;
+				return;
 
-            while ($query->have_posts()): $query->the_post();
+			while ($query->have_posts()): $query->the_post();
 
-                //$wherever_rules = carbon_get_the_post_meta('wherever_rules');
-                $wherever_rules = array();
-                for($i=0; $i<100; $i++){
-                    $rule = array();
-                    $rule['location_type']=get_post_meta(get_the_ID(), '_wherever_rules|location_type|'.$i.'|0|value', true);
-                    if(!empty($rule['location_type'])){
-                        $rule['_type']=get_post_meta(get_the_ID(), '_wherever_rules|||'.$i.'|value', true);
-                        $rule['location_condition']=get_post_meta(get_the_ID(), '_wherever_rules|location_condition|'.$i.'|0|value', true);
-                        $rule['post']=(int)get_post_meta(get_the_ID(), '_wherever_rules|post|'.$i.'|0|value', true);
-                        $rule['post_type']=get_post_meta(get_the_ID(), '_wherever_rules|post_type|'.$i.'|0|value', true);
-                        $rule['post_cat']=(int)get_post_meta(get_the_ID(), '_wherever_rules|post_cat|'.$i.'|0|value', true);
-                        $rule['page']=(int)get_post_meta(get_the_ID(), '_wherever_rules|page|'.$i.'|0|value', true);
-                        $rule['template_type']=get_post_meta(get_the_ID(), '_wherever_rules|template_type|'.$i.'|0|value', true);
-                        $rule['archive_post_type']=get_post_meta(get_the_ID(), '_wherever_rules|archive_post_type|'.$i.'|0|value', true);
-                        $rule['rule_info']=get_post_meta(get_the_ID(), '_wherever_rules|rule_info|'.$i.'|0|value', true);
-                        $wherever_rules[]=$rule;
-                    } else {
-                        $i=101;
-                    }
-                }
+				//$wherever_rules = carbon_get_the_post_meta('wherever_rules');
+				$post_id = get_the_ID();
+				$wherever_rules = array();
+				for($i=0; $i<100; $i++){
+					$rule = array();
+					$location_type_key = '_wherever_rules|location_type|'.$i.'|0|value';
+					$location_type = get_post_meta( $post_id ,$location_type_key , true );
+					
+					// Update DB to new carbon-fields format
+					if ( empty( $location_type ) ) {
+						$this->update_wherever_meta_format( $post_id );
+					}
+					
+					$rule['location_type'] = get_post_meta( $post_id ,$location_type_key , true );
 
-                $wherever_places = carbon_get_the_post_meta('wherever_places');
-                $disable_wpautop = carbon_get_the_post_meta('disable_wpautop');
+					if(!empty($rule['location_type'])){
+						$rule['_type']=get_post_meta($post_id , '_wherever_rules|||'.$i.'|value', true);
+						$rule['location_condition']=get_post_meta($post_id , '_wherever_rules|location_condition|'.$i.'|0|value', true);
+						$rule['post']=(int)get_post_meta($post_id , '_wherever_rules|post|'.$i.'|0|value', true);
+						$rule['post_type']=get_post_meta($post_id , '_wherever_rules|post_type|'.$i.'|0|value', true);
+						$rule['post_cat']=(int)get_post_meta($post_id , '_wherever_rules|post_cat|'.$i.'|0|value', true);
+						$rule['page']=(int)get_post_meta($post_id , '_wherever_rules|page|'.$i.'|0|value', true);
+						$rule['template_type']=get_post_meta($post_id , '_wherever_rules|template_type|'.$i.'|0|value', true);
+						$rule['archive_post_type']=get_post_meta($post_id , '_wherever_rules|archive_post_type|'.$i.'|0|value', true);
+						$rule['rule_info']=get_post_meta($post_id , '_wherever_rules|rule_info|'.$i.'|0|value', true);
+						$wherever_rules[]=$rule;
+					} else {
+						$i=101;
+					}
+				}
 
-                foreach ($wherever_rules as $key => $rules) {
-                    $wherever_rules[$key] = apply_filters('wherever_public/rules', $rules);
-                }
+				$wherever_places = carbon_get_the_post_meta('wherever_places');
+				$disable_wpautop = carbon_get_the_post_meta('disable_wpautop');
 
-                foreach ($wherever_places as $key => $places) {
-                    $wherever_places[$key] = apply_filters('wherever_public/places', $places);
-                }
+				foreach ($wherever_rules as $key => $rules) {
+					$wherever_rules[$key] = apply_filters('wherever_public/rules', $rules);
+				}
 
-                if (empty($wherever_rules) || empty($wherever_places)) {
-                    continue;
-                }
+				foreach ($wherever_places as $key => $places) {
+					$wherever_places[$key] = apply_filters('wherever_public/places', $places);
+				}
 
-                $this->wherevers[] = array(
-                    'post' => $post,
-                    'the_content' => ($disable_wpautop ? $post->post_content : apply_filters('the_content', $post->post_content)), // Todo: apply_filters only on wherevers to display in build_wherevers
-                    'wherever_rules' => $wherever_rules,
-                    'wherever_places' => $wherever_places,
-                    'in_current_location' => false
-                );
+				if (empty($wherever_rules) || empty($wherever_places)) {
+					continue;
+				}
 
-            endwhile;
+				$this->wherevers[] = array(
+					'post' => $post,
+					'the_content' => ($disable_wpautop ? $post->post_content : apply_filters('the_content', $post->post_content)), // Todo: apply_filters only on wherevers to display in build_wherevers
+					'wherever_rules' => $wherever_rules,
+					'wherever_places' => $wherever_places,
+					'in_current_location' => false
+				);
 
-            wp_reset_postdata();
+			endwhile;
 
-			set_transient( $transient_key, $this->wherevers, HOUR_IN_SECONDS * 6);
-        }
+			wp_reset_postdata();
+
+			if ( !empty( $this->wherevers ) ) {
+				set_transient( $transient_key, $this->wherevers, HOUR_IN_SECONDS * 6);
+			}
+		}
+
+		if ( empty( $this->wherevers ) ) {
+			return;
+		}
 
 		foreach( $this->wherevers as $key => $wherever ){
 
@@ -198,35 +214,22 @@ class Wherever_Public {
 				
 			}
 
-            // Setup post/page objects instead of ID’s
-            /*if( !empty( $wherever['wherever_rules'] ) ){
-                foreach( $wherever['wherever_rules'] as $location_key => $location ){
-                    if( 'post' ==  $location['location_type'] ){
-                        $this->wherevers[$key]['wherever_rules'][$location_key]['post'] = get_post( $location['post'] );
-                    }
+			// Setup places
+			if( !empty( $wherever['wherever_places'] ) ){
 
-                    if( 'page' ==  $location['location_type'] ){
-                        $this->wherevers[$key]['wherever_rules'][$location_key]['page'] = get_post( $location['page'] );
-                    }
-                }
-            }*/
+				foreach ( $wherever['wherever_places'] as $place_key => $place ) {
 
-            // Setup places
-            if( !empty( $wherever['wherever_places'] ) ){
+					if ( !array_key_exists( $place['place'], $this->places ) ) {
 
-                foreach ( $wherever['wherever_places'] as $place_key => $place ) {
+						$this->places[ $place['place'] ] = array();
 
-                    if ( !array_key_exists( $place['place'], $this->places ) ) {
+					}
 
-                        $this->places[ $place['place'] ] = array();
+					$this->places[ $place['place'] ][] = $this->wherevers[$key];
 
-                    }
+				}
 
-                    $this->places[ $place['place'] ][] = $this->wherevers[$key];
-
-                }
-
-            }
+			}
 			
 		}
 
@@ -270,7 +273,7 @@ class Wherever_Public {
 	/**
 	 * Build an array of Wherever posts grouped by placement
 	 * @param  string $place_name [description]
-	 * @return array            [description]
+	 * @return array			[description]
 	 */
 	private function get_wherevers( $place_name ) {
 		
@@ -318,7 +321,7 @@ class Wherever_Public {
 				if( !empty( $placement_wherevers ) ){
 
 					usort($placement_wherevers, function($a, $b) {
-					    return $b['order'] - $a['order'];
+						return $b['order'] - $a['order'];
 					});
 
 				}
@@ -385,7 +388,89 @@ class Wherever_Public {
 		return $content;
 		
 	}
-	
+
+	/**
+	 * Updates the DB to v3+ format and migrates fields 
+	 * @param	int $post_id [The wherever post ID]
+	 * @since	3.1.0
+	 */
+	private function update_wherever_meta_format( $post_id ) {
+		$rules = array( 'location_type', 'location_condition', 'post', 'post_type', 'post_cat', 'page', 'page_type', 'archive_post_type' );
+		$places = array( 'place', 'placement', 'order' );
+		$meta = get_metadata('post', $post_id, false, true );
+
+		// Count rules to traverse
+		$meta_count_rules = 0;
+		foreach ($meta as $key => $value) {
+			if (  false !== strpos( $key, '_wherever_rules_-_location_type' ) ) {
+				$meta_count_rules++;
+			}
+		}
+
+		$updated = false;
+
+		foreach( $rules as $rule ){
+			for ( $i=0; $i <= $meta_count_rules; $i++ ) { 
+				// get value
+				$legacy_key =  '_wherever_rules_-_' . $rule . '_' . $i;
+				if ( metadata_exists('post', $post_id, $legacy_key) ) {
+					$legacy_value = get_post_meta( $post_id, $legacy_key, true );
+					
+					// set new key & value
+					if ( 'location_condition' == $rule && empty( $legacy_value ) ) {
+						$legacy_value = '=';
+					}
+
+					// Migrate rule-key page_type to template_type
+					if ( 'page_type' == $rule ) {
+						$rule = 'template_type';
+					}
+					
+					carbon_set_post_meta( $post_id, "wherever_rules[$i]/$rule", $legacy_value );
+					// delete legacy meta
+					delete_post_meta( $post_id, $legacy_key );
+
+					$updated = true;
+				}
+			}
+		}
+		
+		if ( $updated ) {
+			update_post_meta( $post_id, '_wherever_rules|||0|value', '_');
+		}
+
+		$updated = false;
+
+		// Count places 
+		$meta_count_places = 0;
+		foreach ($meta as $key => $value) {
+			if (  false !== strpos( $key, '_wherever_places_-_place' ) ) {
+				$meta_count_places++;
+			}
+		}
+
+		foreach( $places as $place ){
+			for ( $i=0; $i <= $meta_count_places; $i++ ) { 
+				// get value
+				$legacy_key =  '_wherever_places_-_' . $place . '_' . $i;
+				if ( metadata_exists('post', $post_id, $legacy_key) ) {
+					$legacy_value = get_post_meta( $post_id, $legacy_key, true );
+					carbon_set_post_meta( $post_id, "wherever_places[$i]/$place", $legacy_value );
+					
+					// delete legacy meta
+					delete_post_meta( $post_id, $legacy_key );
+
+					$updated = true;
+				}
+			}
+		}
+
+		if ( $updated ) {
+			update_post_meta( $post_id, '_wherever_places|||0|value', '_');
+		}
+
+	}
+
 	// Filter for the_content place
 	public function the_content( $content ) {
 		global $post;
