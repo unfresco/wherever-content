@@ -192,7 +192,7 @@ class Wherever {
 		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_scripts' );
 		$this->loader->add_action( 'all_plugins', $plugin_admin, 'localize_plugin_info' );
 
-		$this->loader->add_action( 'plugins_loaded', $this->meta_fields, 'load_framework' );
+		$this->loader->add_action( 'after_setup_theme', $this->meta_fields, 'load_framework' );
 
 		$this->loader->add_action( 'init', $this->version_control, 'check_version' );
 
