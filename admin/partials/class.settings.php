@@ -85,10 +85,13 @@ class Settings {
 		}
 
 		// Cleanup default_places from < v2.0 $theme_stylesheet
-		if ( array_key_exists( $theme_stylesheet, $this->options_wherever_status['default_places'] ) ) {
-			unset( $this->options_wherever_status['default_places'][$theme_stylesheet] );
-			update_option('wherever_status', $this->options_wherever_status );
+		foreach( $this->options_wherever_status['default_places'] as $key => $value ){
+			if ( ! is_numeric($key) ) {
+				unset( $this->options_wherever_status['default_places'][$key] );
+				update_option('wherever_status', $this->options_wherever_status );
+			}
 		}
+
 		
 	}
 	
