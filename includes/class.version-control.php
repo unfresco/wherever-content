@@ -56,7 +56,7 @@ class Version_Control extends Wherever {
 	 * @return void 
 	 */
 	public function check_version() {
-		$options = get_option( 'wherever_status' );
+		$options = ( !empty( get_option('wherever') ) ? get_option('wherever') : get_option( 'wherever_status' ) );
 
 		$arg = array(
 			'old_version' => $options['plugin_version'],

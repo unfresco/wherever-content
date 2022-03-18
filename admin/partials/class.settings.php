@@ -71,7 +71,7 @@ class Settings {
 		$this->options_wherever_status = get_option( 'wherever_status' );
 		$theme = wp_get_theme();
 		$theme_stylesheet = $theme->get_stylesheet();
-		
+
 		if ( empty( $this->options_wherever_status ) ) {
 			// First time setup
 			update_option('wherever_status', array() ); // Filtered by filter_get_options_status
@@ -84,14 +84,31 @@ class Settings {
 			update_option('wherever_status', $this->options_wherever_status );
 		}
 
-		// Cleanup default_places from < v2.0 $theme_stylesheet
+		// Clean up default_places from < v2.0 $theme_stylesheet
+		$cleaned_up = false;
 		foreach( $this->options_wherever_status['default_places'] as $key => $value ){
 			if ( ! is_numeric($key) ) {
 				unset( $this->options_wherever_status['default_places'][$key] );
-				update_option('wherever_status', $this->options_wherever_status );
+				$cleaned_up = true;
+			}
+		}
+		
+		if ( $cleaned_up ) {
+			update_option('wherever_status', $this->options_wherever_status );
+		}
+
+		// Clean up possible errors in arrays
+		$cleaned_up = false;
+		foreach( $this->options_wherever_status['registered_places'][$theme_stylesheet] as $key => $value ){
+			if ( empty($value) ) {
+				unset( $this->options_wherever_status['registered_places'][$theme_stylesheet][$key] );
+				$cleaned_up = true;
 			}
 		}
 
+		if ( $cleaned_up ) {
+			update_option('wherever_status', $this->options_wherever_status );
+		}
 		
 	}
 	
